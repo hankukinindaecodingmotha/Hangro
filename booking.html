@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="행로 상담 및 방문 예약 — 빈 공간 재생 프로젝트 문의"
+    />
+    <title>예약 · 상담 — 행로</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="sub">
+    <header>
+      <div class="wrap nav">
+        <a href="index.html" class="logo"
+          ><img
+            src="assets/haengro-logo.png"
+            alt="행로"
+            width="846"
+            height="384"
+            decoding="async"
+        /></a>
+        <nav class="nav-links" aria-label="주요 메뉴">
+          <a href="index.html">소개</a>
+          <a href="team.html">직원 소개</a>
+          <a href="booking.html" aria-current="page">예약</a>
+        </nav>
+        <a class="nav-cta" href="booking.html">상담 예약</a>
+      </div>
+    </header>
+
+    <div class="page-hero">
+      <div class="wrap">
+        <p class="badge">Booking</p>
+        <h1>상담 및 일정 예약</h1>
+        <p>
+          아래 양식은 테스트용입니다. 제출해도 서버로 전송되지 않으며, 브라우저에
+          안내 메시지만 표시됩니다.
+        </p>
+      </div>
+    </div>
+
+    <main class="page-fill">
+      <section aria-labelledby="form-title">
+        <div class="wrap">
+          <div class="form-panel">
+            <h2 id="form-title">예약 요청</h2>
+            <p class="form-note">
+              필수 항목을 입력한 뒤 보내기를 누르면 데모 확인 창이 뜹니다. 실제
+              서비스에서는 백엔드 API나 폼 서비스(예: Google Forms, Typeform)와
+              연결하면 됩니다.
+            </p>
+
+            <form class="booking-form" id="booking-form" novalidate>
+              <div class="field-row">
+                <div class="field">
+                  <label for="name">이름 <span aria-hidden="true">*</span></label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    autocomplete="name"
+                    required
+                    placeholder="홍길동"
+                  />
+                </div>
+                <div class="field">
+                  <label for="phone"
+                    >연락처 <span aria-hidden="true">*</span></label
+                  >
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    autocomplete="tel"
+                    required
+                    placeholder="010-0000-0000"
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="email">이메일</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="hello@example.com"
+                />
+                <p class="hint">선택 사항이지만, 안내 메일 발송 시 필요합니다.</p>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="date"
+                    >희망 일자 <span aria-hidden="true">*</span></label
+                  >
+                  <input id="date" name="date" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="time">희망 시간대</label>
+                  <select id="time" name="time">
+                    <option value="">선택</option>
+                    <option value="morning">오전 (10–12시)</option>
+                    <option value="afternoon">오후 (14–17시)</option>
+                    <option value="evening">저녁 (17–19시)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="type"
+                  >문의 유형 <span aria-hidden="true">*</span></label
+                >
+                <select id="type" name="type" required>
+                  <option value="">선택</option>
+                  <option value="space">빈집·유후 시설 상담</option>
+                  <option value="gov">지자체 · 협업</option>
+                  <option value="tour">관광·콘텐츠 제휴</option>
+                  <option value="other">기타</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="message">요청 내용</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="지역, 대략적인 면적, 원하시는 방향 등을 적어 주세요."
+                ></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">예약 요청 보내기</button>
+                <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 행로 (테스트 페이지)</span>
+        <span>빈 공간 · 지역성 · 관광 콘텐츠</span>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var form = document.getElementById("booking-form");
+        var msg = document.getElementById("form-msg");
+        if (!form || !msg) return;
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          msg.textContent = "";
+          msg.className = "form-msg";
+
+          if (!form.checkValidity()) {
+            msg.classList.add("err");
+            msg.textContent = "필수 항목을 확인해 주세요.";
+            return;
+          }
+
+          var data = new FormData(form);
+          var name = (data.get("name") || "").toString().trim();
+          var date = (data.get("date") || "").toString();
+
+          msg.classList.add("ok");
+          msg.textContent =
+            "테스트: " +
+            name +
+            "님, " +
+            date +
+            " 일정 요청이 접수된 것으로 표시됩니다. (실제 저장 없음)";
+
+          alert(
+            "[데모]\n" +
+              name +
+              "님의 예약 요청이 전송된 것처럼 보입니다.\n" +
+              "실제 서비스에서는 여기서 API를 호출하세요."
+          );
+        });
+      })();
+    </script>
+  </body>
+</html>

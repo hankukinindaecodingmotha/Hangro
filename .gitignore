@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS / temp
+Thumbs.db
+desktop.ini
+
+# Node / build artifacts (혹시 나중에 쓰게 되면)
+node_modules/
+dist/
+build/
+.cache/
+.parcel-cache/
+
+# 환경 변수
+.env
+.env.local

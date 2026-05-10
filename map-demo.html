@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="행로 — 커스텀 핀 지도 데모 (OpenStreetMap + Leaflet)"
+    />
+    <title>지도 데모 — 행로</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <style>
+      .map-shell {
+        border: 1px solid var(--line);
+        border-radius: calc(var(--radius) + 4px);
+        overflow: hidden;
+        margin-top: 1.5rem;
+        background: var(--bg-elevated);
+      }
+
+      #map {
+        height: min(420px, 55vh);
+        width: 100%;
+      }
+
+      .leaflet-container {
+        font-family: "Noto Sans KR", system-ui, sans-serif;
+        background: var(--bg-elevated);
+      }
+
+      .haeng-pin {
+        position: relative;
+        width: 36px;
+        height: 44px;
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+      }
+
+      .haeng-pin-svg {
+        display: block;
+        width: 36px;
+        height: 44px;
+      }
+
+      /* Leaflet divIcon anchors bottom center — padding-bottom matches pin tip */
+      .haeng-pin-wrap {
+        margin-bottom: -4px;
+      }
+
+      .map-legend {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.55;
+      }
+
+      .map-legend strong {
+        color: var(--text);
+      }
+    </style>
+  </head>
+  <body class="sub">
+    <header>
+      <div class="wrap nav">
+        <a href="index.html" class="logo"
+          ><img
+            src="assets/haengro-logo.png"
+            alt="행로"
+            width="846"
+            height="384"
+            decoding="async"
+        /></a>
+        <nav class="nav-links" aria-label="주요 메뉴">
+          <a href="index.html">소개</a>
+          <a href="team.html">직원 소개</a>
+          <a href="booking.html">예약</a>
+        </nav>
+        <a class="nav-cta" href="booking.html">상담 예약</a>
+      </div>
+    </header>
+
+    <div class="page-hero">
+      <div class="wrap">
+        <p class="badge">Map prototype</p>
+        <h1>커스텀 핀 지도 데모</h1>
+        <p>
+          아래 예시는 <strong>OpenStreetMap</strong> 타일 +
+          <strong>Leaflet</strong>(무료 오픈소스 라이브러리)입니다. 업체 계정 없이도
+          동작 확인이 가능하지만, 상용·대량 트래픽은 타일 정책을 따라야 하며 한국 서비스는
+          <strong>카카오 · 네이버 지도 SDK</strong>가 더 적합할 때가 많습니다.
+        </p>
+      </div>
+    </div>
+
+    <main class="page-fill">
+      <section aria-labelledby="map-demo-title">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="map-demo-title">행로 브랜드 색에 맞춘 핀 예시</h2>
+            <p>
+              SVG 모양 그대로 쓸 수 있고, 이미지(png/svg) URL로 교체하면 디자인팀 산출물을
+              그대로 적용할 수 있습니다. <strong>핀을 누르면</strong> 해당 지점의 변경
+              전·후 소개 페이지로 이동합니다.
+            </p>
+          </div>
+
+          <div class="map-shell">
+            <div id="map" role="presentation" aria-label="데모 지도 영역"></div>
+          </div>
+
+          <p class="map-legend">
+            <strong>필수:</strong> 핀을 한 번 탭하면 <code>place-detail.html?id=…</code>로 이동하며,
+            테스트용 변경 전·후 패널이 열립니다.<br /><br />
+            <strong>표시 좌표</strong>는 예시입니다(서울 시청 근처). 카카오/네이버로 옮길
+            때는 동일하게 <strong>위도(WGS84)</strong>에 핀 좌표를 넣습니다. 카카오
+            JavaScript API의 <code>MarkerImage</code>나 커스텀 오버레이로도 같은 방법이
+            가능합니다.<br /><br />
+            © OpenStreetMap contributors — 타일은
+            <a
+              href="https://operations.osmfoundation.org/policies/tiles/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >OSM 타일 이용 정책</a
+            >을 따라 주세요.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 행로 (테스트 페이지)</span>
+        <span>지도 데모 — 브라우저에서 파일로 열면 타일이 막힐 수 있어 간단 서버 사용 권장</span>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script>
+      (function () {
+        /** 서비스 브랜드에 맞춘 간단 SVG 핀 (디자인팀 에셋으로 교체 가능) */
+        function pinHtml() {
+          var accent = "#6b9b7a";
+          var svg =
+            '<svg class="haeng-pin-svg" viewBox="0 0 36 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+            '<path fill="' +
+            accent +
+            '" stroke="rgba(15,20,18,0.95)" stroke-width="1.2"' +
+            ' d="M18 2C11.5 2 7 6.95 7 13.1c0 8.95 11 26.65 11 26.65S29 21.76 29 13.1C29 6.95 24.5 2 18 2z"/>' +
+            '<circle cx="18" cy="13" r="5" fill="#0f1412" opacity="0.92"/>' +
+            "</svg>";
+          return '<div class="haeng-pin haeng-pin-wrap">' + svg + "</div>";
+        }
+
+        var sites = [
+          {
+            id: "sakjeon-hanok",
+            lat: 37.5667,
+            lng: 126.9782,
+            tooltip: "남산 골목 한옥 — 클릭하여 변경 후 보기",
+          },
+          {
+            id: "byeolmun-mill",
+            lat: 37.5796,
+            lng: 126.9932,
+            tooltip: "한강변 제분소 — 클릭하여 변경 후 보기",
+          },
+        ];
+
+        var center = sites[0];
+        var map = L.map("map", {
+          zoomControl: true,
+          scrollWheelZoom: false,
+        }).setView([center.lat, center.lng], 13);
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+          maxZoom: 19,
+        }).addTo(map);
+
+        function makePinIcon() {
+          return L.divIcon({
+            className: "haeng-pin-icon",
+            html: pinHtml(),
+            iconSize: [36, 44],
+            iconAnchor: [18, 42],
+          });
+        }
+
+        var bounds = [];
+
+        sites.forEach(function (s) {
+          var marker = L.marker([s.lat, s.lng], {
+            icon: makePinIcon(),
+          }).addTo(map);
+
+          marker.bindTooltip(s.tooltip, { sticky: true });
+
+          marker.on("click", function () {
+            window.location.href =
+              "place-detail.html?id=" + encodeURIComponent(s.id);
+          });
+
+          bounds.push([s.lat, s.lng]);
+        });
+
+        if (bounds.length > 1) {
+          map.fitBounds(bounds, { padding: [56, 56], maxZoom: 14 });
+        }
+
+        /** 모바일에서 영역 깨짐 완화 */
+        setTimeout(function () {
+          map.invalidateSize();
+        }, 250);
+      })();
+    </script>
+  </body>
+</html>
