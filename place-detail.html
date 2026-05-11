@@ -314,6 +314,100 @@
       .floor-dialog-close {
         width: 100%;
       }
+
+      .before-slider-section .hint {
+        margin-bottom: 1rem;
+      }
+
+      .before-slider {
+        position: relative;
+        display: flex;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+
+      .before-slider-track {
+        flex: 1;
+        display: flex;
+        gap: 0.75rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+      }
+
+      .before-slider-track:focus {
+        outline: 2px solid var(--ink, currentColor);
+        outline-offset: 4px;
+      }
+
+      .before-slide {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        margin: 0;
+        background: var(--paper, var(--bg-elevated, #f6f1e5));
+        border: 1px solid var(--rule, var(--line, rgba(0, 0, 0, 0.12)));
+        border-radius: 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      @media (min-width: 720px) {
+        .before-slide {
+          flex-basis: calc((100% - 0.75rem) / 2);
+        }
+      }
+
+      .before-slide img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .before-slide figcaption {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: var(--ink-mute, var(--text-muted, #6a6a6a));
+        border-top: 1px solid var(--rule, var(--line, rgba(0, 0, 0, 0.08)));
+      }
+
+      .before-slider-btn {
+        flex: 0 0 auto;
+        align-self: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 1px solid var(--ink, currentColor);
+        background: transparent;
+        color: var(--ink, currentColor);
+        cursor: pointer;
+        font-size: 1.1rem;
+        line-height: 1;
+        padding: 0;
+        font-family: inherit;
+      }
+
+      .before-slider-btn:hover:not(:disabled) {
+        background: var(--ink, currentColor);
+        color: var(--bg, #fff);
+      }
+
+      .before-slider-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      .before-slider-status {
+        margin: 0.75rem 0 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: var(--ink-mute, var(--text-muted, #6a6a6a));
+      }
     </style>
   </head>
   <body class="sub">

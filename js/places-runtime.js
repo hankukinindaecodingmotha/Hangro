@@ -235,6 +235,126 @@
     }
   }
 
+  function buildBeforeSliderSection(place) {
+    var bp = place.beforePhotos;
+    if (!bp || !Array.isArray(bp.items) || !bp.items.length) {
+      return "";
+    }
+
+    var title = bp.title || "현장 사진 — 변경 전";
+    var hint = bp.hint || "";
+    var alt = bp.alt || "변경 전 사진";
+    var basePath = bp.basePath || "";
+
+    var slides = bp.items
+      .map(function (file, idx) {
+        var src = basePath + file;
+        var num = idx + 1;
+        return (
+          '<figure class="before-slide" data-slide-index="' +
+          idx +
+          '">' +
+          '<img src="' +
+          escapeHtml(src) +
+          '" alt="' +
+          escapeHtml(alt) +
+          " " +
+          num +
+          '" loading="lazy" decoding="async" />' +
+          '<figcaption><span class="before-slide-num">' +
+          num +
+          " / " +
+          bp.items.length +
+          "</span></figcaption>" +
+          "</figure>"
+        );
+      })
+      .join("");
+
+    return (
+      '<section class="before-slider-section ba-section" aria-labelledby="before-slider-heading">' +
+      '<h2 id="before-slider-heading">' +
+      escapeHtml(title) +
+      "</h2>" +
+      (hint
+        ? '<p class="hint">' + escapeHtml(hint) + "</p>"
+        : "") +
+      '<div class="before-slider" data-before-slider>' +
+      '<button type="button" class="before-slider-btn before-slider-prev" data-before-prev aria-label="이전 사진">' +
+      '<span aria-hidden="true">‹</span>' +
+      "</button>" +
+      '<div class="before-slider-track" data-before-track tabindex="0" aria-roledescription="carousel" aria-label="' +
+      escapeHtml(alt) +
+      ' 슬라이더">' +
+      slides +
+      "</div>" +
+      '<button type="button" class="before-slider-btn before-slider-next" data-before-next aria-label="다음 사진">' +
+      '<span aria-hidden="true">›</span>' +
+      "</button>" +
+      "</div>" +
+      '<p class="before-slider-status" data-before-status aria-live="polite"></p>' +
+      "</section>"
+    );
+  }
+
+  function attachBeforeSliderListeners(main, place) {
+    var bp = place.beforePhotos;
+    if (!bp || !Array.isArray(bp.items) || !bp.items.length) return;
+
+    var track = main.querySelector("[data-before-track]");
+    var prev = main.querySelector("[data-before-prev]");
+    var next = main.querySelector("[data-before-next]");
+    var status = main.querySelector("[data-before-status]");
+    if (!track || !prev || !next) return;
+
+    function step(direction) {
+      var slide = track.querySelector(".before-slide");
+      var step = slide ? slide.getBoundingClientRect().width : track.clientWidth;
+      track.scrollBy({ left: direction * step, behavior: "smooth" });
+    }
+
+    function updateStatus() {
+      if (!status) return;
+      var slides = track.querySelectorAll(".before-slide");
+      if (!slides.length) return;
+      var center = track.scrollLeft + track.clientWidth / 2;
+      var current = 0;
+      for (var i = 0; i < slides.length; i++) {
+        var left = slides[i].offsetLeft;
+        var right = left + slides[i].offsetWidth;
+        if (center >= left && center < right) {
+          current = i;
+          break;
+        }
+      }
+      status.textContent = "사진 " + (current + 1) + " / " + slides.length;
+
+      var atStart = track.scrollLeft <= 2;
+      var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+      prev.disabled = atStart;
+      next.disabled = atEnd;
+    }
+
+    prev.addEventListener("click", function () {
+      step(-1);
+    });
+    next.addEventListener("click", function () {
+      step(1);
+    });
+    track.addEventListener("scroll", updateStatus, { passive: true });
+    track.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        step(1);
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        step(-1);
+      }
+    });
+
+    updateStatus();
+  }
+
   function buildFloorPlanSection(place) {
     var fp = place.floorPlan;
     if (!fp || !Array.isArray(fp.items) || !fp.items.length) {
@@ -433,6 +553,7 @@
       "</ul>";
 
     var floorHtml = buildFloorPlanSection(place);
+    var sliderHtml = buildBeforeSliderSection(place);
 
     main.innerHTML =
       '<section class="ba-section" aria-labelledby="ba-heading">' +
@@ -463,6 +584,7 @@
       "</figure>" +
       "</div>" +
       "</section>" +
+      sliderHtml +
       floorHtml +
       '<section class="detail-story" aria-labelledby="story-heading">' +
       '<h2 id="story-heading">프로그램 · 운영 포인트</h2>' +
@@ -480,6 +602,7 @@
       "</p>";
 
     attachFloorPlanListeners(main, place);
+    attachBeforeSliderListeners(main, place);
   }
 
   function initDetailPage() {

@@ -17,6 +17,29 @@
         "지도 좌표: 위도 36.0859… / 경도 129.4166… (WGS84)",
         "실제 허가·설계·브랜딩은 현장 협의 후 확정"
       ],
+      "beforePhotos": {
+        "title": "현장 사진 — 변경 전",
+        "hint": "← / → 버튼이나 손가락 스와이프로 좌우로 넘겨 볼 수 있습니다.",
+        "alt": "첫 번째 유후공간 변경 전 사진",
+        "basePath": "Asset/Home_1/before/",
+        "items": [
+          "Home_1_before_01.jpeg",
+          "Home_1_before_02.jpeg",
+          "Home_1_before_03.jpeg",
+          "Home_1_before_04.jpeg",
+          "Home_1_before_05.jpeg",
+          "Home_1_before_06.jpeg",
+          "Home_1_before_07.jpeg",
+          "Home_1_before_08.jpeg",
+          "Home_1_before_09.jpeg",
+          "Home_1_before_10.jpeg",
+          "Home_1_before_11.jpeg",
+          "Home_1_before_12.jpeg",
+          "Home_1_before_13.jpeg",
+          "Home_1_before_14.jpeg",
+          "Home_1_before_15.jpeg"
+        ]
+      },
       "floorPlan": {
         "title": "내부 구조 (스케매틱)",
         "hint": "손 도면을 바탕으로 재구성한 벡터 평면도입니다. 축척·치수는 참고용이며 실제와 다를 수 있습니다. 공간을 누르면 설명이 열립니다.",
