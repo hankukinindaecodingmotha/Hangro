@@ -235,6 +235,183 @@
     }
   }
 
+  function buildFloorPlanSection(place) {
+    var fp = place.floorPlan;
+    if (!fp || !Array.isArray(fp.items) || !fp.items.length) {
+      return "";
+    }
+
+    var vb = fp.viewBox || "0 0 420 300";
+    var title = fp.title || "내부 구조";
+    var hint = fp.hint || "";
+    var parts = [];
+    var pid = "fp-hatch-" + String(place.id).replace(/[^a-zA-Z0-9_-]/g, "");
+
+    parts.push(
+      '<section class="floor-plan-wrap ba-section" aria-labelledby="floor-plan-heading">'
+    );
+    parts.push('<h2 id="floor-plan-heading">' + escapeHtml(title) + "</h2>");
+    if (hint) {
+      parts.push('<p class="hint">' + escapeHtml(hint) + "</p>");
+    }
+    parts.push('<div class="floor-svg-shell">');
+    parts.push(
+      '<svg class="floor-svg" viewBox="' +
+        escapeHtml(vb) +
+        '" role="img" aria-label="내부 평면 스케매틱">'
+    );
+    parts.push("<defs>");
+    parts.push(
+      '<pattern id="' +
+        pid +
+        '" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">'
+    );
+    parts.push(
+      '<rect width="8" height="8" fill="rgba(107,155,122,0.18)"/>'
+    );
+    parts.push(
+      '<line x1="0" y1="0" x2="0" y2="8" stroke="rgba(232,238,233,0.28)" stroke-width="1.2"/>'
+    );
+    parts.push("</pattern></defs>");
+
+    fp.items.forEach(function (item) {
+      var fillDefault = "rgba(107, 155, 122, 0.14)";
+      var stroke = "rgba(232, 238, 233, 0.35)";
+      var fill = fillDefault;
+      if (item.tone === "bath") {
+        fill = "rgba(45, 90, 62, 0.38)";
+      }
+      if (item.id === "parking") {
+        fill = "rgba(107, 155, 122, 0.08)";
+      }
+
+      var hatchFill = item.hatch ? "url(#" + pid + ")" : fill;
+      var shape = "";
+
+      if (Array.isArray(item.ellipse) && item.ellipse.length >= 4) {
+        var ex = item.ellipse;
+        shape =
+          '<ellipse cx="' +
+          ex[0] +
+          '" cy="' +
+          ex[1] +
+          '" rx="' +
+          ex[2] +
+          '" ry="' +
+          ex[3] +
+          '" fill="' +
+          hatchFill +
+          '" stroke="' +
+          stroke +
+          '" stroke-width="1.5"/>';
+      } else if (Array.isArray(item.rect) && item.rect.length >= 4) {
+        var r = item.rect;
+        shape =
+          '<rect x="' +
+          r[0] +
+          '" y="' +
+          r[1] +
+          '" width="' +
+          r[2] +
+          '" height="' +
+          r[3] +
+          '" rx="2" fill="' +
+          hatchFill +
+          '" stroke="' +
+          stroke +
+          '" stroke-width="1.5"/>';
+      } else {
+        return;
+      }
+
+      var lx = 0;
+      var ly = 0;
+      if (item.ellipse) {
+        lx = item.ellipse[0];
+        ly = item.ellipse[1];
+      } else if (item.rect) {
+        lx = item.rect[0] + item.rect[2] / 2;
+        ly = item.rect[1] + item.rect[3] / 2;
+      }
+
+      parts.push(
+        '<g class="floor-hit" tabindex="0" role="button" data-room-id="' +
+          escapeHtml(item.id) +
+          '" aria-label="' +
+          escapeHtml(item.label) +
+          '">'
+      );
+      parts.push(shape);
+      parts.push(
+        '<text class="floor-label" x="' +
+          lx +
+          '" y="' +
+          ly +
+          '" text-anchor="middle" dominant-baseline="middle" fill="rgba(232,238,233,0.92)" font-size="11" font-family="Noto Sans KR, sans-serif" pointer-events="none">' +
+          escapeHtml(item.label) +
+          "</text>"
+      );
+      parts.push("</g>");
+    });
+
+    parts.push("</svg></div>");
+    parts.push(
+      '<dialog class="floor-dialog" id="floor-room-dialog" aria-labelledby="floor-modal-title">' +
+        '<form method="dialog" class="floor-dialog-form">' +
+        '<h3 id="floor-modal-title"></h3>' +
+        '<p id="floor-modal-body" class="floor-dialog-body"></p>' +
+        '<button type="submit" class="btn btn-primary floor-dialog-close">닫기</button>' +
+        "</form>" +
+        "</dialog>"
+    );
+    parts.push("</section>");
+    return parts.join("");
+  }
+
+  function attachFloorPlanListeners(main, place) {
+    var fp = place.floorPlan;
+    if (!fp || !Array.isArray(fp.items) || !fp.items.length) return;
+
+    var byId = {};
+    fp.items.forEach(function (it) {
+      byId[it.id] = it;
+    });
+
+    var dialog = main.querySelector("#floor-room-dialog");
+    var titleEl = main.querySelector("#floor-modal-title");
+    var bodyEl = main.querySelector("#floor-modal-body");
+    if (!dialog || !titleEl || !bodyEl) return;
+
+    function openRoom(id) {
+      var item = byId[id];
+      if (!item) return;
+      titleEl.textContent = item.label;
+      bodyEl.textContent = item.detail;
+      if (typeof dialog.showModal === "function") {
+        dialog.showModal();
+      } else {
+        dialog.setAttribute("open", "");
+      }
+    }
+
+    var nodes = main.querySelectorAll(".floor-hit[data-room-id]");
+    for (var i = 0; i < nodes.length; i++) {
+      (function (node) {
+        function onActivate(e) {
+          if (e.type === "keydown" && e.key !== "Enter" && e.key !== " ") {
+            return;
+          }
+          if (e.type === "keydown" && e.key === " ") {
+            e.preventDefault();
+          }
+          openRoom(node.getAttribute("data-room-id"));
+        }
+        node.addEventListener("click", onActivate);
+        node.addEventListener("keydown", onActivate);
+      })(nodes[i]);
+    }
+  }
+
   function renderPlaceDetail(root, main, place) {
     document.title = place.title + " — 행로";
 
@@ -254,6 +431,8 @@
       "<ul class=\"tags\">" +
       tagsHtml +
       "</ul>";
+
+    var floorHtml = buildFloorPlanSection(place);
 
     main.innerHTML =
       '<section class="ba-section" aria-labelledby="ba-heading">' +
@@ -284,6 +463,7 @@
       "</figure>" +
       "</div>" +
       "</section>" +
+      floorHtml +
       '<section class="detail-story" aria-labelledby="story-heading">' +
       '<h2 id="story-heading">프로그램 · 운영 포인트</h2>' +
       "<ul>" +
@@ -298,6 +478,8 @@
       '<a href="booking.html">이런 프로젝트 상담 예약</a> · ' +
       '<a href="map-demo.html">다른 핀 보기</a>' +
       "</p>";
+
+    attachFloorPlanListeners(main, place);
   }
 
   function initDetailPage() {
