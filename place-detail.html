@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="행로 매장별 공간 재생 소개 — 테스트 페이지" />
+    <meta name="description" content="행로 프로젝트별 공간 재생 소개 — 테스트 페이지" />
     <title>공간 소개 — 행로</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -246,18 +246,12 @@
   <body class="sub">
     <header>
       <div class="wrap nav">
-        <a href="index.html" class="logo"
-          ><img
-            src="assets/haengro-logo.png"
-            alt="행로"
-            width="846"
-            height="384"
-            decoding="async"
-        /></a>
+        <a href="index.html" class="logo">행로</a>
         <nav class="nav-links" aria-label="주요 메뉴">
           <a href="index.html">소개</a>
           <a href="team.html">직원 소개</a>
           <a href="booking.html">예약</a>
+          <a href="map-demo.html">지도</a>
         </nav>
         <a class="nav-cta" href="map-demo.html">지도 보기</a>
       </div>
@@ -283,144 +277,11 @@
       </div>
     </footer>
 
+    <script src="js/places-runtime.js"></script>
     <script>
-      (function () {
-        var PLACES = {
-          "sakjeon-hanok": {
-            title: "남산 골목 한옥 게스트하우스",
-            lead:
-              "10년 넘게 비어 있던 단독 한옥을 지역 놀이·민화 이야기를 담은 체류형 숙소로 재구성한 예시입니다.",
-            tags: ["빈집", "한옥", "게스트하우스"],
-            beforeCaption: "변경 전 · 장기 공실",
-            afterCaption: "변경 후 · 지역 테마 숙소",
-            beforeText:
-              "창호와 마루 상태가 불량하고 난방 비용 부담으로 임차인을 구하지 못한 상태였습니다.",
-            afterText:
-              "보존 구역 준준수 리모델링으로 마루 높이·동선만 손 보고, 민속놀이 체험 테마로 방 3실과 공동 거실을 열었습니다. (데모 비주얼)",
-            bullets: [
-              "지역예술인 협업: 한지 조명 · 세자 컬러 패브릭",
-              "숙박 브랜드 스토리: ‘골목 기록자’ 패키지 (아카이빙 체험)",
-            ],
-          },
-          "byeolmun-mill": {
-            title: "한강변 제분 공장 카페 스테이",
-            lead:
-              "폐업 후 방치된 소규모 제분 시설 리드를 생산·판매 기능은 걷어내고, 창고 층고를 살려 스테이+카페로 바꾼 데모 케이스입니다.",
-            tags: ["유후시설", "제분소", "복합 리유즈"],
-            beforeCaption: "변경 전 · 유후 산업 시설",
-            afterCaption: "변경 후 · 숙소 + 로스팅 카페",
-            beforeText:
-              "설비 철거만 되고 빈 골조에 잡초와 누수가 있던 상태. 소음·진동 규제가 남아 있어 용도 변경 검토가 필요했습니다.",
-            afterText:
-              "1층은 로컬 로스팅 카페, 2층은 이층침대형 도미토리형 스테이. 외관은 원형 사일로 형태만 남겨 간판 없이 브랜드 실루엣으로 인지되게 했습니다. (데모 비주얼)",
-            bullets: [
-              "한강 라이더·패들보드 이용객 타깃 ‘새벽 오픈’ 카페",
-              "건축·소방 허용 범위는 실제 과제로 교체해야 합니다",
-            ],
-          },
-        };
-
-        function winGrid() {
-          return (
-            '<div class="facade-windows" aria-hidden="true">' +
-            "<span class=\"win\"></span><span class=\"win\"></span><span class=\"win\"></span>" +
-            "<span class=\"win\"></span><span class=\"win\"></span><span class=\"win\"></span>" +
-            "</div>"
-          );
-        }
-
-        function renderPlace(id) {
-          var data = PLACES[id];
-          var root = document.getElementById("detail-root");
-          var main = document.getElementById("detail-main");
-          document.title =
-            (data ? data.title : "공간을 찾을 수 없음") + " — 행로";
-
-          if (!data) {
-            root.innerHTML =
-              "<h1>알 수 없는 장소</h1><p class=\"lead\">링크가 잘못되었거나 아직 등록되지 않은 핀입니다.</p>";
-            main.innerHTML =
-              '<div class="unknown-box">' +
-              "<p style=\"margin:0 0 1rem\">지도에서 핀을 골라 다시 들어와 주세요.</p>" +
-              '<a href="map-demo.html">지도 데모로 이동</a>' +
-              "</div>";
-            return;
-          }
-
-          var tagsHtml = data.tags
-            .map(function (t) {
-              return "<li>" + escapeHtml(t) + "</li>";
-            })
-            .join("");
-
-          root.innerHTML =
-            "<h1>" +
-            escapeHtml(data.title) +
-            "</h1>" +
-            "<p class=\"lead\">" +
-            escapeHtml(data.lead) +
-            "</p>" +
-            "<ul class=\"tags\">" +
-            tagsHtml +
-            "</ul>";
-
-          main.innerHTML =
-            '<section class="ba-section" aria-labelledby="ba-heading">' +
-            '<h2 id="ba-heading">공간 변화</h2>' +
-            '<p class="hint">실제 서비스에서는 촬영한 사진·3D 워크스루 영상 등으로 교체하면 됩니다. 아래는 레이아웃용 데모 그래픽입니다.</p>' +
-            '<div class="ba-grid">' +
-            '<figure class="ba-card">' +
-            "<figcaption>" +
-            escapeHtml(data.beforeCaption) +
-            "</figcaption>" +
-            '<div class="facade facade--before">' +
-            winGrid() +
-            "</div>" +
-            "<p>" +
-            escapeHtml(data.beforeText) +
-            "</p>" +
-            "</figure>" +
-            '<figure class="ba-card">' +
-            "<figcaption>" +
-            escapeHtml(data.afterCaption) +
-            "</figcaption>" +
-            '<div class="facade facade--after">' +
-            winGrid() +
-            "</div>" +
-            "<p>" +
-            escapeHtml(data.afterText) +
-            "</p>" +
-            "</figure>" +
-            "</div>" +
-            "</section>" +
-            '<section class="detail-story" aria-labelledby="story-heading">' +
-            '<h2 id="story-heading">프로그램 · 운영 포인트</h2>' +
-            "<ul>" +
-            data.bullets
-              .map(function (b) {
-                return "<li>" + escapeHtml(b) + "</li>";
-              })
-              .join("") +
-            "</ul>" +
-            "</section>" +
-            '<p style="margin-top:2rem;font-size:0.88rem;color:var(--text-muted)">' +
-            '<a href="booking.html">이런 프로젝트 상담 예약</a> · ' +
-            '<a href="map-demo.html">다른 핀 보기</a>' +
-            "</p>";
-        }
-
-        function escapeHtml(s) {
-          return String(s)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;");
-        }
-
-        var params = new URLSearchParams(window.location.search);
-        var id = params.get("id") || "";
-        renderPlace(id);
-      })();
+      if (window.HAENG_RUNTIME && typeof HAENG_RUNTIME.initDetailPage === "function") {
+        HAENG_RUNTIME.initDetailPage();
+      }
     </script>
   </body>
 </html>

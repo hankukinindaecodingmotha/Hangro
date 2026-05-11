@@ -19,18 +19,12 @@
   <body class="sub">
     <header>
       <div class="wrap nav">
-        <a href="index.html" class="logo"
-          ><img
-            src="assets/haengro-logo.png"
-            alt="행로"
-            width="846"
-            height="384"
-            decoding="async"
-        /></a>
+        <a href="index.html" class="logo">행로</a>
         <nav class="nav-links" aria-label="주요 메뉴">
           <a href="index.html">소개</a>
           <a href="team.html">직원 소개</a>
           <a href="booking.html" aria-current="page">예약</a>
+          <a href="map-demo.html">지도</a>
         </nav>
         <a class="nav-cta" href="booking.html">상담 예약</a>
       </div>
@@ -161,35 +155,54 @@
         var msg = document.getElementById("form-msg");
         if (!form || !msg) return;
 
+        var busy = false;
+
         form.addEventListener("submit", function (e) {
           e.preventDefault();
+          if (busy) return;
+
           msg.textContent = "";
           msg.className = "form-msg";
 
+          var btn = form.querySelector('button[type="submit"]');
+
           if (!form.checkValidity()) {
+            form.reportValidity();
             msg.classList.add("err");
             msg.textContent = "필수 항목을 확인해 주세요.";
             return;
           }
 
-          var data = new FormData(form);
-          var name = (data.get("name") || "").toString().trim();
-          var date = (data.get("date") || "").toString();
+          busy = true;
+          if (btn) btn.disabled = true;
 
-          msg.classList.add("ok");
-          msg.textContent =
-            "테스트: " +
-            name +
-            "님, " +
-            date +
-            " 일정 요청이 접수된 것으로 표시됩니다. (실제 저장 없음)";
+          try {
+            var data = new FormData(form);
+            var name = (data.get("name") || "").toString().trim();
+            var date = (data.get("date") || "").toString();
 
-          alert(
-            "[데모]\n" +
+            msg.classList.add("ok");
+            msg.textContent =
+              "테스트: " +
               name +
-              "님의 예약 요청이 전송된 것처럼 보입니다.\n" +
-              "실제 서비스에서는 여기서 API를 호출하세요."
-          );
+              "님, " +
+              date +
+              " 일정 요청이 접수된 것으로 표시됩니다. (실제 저장 없음)";
+
+            alert(
+              "[데모]\n" +
+                name +
+                "님의 예약 요청이 전송된 것처럼 보입니다.\n" +
+                "실제 서비스에서는 여기서 API를 호출하세요."
+            );
+          } catch (err) {
+            console.error("[행로 예약 폼]", err);
+            msg.classList.add("err");
+            msg.textContent = "처리 중 문제가 발생했습니다. 다시 시도해 주세요.";
+          } finally {
+            busy = false;
+            if (btn) btn.disabled = false;
+          }
         });
       })();
     </script>

@@ -10,7 +10,6 @@
   --max: 1100px;
   --safe-top: env(safe-area-inset-top, 0);
   --safe-bottom: env(safe-area-inset-bottom, 0);
-  --danger: #c97a7a;
 }
 
 *,
@@ -62,43 +61,33 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
   padding: 0.85rem 0;
-  gap: 0.75rem 1rem;
+  gap: 1rem;
 }
 
 .logo {
-  display: inline-flex;
-  align-items: center;
-  line-height: 0;
+  font-family: "Nanum Myeongjo", serif;
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+/* 링크 로고는 글로벌 a 색보다 우선해 본문색 유지 */
+a.logo {
+  color: var(--text);
   text-decoration: none;
-  flex-shrink: 0;
 }
 
-.logo:hover {
+a.logo:hover {
+  color: var(--text);
   text-decoration: none;
-  opacity: 0.9;
-}
-
-.logo:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-  border-radius: 6px;
-}
-
-.logo img {
-  display: block;
-  height: clamp(2rem, 5.2vw, 2.7rem);
-  width: auto;
-  max-width: min(260px, 52vw);
-  object-fit: contain;
 }
 
 .nav-links {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1.25rem;
+  gap: 1.25rem;
   font-size: 0.9rem;
 }
 
@@ -133,16 +122,6 @@ header {
   background: var(--accent-soft);
   border-color: var(--accent);
   text-decoration: none;
-}
-
-@media (max-width: 560px) {
-  .nav-links {
-    order: 3;
-    width: 100%;
-    justify-content: flex-start;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--line);
-  }
 }
 
 .hero {
@@ -238,7 +217,6 @@ main.page-fill {
   cursor: pointer;
   text-decoration: none;
   transition: transform 0.15s ease, background 0.15s ease;
-  font-family: inherit;
 }
 
 .btn:disabled {
@@ -607,7 +585,7 @@ section {
 }
 
 .form-msg.err {
-  color: var(--danger);
+  color: #cfa0a0;
 }
 
 footer {

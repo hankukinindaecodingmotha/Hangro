@@ -73,18 +73,12 @@
   <body class="sub">
     <header>
       <div class="wrap nav">
-        <a href="index.html" class="logo"
-          ><img
-            src="assets/haengro-logo.png"
-            alt="행로"
-            width="846"
-            height="384"
-            decoding="async"
-        /></a>
+        <a href="index.html" class="logo">행로</a>
         <nav class="nav-links" aria-label="주요 메뉴">
           <a href="index.html">소개</a>
           <a href="team.html">직원 소개</a>
           <a href="booking.html">예약</a>
+          <a href="map-demo.html" aria-current="page">지도</a>
         </nav>
         <a class="nav-cta" href="booking.html">상담 예약</a>
       </div>
@@ -150,84 +144,11 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
+    <script src="js/places-runtime.js"></script>
     <script>
-      (function () {
-        /** 서비스 브랜드에 맞춘 간단 SVG 핀 (디자인팀 에셋으로 교체 가능) */
-        function pinHtml() {
-          var accent = "#6b9b7a";
-          var svg =
-            '<svg class="haeng-pin-svg" viewBox="0 0 36 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-            '<path fill="' +
-            accent +
-            '" stroke="rgba(15,20,18,0.95)" stroke-width="1.2"' +
-            ' d="M18 2C11.5 2 7 6.95 7 13.1c0 8.95 11 26.65 11 26.65S29 21.76 29 13.1C29 6.95 24.5 2 18 2z"/>' +
-            '<circle cx="18" cy="13" r="5" fill="#0f1412" opacity="0.92"/>' +
-            "</svg>";
-          return '<div class="haeng-pin haeng-pin-wrap">' + svg + "</div>";
-        }
-
-        var sites = [
-          {
-            id: "sakjeon-hanok",
-            lat: 37.5667,
-            lng: 126.9782,
-            tooltip: "남산 골목 한옥 — 클릭하여 변경 후 보기",
-          },
-          {
-            id: "byeolmun-mill",
-            lat: 37.5796,
-            lng: 126.9932,
-            tooltip: "한강변 제분소 — 클릭하여 변경 후 보기",
-          },
-        ];
-
-        var center = sites[0];
-        var map = L.map("map", {
-          zoomControl: true,
-          scrollWheelZoom: false,
-        }).setView([center.lat, center.lng], 13);
-
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
-          maxZoom: 19,
-        }).addTo(map);
-
-        function makePinIcon() {
-          return L.divIcon({
-            className: "haeng-pin-icon",
-            html: pinHtml(),
-            iconSize: [36, 44],
-            iconAnchor: [18, 42],
-          });
-        }
-
-        var bounds = [];
-
-        sites.forEach(function (s) {
-          var marker = L.marker([s.lat, s.lng], {
-            icon: makePinIcon(),
-          }).addTo(map);
-
-          marker.bindTooltip(s.tooltip, { sticky: true });
-
-          marker.on("click", function () {
-            window.location.href =
-              "place-detail.html?id=" + encodeURIComponent(s.id);
-          });
-
-          bounds.push([s.lat, s.lng]);
-        });
-
-        if (bounds.length > 1) {
-          map.fitBounds(bounds, { padding: [56, 56], maxZoom: 14 });
-        }
-
-        /** 모바일에서 영역 깨짐 완화 */
-        setTimeout(function () {
-          map.invalidateSize();
-        }, 250);
-      })();
+      if (window.HAENG_RUNTIME && typeof HAENG_RUNTIME.initMapPage === "function") {
+        HAENG_RUNTIME.initMapPage({ mapElId: "map" });
+      }
     </script>
   </body>
 </html>
