@@ -76,9 +76,9 @@
         <a href="index.html" class="logo">행로</a>
         <nav class="nav-links" aria-label="주요 메뉴">
           <a href="index.html">소개</a>
-          <a href="team.html">팀</a>
           <a href="map-demo.html" aria-current="page">지도</a>
           <a href="booking.html">예약</a>
+          <a href="team.html">팀</a>
         </nav>
         <a class="nav-cta" href="booking.html">상담 예약</a>
       </div>
@@ -104,8 +104,9 @@
             <h2 id="map-demo-title">행로 브랜드 색에 맞춘 핀 예시</h2>
             <p>
               SVG 모양 그대로 쓸 수 있고, 이미지(png/svg) URL로 교체하면 디자인팀 산출물을
-              그대로 적용할 수 있습니다. <strong>핀을 누르면</strong> 해당 지점의 변경
-              전·후 소개 페이지로 이동합니다.
+              그대로 적용할 수 있습니다. <strong>핀을 누르면</strong> 해당 지점의
+              상세 주소 카드가 먼저 뜨고, 카드 안의 <em>자세히 보기</em>를 누르면 변경 전·후 소개
+              페이지로 이동합니다.
             </p>
           </div>
 
@@ -114,8 +115,8 @@
           </div>
 
           <p class="map-legend">
-            <strong>필수:</strong> 핀을 한 번 탭하면 <code>place-detail.html?id=…</code>로 이동하며,
-            테스트용 변경 전·후 패널이 열립니다.<br /><br />
+            <strong>사용 흐름:</strong> 핀을 누르면 위치 카드(제목 · 주소 · 링크)가 먼저 열리고,
+            카드 안의 <em>자세히 보기</em>를 통해 <code>place-detail.html?id=…</code>로 이동합니다.<br /><br />
             <strong>표시 좌표</strong>는 예시입니다(서울 시청 근처). 카카오/네이버로 옮길
             때는 동일하게 <strong>위도(WGS84)</strong>에 핀 좌표를 넣습니다. 카카오
             JavaScript API의 <code>MarkerImage</code>나 커스텀 오버레이로도 같은 방법이

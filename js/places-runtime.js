@@ -8,7 +8,7 @@
   var DATA_URL = "data/places.json";
   var CACHE = null;
 
-  var PIN_HEX = "#1A2419";
+  var PIN_HEX = "#6b9b7a";
 
   var REQUIRED_DETAIL = [
     "id",
@@ -139,11 +139,9 @@
       '<svg class="haeng-pin-svg" viewBox="0 0 36 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
       '<path fill="' +
       PIN_HEX +
-      '" stroke="' +
-      PIN_HEX +
-      '" stroke-width="1"' +
+      '" stroke="rgba(15,20,18,0.95)" stroke-width="1.2"' +
       ' d="M18 2C11.5 2 7 6.95 7 13.1c0 8.95 11 26.65 11 26.65S29 21.76 29 13.1C29 6.95 24.5 2 18 2z"/>' +
-      '<circle cx="18" cy="13" r="3.5" fill="#EFE9DC"/>' +
+      '<circle cx="18" cy="13" r="5" fill="#0f1412" opacity="0.92"/>' +
       "</svg>";
     return '<div class="haeng-pin haeng-pin-wrap">' + svg + "</div>";
   }
@@ -196,9 +194,35 @@
 
           marker.bindTooltip(s.tooltip, { sticky: true });
 
-          marker.on("click", function () {
-            global.location.href =
-              "place-detail.html?id=" + encodeURIComponent(s.id);
+          var address = s.address
+            ? escapeHtml(s.address)
+            : "좌표 " +
+              Number(s.lat).toFixed(5) +
+              ", " +
+              Number(s.lng).toFixed(5);
+
+          var detailHref =
+            "place-detail.html?id=" + encodeURIComponent(s.id);
+
+          var popupHtml =
+            '<div class="haeng-popup" style="min-width:200px;max-width:240px;font-family:inherit;line-height:1.5">' +
+            '<p style="margin:0 0 0.35rem;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;color:#6b7570">위치 정보</p>' +
+            '<h3 style="margin:0 0 0.45rem;font-size:0.98rem;font-weight:700;color:#1f2622">' +
+            escapeHtml(s.title || s.tooltip || "유후공간") +
+            "</h3>" +
+            '<p style="margin:0 0 0.75rem;font-size:0.86rem;color:#3b423d">' +
+            address +
+            "</p>" +
+            '<a href="' +
+            detailHref +
+            '" style="display:inline-block;font-size:0.84rem;font-weight:600;color:#2d5a3e;text-decoration:none;border-bottom:1px solid #2d5a3e;padding-bottom:1px">자세히 보기 →</a>' +
+            "</div>";
+
+          marker.bindPopup(popupHtml, {
+            offset: [0, -34],
+            closeButton: true,
+            autoClose: true,
+            className: "haeng-popup-wrap",
           });
 
           bounds.push([s.lat, s.lng]);
