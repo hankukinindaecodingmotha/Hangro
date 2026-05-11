@@ -280,19 +280,21 @@
         ? '<p class="hint">' + escapeHtml(hint) + "</p>"
         : "") +
       '<div class="before-slider" data-before-slider>' +
-      '<button type="button" class="before-slider-btn before-slider-prev" data-before-prev aria-label="이전 사진">' +
-      '<span aria-hidden="true">‹</span>' +
-      "</button>" +
       '<div class="before-slider-track" data-before-track tabindex="0" aria-roledescription="carousel" aria-label="' +
       escapeHtml(alt) +
       ' 슬라이더">' +
       slides +
       "</div>" +
+      '<div class="before-slider-controls">' +
+      '<button type="button" class="before-slider-btn before-slider-prev" data-before-prev aria-label="이전 사진">' +
+      '<span aria-hidden="true">‹</span>' +
+      "</button>" +
+      '<p class="before-slider-status" data-before-status aria-live="polite"></p>' +
       '<button type="button" class="before-slider-btn before-slider-next" data-before-next aria-label="다음 사진">' +
       '<span aria-hidden="true">›</span>' +
       "</button>" +
       "</div>" +
-      '<p class="before-slider-status" data-before-status aria-live="polite"></p>' +
+      "</div>" +
       "</section>"
     );
   }
