@@ -261,14 +261,13 @@
     }
   }
 
-  function buildBeforeSliderSection(place) {
+  function buildPhotoStripInline(place) {
     var bp = place.beforePhotos;
     if (!bp || !Array.isArray(bp.items) || !bp.items.length) {
       return "";
     }
 
     var title = bp.title || "현장 사진 — 변경 전";
-    var hint = bp.hint || "";
     var alt = bp.alt || "변경 전 사진";
     var basePath = bp.basePath || "";
 
@@ -277,7 +276,7 @@
         var src = basePath + file;
         var num = idx + 1;
         return (
-          '<figure class="before-slide" data-slide-index="' +
+          '<figure class="ba-photo" data-photo-index="' +
           idx +
           '">' +
           '<img src="' +
@@ -287,63 +286,55 @@
           " " +
           num +
           '" loading="lazy" decoding="async" />' +
-          '<figcaption><span class="before-slide-num">' +
-          num +
-          " / " +
-          bp.items.length +
-          "</span></figcaption>" +
           "</figure>"
         );
       })
       .join("");
 
     return (
-      '<section class="before-slider-section ba-section" aria-labelledby="before-slider-heading">' +
-      '<h2 id="before-slider-heading">' +
+      '<div class="ba-photos" data-ba-photos>' +
+      '<div class="ba-photos-head">' +
+      "<h3>" +
       escapeHtml(title) +
-      "</h2>" +
-      (hint
-        ? '<p class="hint">' + escapeHtml(hint) + "</p>"
-        : "") +
-      '<div class="before-slider" data-before-slider>' +
-      '<div class="before-slider-track" data-before-track tabindex="0" aria-roledescription="carousel" aria-label="' +
+      "</h3>" +
+      '<p class="hint">한 장씩 넘겨 보기</p>' +
+      "</div>" +
+      '<div class="ba-photos-frame">' +
+      '<div class="ba-photos-track" data-photos-track tabindex="0" aria-roledescription="carousel" aria-label="' +
       escapeHtml(alt) +
-      ' 슬라이더">' +
+      '">' +
       slides +
       "</div>" +
-      '<div class="before-slider-controls">' +
-      '<button type="button" class="before-slider-btn before-slider-prev" data-before-prev aria-label="이전 사진">' +
+      '<button type="button" class="ba-photos-btn ba-photos-prev" data-photos-prev aria-label="이전 사진">' +
       '<span aria-hidden="true">‹</span>' +
       "</button>" +
-      '<p class="before-slider-status" data-before-status aria-live="polite"></p>' +
-      '<button type="button" class="before-slider-btn before-slider-next" data-before-next aria-label="다음 사진">' +
+      '<button type="button" class="ba-photos-btn ba-photos-next" data-photos-next aria-label="다음 사진">' +
       '<span aria-hidden="true">›</span>' +
       "</button>" +
       "</div>" +
-      "</div>" +
-      "</section>"
+      '<p class="ba-photos-status" data-photos-status aria-live="polite"></p>' +
+      "</div>"
     );
   }
 
-  function attachBeforeSliderListeners(main, place) {
+  function attachPhotoStripListeners(main, place) {
     var bp = place.beforePhotos;
     if (!bp || !Array.isArray(bp.items) || !bp.items.length) return;
 
-    var track = main.querySelector("[data-before-track]");
-    var prev = main.querySelector("[data-before-prev]");
-    var next = main.querySelector("[data-before-next]");
-    var status = main.querySelector("[data-before-status]");
+    var track = main.querySelector("[data-photos-track]");
+    var prev = main.querySelector("[data-photos-prev]");
+    var next = main.querySelector("[data-photos-next]");
+    var status = main.querySelector("[data-photos-status]");
     if (!track || !prev || !next) return;
 
     function step(direction) {
-      var slide = track.querySelector(".before-slide");
-      var step = slide ? slide.getBoundingClientRect().width : track.clientWidth;
-      track.scrollBy({ left: direction * step, behavior: "smooth" });
+      var slide = track.querySelector(".ba-photo");
+      var w = slide ? slide.getBoundingClientRect().width : track.clientWidth;
+      track.scrollBy({ left: direction * w, behavior: "smooth" });
     }
 
-    function updateStatus() {
-      if (!status) return;
-      var slides = track.querySelectorAll(".before-slide");
+    function update() {
+      var slides = track.querySelectorAll(".ba-photo");
       if (!slides.length) return;
       var center = track.scrollLeft + track.clientWidth / 2;
       var current = 0;
@@ -355,32 +346,25 @@
           break;
         }
       }
-      status.textContent = "사진 " + (current + 1) + " / " + slides.length;
-
+      if (status) {
+        status.textContent = (current + 1) + " / " + slides.length;
+      }
       var atStart = track.scrollLeft <= 2;
-      var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+      var atEnd =
+        track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
       prev.disabled = atStart;
       next.disabled = atEnd;
     }
 
-    prev.addEventListener("click", function () {
-      step(-1);
-    });
-    next.addEventListener("click", function () {
-      step(1);
-    });
-    track.addEventListener("scroll", updateStatus, { passive: true });
+    prev.addEventListener("click", function () { step(-1); });
+    next.addEventListener("click", function () { step(1); });
+    track.addEventListener("scroll", update, { passive: true });
     track.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        step(1);
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        step(-1);
-      }
+      if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
     });
 
-    updateStatus();
+    update();
   }
 
   function buildFloorPlanSection(place) {
@@ -581,7 +565,7 @@
       "</ul>";
 
     var floorHtml = buildFloorPlanSection(place);
-    var sliderHtml = buildBeforeSliderSection(place);
+    var photoStripHtml = buildPhotoStripInline(place);
 
     main.innerHTML =
       '<section class="ba-section" aria-labelledby="ba-heading">' +
@@ -611,8 +595,8 @@
       "</p>" +
       "</figure>" +
       "</div>" +
+      photoStripHtml +
       "</section>" +
-      sliderHtml +
       floorHtml +
       '<section class="detail-story" aria-labelledby="story-heading">' +
       '<h2 id="story-heading">프로그램 · 운영 포인트</h2>' +
@@ -630,7 +614,7 @@
       "</p>";
 
     attachFloorPlanListeners(main, place);
-    attachBeforeSliderListeners(main, place);
+    attachPhotoStripListeners(main, place);
   }
 
   function initDetailPage() {
