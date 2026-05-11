@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="행로 — 커스텀 핀 지도 데모 (OpenStreetMap + Leaflet)"
+      content="행로 — 프로젝트 위치 지도"
     />
-    <title>지도 데모 — 행로</title>
+    <title>지도 — 행로</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -44,7 +44,7 @@
         position: relative;
         width: 36px;
         height: 44px;
-        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+        filter: drop-shadow(0 2px 4px rgba(26, 36, 25, 0.25));
       }
 
       .haeng-pin-svg {
@@ -86,48 +86,40 @@
 
     <div class="page-hero">
       <div class="wrap">
-        <p class="badge">Map prototype</p>
-        <h1>커스텀 핀 지도 데모</h1>
+        <p class="badge">Map · 프로젝트 위치</p>
+        <h1>행로가 다시 켠 공간들.</h1>
         <p>
-          아래 예시는 <strong>OpenStreetMap</strong> 타일 +
-          <strong>Leaflet</strong>(무료 오픈소스 라이브러리)입니다. 업체 계정 없이도
-          동작 확인이 가능하지만, 상용·대량 트래픽은 타일 정책을 따라야 하며 한국 서비스는
-          <strong>카카오 · 네이버 지도 SDK</strong>가 더 적합할 때가 많습니다.
+          현재 진행 중인 프로젝트의 위치입니다. 핀을 눌러 공간 정보를 보고,
+          상세 페이지에서 변경 전·후를 확인하세요.
         </p>
       </div>
     </div>
 
     <main class="page-fill">
-      <section aria-labelledby="map-demo-title">
+      <section aria-labelledby="map-section-title">
         <div class="wrap">
           <div class="section-head">
-            <h2 id="map-demo-title">행로 브랜드 색에 맞춘 핀 예시</h2>
+            <div class="head-left">
+              <span class="kicker">Locations</span>
+              <h2 id="map-section-title">진행 중인 프로젝트</h2>
+            </div>
             <p>
-              SVG 모양 그대로 쓸 수 있고, 이미지(png/svg) URL로 교체하면 디자인팀 산출물을
-              그대로 적용할 수 있습니다. <strong>핀을 누르면</strong> 해당 지점의
-              상세 주소 카드가 먼저 뜨고, 카드 안의 <em>자세히 보기</em>를 누르면 변경 전·후 소개
-              페이지로 이동합니다.
+              핀을 누르면 위치 카드가 열리고, "자세히 보기"로 변경 전·후
+              상세를 확인할 수 있습니다.
             </p>
           </div>
 
           <div class="map-shell">
-            <div id="map" role="presentation" aria-label="데모 지도 영역"></div>
+            <div id="map" role="presentation" aria-label="프로젝트 위치 지도"></div>
           </div>
 
           <p class="map-legend">
-            <strong>사용 흐름:</strong> 핀을 누르면 위치 카드(제목 · 주소 · 링크)가 먼저 열리고,
-            카드 안의 <em>자세히 보기</em>를 통해 <code>place-detail.html?id=…</code>로 이동합니다.<br /><br />
-            <strong>표시 좌표</strong>는 행로의 첫 번째 유후공간(경상북도, WGS84 기준)입니다.
-            카카오/네이버 지도로 옮길 때도 동일하게 <strong>위도(WGS84)</strong>에 핀 좌표를
-            넣으면 되고, 카카오 JavaScript API의 <code>MarkerImage</code>나 커스텀 오버레이로도
-            동일한 SVG 핀을 사용할 수 있습니다.<br /><br />
-            © OpenStreetMap contributors — 타일은
-            <a
-              href="https://operations.osmfoundation.org/policies/tiles/"
+            지도 데이터 © <a
+              href="https://www.openstreetmap.org/copyright"
               target="_blank"
               rel="noopener noreferrer"
-              >OSM 타일 이용 정책</a
-            >을 따라 주세요.
+              >OpenStreetMap</a
+            > 기여자.
           </p>
         </div>
       </section>
@@ -135,8 +127,8 @@
 
     <footer>
       <div class="wrap footer-inner">
-        <span>© 행로 (테스트 페이지)</span>
-        <span>지도 데모 — 브라우저에서 파일로 열면 타일이 막힐 수 있어 간단 서버 사용 권장</span>
+        <span>© 행로 · Hangro Studio</span>
+        <span>빈 공간 · 지역성 · 관광 콘텐츠</span>
       </div>
     </footer>
 

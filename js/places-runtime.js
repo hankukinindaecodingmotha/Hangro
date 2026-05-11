@@ -8,7 +8,7 @@
   var DATA_URL = "data/places.json";
   var CACHE = null;
 
-  var PIN_HEX = "#6b9b7a";
+  var PIN_HEX = "#1A2419";
 
   var REQUIRED_DETAIL = [
     "id",
@@ -139,9 +139,9 @@
       '<svg class="haeng-pin-svg" viewBox="0 0 36 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
       '<path fill="' +
       PIN_HEX +
-      '" stroke="rgba(15,20,18,0.95)" stroke-width="1.2"' +
+      '" stroke="' + PIN_HEX + '" stroke-width="1"' +
       ' d="M18 2C11.5 2 7 6.95 7 13.1c0 8.95 11 26.65 11 26.65S29 21.76 29 13.1C29 6.95 24.5 2 18 2z"/>' +
-      '<circle cx="18" cy="13" r="5" fill="#0f1412" opacity="0.92"/>' +
+      '<circle cx="18" cy="13" r="3.5" fill="#EFE9DC"/>' +
       "</svg>";
     return '<div class="haeng-pin haeng-pin-wrap">' + svg + "</div>";
   }
@@ -207,15 +207,15 @@
           var popupHtml =
             '<div class="haeng-popup" style="min-width:200px;max-width:240px;font-family:inherit;line-height:1.5">' +
             '<p style="margin:0 0 0.35rem;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;color:#6b7570">위치 정보</p>' +
-            '<h3 style="margin:0 0 0.45rem;font-size:0.98rem;font-weight:700;color:#1f2622">' +
+            '<h3 style="margin:0 0 0.45rem;font-family:\'Nanum Myeongjo\',serif;font-size:1rem;font-weight:700;color:#1A2419;letter-spacing:-0.02em">' +
             escapeHtml(s.title || s.tooltip || "유후공간") +
             "</h3>" +
-            '<p style="margin:0 0 0.75rem;font-size:0.86rem;color:#3b423d">' +
+            '<p style="margin:0 0 0.85rem;font-size:0.86rem;color:#4A4F44;line-height:1.55">' +
             address +
             "</p>" +
             '<a href="' +
             detailHref +
-            '" style="display:inline-block;font-size:0.84rem;font-weight:600;color:#2d5a3e;text-decoration:none;border-bottom:1px solid #2d5a3e;padding-bottom:1px">자세히 보기 →</a>' +
+            '" style="display:inline-flex;align-items:center;gap:0.4rem;font-family:Helvetica,system-ui,sans-serif;font-size:0.74rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#1A2419;text-decoration:none;border-bottom:1px solid #1A2419;padding-bottom:2px">자세히 보기 →</a>' +
             "</div>";
 
           marker.bindPopup(popupHtml, {
@@ -255,8 +255,8 @@
     if (main) {
       main.innerHTML =
         '<div class="unknown-box">' +
-        '<p style="margin:0 0 1rem;color:var(--text-muted)">지도에서 핀을 골라 다시 들어와 주세요.</p>' +
-        '<a href="map-demo.html">지도 데모로 이동</a>' +
+        '<p style="margin:0 0 1rem;color:var(--ink-mute)">지도에서 위치를 다시 선택해 주세요.</p>' +
+        '<a href="map-demo.html">지도로 돌아가기</a>' +
         "</div>";
     }
   }
@@ -398,22 +398,22 @@
         '" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">'
     );
     parts.push(
-      '<rect width="8" height="8" fill="rgba(107,155,122,0.18)"/>'
+      '<rect width="8" height="8" fill="rgba(26,36,25,0.05)"/>'
     );
     parts.push(
-      '<line x1="0" y1="0" x2="0" y2="8" stroke="rgba(232,238,233,0.28)" stroke-width="1.2"/>'
+      '<line x1="0" y1="0" x2="0" y2="8" stroke="rgba(26,36,25,0.18)" stroke-width="1.2"/>'
     );
     parts.push("</pattern></defs>");
 
     fp.items.forEach(function (item) {
-      var fillDefault = "rgba(107, 155, 122, 0.14)";
-      var stroke = "rgba(232, 238, 233, 0.35)";
+      var fillDefault = "rgba(183, 201, 164, 0.45)";
+      var stroke = "rgba(26, 36, 25, 0.45)";
       var fill = fillDefault;
       if (item.tone === "bath") {
-        fill = "rgba(45, 90, 62, 0.38)";
+        fill = "rgba(61, 110, 44, 0.30)";
       }
       if (item.id === "parking") {
-        fill = "rgba(107, 155, 122, 0.08)";
+        fill = "rgba(26, 36, 25, 0.06)";
       }
 
       var hatchFill = item.hatch ? "url(#" + pid + ")" : fill;
@@ -478,7 +478,7 @@
           lx +
           '" y="' +
           ly +
-          '" text-anchor="middle" dominant-baseline="middle" fill="rgba(232,238,233,0.92)" font-size="11" font-family="Noto Sans KR, sans-serif" pointer-events="none">' +
+          '" text-anchor="middle" dominant-baseline="middle" fill="rgba(26,36,25,0.92)" font-size="11" font-family="Noto Sans KR, sans-serif" pointer-events="none">' +
           escapeHtml(item.label) +
           "</text>"
       );
@@ -579,9 +579,9 @@
         .join("") +
       "</ul>" +
       "</section>" +
-      '<p style="margin-top:2rem;font-size:0.88rem;color:var(--text-muted)">' +
-      '<a href="booking.html">이런 프로젝트 상담 예약</a> · ' +
-      '<a href="map-demo.html">다른 핀 보기</a>' +
+      '<p style="margin-top:2rem;font-size:0.88rem;color:var(--ink-mute)">' +
+      '<a href="booking.html">이런 프로젝트 상담 신청</a> · ' +
+      '<a href="map-demo.html">다른 위치 보기</a>' +
       "</p>";
 
     attachFloorPlanListeners(main, place);
@@ -620,8 +620,8 @@
           "</p>";
         main.innerHTML =
           '<div class="unknown-box">' +
-          '<p style="margin:0 0 1rem;color:var(--text-muted)">HTTP 서버로 사이트를 연 뒤 다시 시도해 주세요.</p>' +
-          '<a href="map-demo.html">지도 데모로 이동</a>' +
+          '<p style="margin:0 0 1rem;color:var(--ink-mute)">잠시 후 다시 시도해 주세요.</p>' +
+          '<a href="map-demo.html">지도로 돌아가기</a>' +
           "</div>";
       });
   }

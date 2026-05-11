@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="행로 프로젝트별 공간 재생 소개 — 테스트 페이지" />
+    <meta name="description" content="행로 — 프로젝트별 공간 재생 소개" />
     <title>공간 소개 — 행로</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -234,22 +234,22 @@
       }
 
       .floor-label {
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+        text-shadow: 0 1px 2px rgba(26, 36, 25, 0.45);
       }
 
       .floor-dialog {
         max-width: 22rem;
         width: calc(100% - 2rem);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
+        border: 1px solid var(--ink);
+        border-radius: 0;
         padding: 0;
-        background: var(--bg-elevated);
-        color: var(--text);
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+        background: var(--paper);
+        color: var(--ink);
+        box-shadow: 0 12px 36px rgba(26, 36, 25, 0.18);
       }
 
       .floor-dialog::backdrop {
-        background: rgba(0, 0, 0, 0.55);
+        background: rgba(26, 36, 25, 0.35);
       }
 
       .floor-dialog-form {
@@ -325,42 +325,78 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        width: 2rem;
-        height: 2rem;
-        background: rgba(15, 20, 18, 0.65);
-        color: #fff;
-        border: 0;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: var(--ink);
+        color: var(--bg);
+        border: 1px solid var(--ink);
         border-radius: 999px;
         cursor: pointer;
-        font-size: 1rem;
+        font-size: 0;
         line-height: 1;
         padding: 0;
         font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.18s ease, transform 0.18s ease;
+      }
+
+      .ba-photos-btn::before {
+        content: "";
+        display: block;
+        width: 0.7rem;
+        height: 0.7rem;
+        border-top: 1.5px solid var(--bg);
+        border-right: 1.5px solid var(--bg);
+      }
+
+      .ba-photos-prev::before {
+        transform: rotate(-135deg);
+        margin-left: 4px;
+      }
+
+      .ba-photos-next::before {
+        transform: rotate(45deg);
+        margin-right: 4px;
       }
 
       .ba-photos-btn:hover:not(:disabled) {
-        background: rgba(15, 20, 18, 0.85);
+        background: var(--paper);
+        color: var(--ink);
+      }
+
+      .ba-photos-btn:hover:not(:disabled)::before {
+        border-top-color: var(--ink);
+        border-right-color: var(--ink);
+      }
+
+      .ba-photos-btn:active:not(:disabled) {
+        transform: translateY(-50%) scale(0.96);
       }
 
       .ba-photos-btn:disabled {
-        opacity: 0.25;
+        opacity: 0.2;
         cursor: not-allowed;
       }
 
       .ba-photos-prev {
-        left: 0.5rem;
+        left: 0.85rem;
       }
 
       .ba-photos-next {
-        right: 0.5rem;
+        right: 0.85rem;
       }
 
       .ba-photos-status {
-        margin: 0.55rem 0 0;
+        margin: 0.7rem 0 0;
         text-align: center;
-        font-size: 0.74rem;
-        color: var(--text-muted);
-        letter-spacing: 0.06em;
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--ink-mute);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
       }
     </style>
   </head>
@@ -393,8 +429,8 @@
 
     <footer>
       <div class="wrap footer-inner">
-        <span>© 행로 (테스트 페이지)</span>
-        <span>실제 사진으로 교체 시 before/after 이미지 컴포넌트만 갈아 끼우면 됩니다</span>
+        <span>© 행로 · Hangro Studio</span>
+        <span>빈 공간 · 지역성 · 관광 콘텐츠</span>
       </div>
     </footer>
 
