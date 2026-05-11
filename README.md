@@ -65,24 +65,7 @@
 
 ---
 
-## 배포 옵션
-
-### A. GitHub Pages (현재)
-`Settings → Pages` → Source: `main` · `/(root)` 선택. push 즉시 자동 재배포.
-- **Free 플랜은 public repo만 지원**. private repo로 운영하려면 GitHub Pro($4/mo) 이상.
-
-### B. 비공개 repo + 외부 정적 호스팅 (무료)
-repo는 private 유지하면서 사이트만 public 배포하고 싶을 때 권장:
-- **Cloudflare Pages** — 무료 무제한, 빌드 명령 없이 root 폴더만 지정.
-- **Vercel** Hobby — 미리보기 배포 자동.
-- **Netlify** Starter — 폼/리다이렉트 기능 풍부.
-
-세 곳 모두 GitHub OAuth로 private repo 직접 연결 가능. main push 시 자동 재배포.
-
----
-
 ## 메모
 
 - `booking.html` 폼은 데모 — 서버로 전송되지 않습니다. 운영 시 Formspree/Tally/자체 백엔드 등에 연결 필요.
 - 이미지는 가능한 한 1600px 이하·JPEG 85%로 리사이즈 후 커밋 권장 (현재 `Asset/Home_1/before/` 일부 원본이 큰 편).
-- `map-demo.html`의 OSM 타일은 `file://`에서는 막힙니다. 로컬에서 띄울 때는 정적 파일을 서빙하는 간단한 HTTP 서버를 이용하세요.
