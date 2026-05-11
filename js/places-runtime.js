@@ -8,7 +8,7 @@
   var DATA_URL = "data/places.json";
   var CACHE = null;
 
-  var PIN_HEX = "#6b9b7a";
+  var PIN_HEX = "#1A2419";
 
   var REQUIRED_DETAIL = [
     "id",
@@ -139,9 +139,11 @@
       '<svg class="haeng-pin-svg" viewBox="0 0 36 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
       '<path fill="' +
       PIN_HEX +
-      '" stroke="rgba(15,20,18,0.95)" stroke-width="1.2"' +
+      '" stroke="' +
+      PIN_HEX +
+      '" stroke-width="1"' +
       ' d="M18 2C11.5 2 7 6.95 7 13.1c0 8.95 11 26.65 11 26.65S29 21.76 29 13.1C29 6.95 24.5 2 18 2z"/>' +
-      '<circle cx="18" cy="13" r="5" fill="#0f1412" opacity="0.92"/>' +
+      '<circle cx="18" cy="13" r="3.5" fill="#EFE9DC"/>' +
       "</svg>";
     return '<div class="haeng-pin haeng-pin-wrap">' + svg + "</div>";
   }
