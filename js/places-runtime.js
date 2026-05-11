@@ -292,13 +292,11 @@
       .join("");
 
     return (
-      '<div class="ba-photos" data-ba-photos>' +
-      '<div class="ba-photos-head">' +
-      "<h3>" +
+      '<section class="ba-section ba-photos-section" aria-labelledby="photos-heading">' +
+      '<h2 id="photos-heading">' +
       escapeHtml(title) +
-      "</h3>" +
-      '<p class="hint">한 장씩 넘겨 보기</p>' +
-      "</div>" +
+      "</h2>" +
+      '<div class="ba-photos" data-ba-photos>' +
       '<div class="ba-photos-frame">' +
       '<div class="ba-photos-track" data-photos-track tabindex="0" aria-roledescription="carousel" aria-label="' +
       escapeHtml(alt) +
@@ -313,7 +311,8 @@
       "</button>" +
       "</div>" +
       '<p class="ba-photos-status" data-photos-status aria-live="polite"></p>' +
-      "</div>"
+      "</div>" +
+      "</section>"
     );
   }
 
@@ -568,35 +567,7 @@
     var photoStripHtml = buildPhotoStripInline(place);
 
     main.innerHTML =
-      '<section class="ba-section" aria-labelledby="ba-heading">' +
-      '<h2 id="ba-heading">공간 변화</h2>' +
-      '<p class="hint">실제 서비스에서는 촬영한 사진·3D 워크스루 영상 등으로 교체하면 됩니다. 아래는 레이아웃용 데모 그래픽입니다.</p>' +
-      '<div class="ba-grid">' +
-      '<figure class="ba-card">' +
-      "<figcaption>" +
-      escapeHtml(place.beforeCaption) +
-      "</figcaption>" +
-      '<div class="facade facade--before">' +
-      winGrid() +
-      "</div>" +
-      "<p>" +
-      escapeHtml(place.beforeText) +
-      "</p>" +
-      "</figure>" +
-      '<figure class="ba-card">' +
-      "<figcaption>" +
-      escapeHtml(place.afterCaption) +
-      "</figcaption>" +
-      '<div class="facade facade--after">' +
-      winGrid() +
-      "</div>" +
-      "<p>" +
-      escapeHtml(place.afterText) +
-      "</p>" +
-      "</figure>" +
-      "</div>" +
       photoStripHtml +
-      "</section>" +
       floorHtml +
       '<section class="detail-story" aria-labelledby="story-heading">' +
       '<h2 id="story-heading">프로그램 · 운영 포인트</h2>' +
