@@ -666,8 +666,44 @@
       });
   }
 
-  function buildArchiveCard(place) {
-    var tagsHtml = place.tags
+  function buildArchiveCardSummary(place, index) {
+    var caseNo = "Case " + (index + 1 < 10 ? "0" : "") + (index + 1);
+    var locationTag = "";
+    if (Array.isArray(place.tags) && place.tags.length) {
+      locationTag = escapeHtml(place.tags[place.tags.length - 1]);
+    }
+
+    var tagsHtml = (Array.isArray(place.tags) ? place.tags : [])
+      .map(function (t) {
+        return "<li>" + escapeHtml(t) + "</li>";
+      })
+      .join("");
+
+    var statusBit = place.status
+      ? '<span>' + escapeHtml(place.status) + '</span>'
+      : "";
+
+    return (
+      '<a class="case" href="#' +
+      escapeHtml(place.id) +
+      '" data-archive-anchor="' +
+      escapeHtml(place.id) +
+      '">' +
+      '<div class="case-meta">' +
+      '<span class="case-no">' + escapeHtml(caseNo) + '</span>' +
+      (locationTag ? '<span>' + locationTag + '</span>' : "") +
+      statusBit +
+      '</div>' +
+      '<h3>' + escapeHtml(place.title) + '</h3>' +
+      '<p>' + escapeHtml(place.lead) + '</p>' +
+      (tagsHtml ? '<ul class="case-tags">' + tagsHtml + '</ul>' : "") +
+      '<span class="case-link">기록 보기</span>' +
+      '</a>'
+    );
+  }
+
+  function buildArchiveDetail(place) {
+    var tagsHtml = (Array.isArray(place.tags) ? place.tags : [])
       .map(function (t) {
         return "<li>" + escapeHtml(t) + "</li>";
       })
@@ -725,7 +761,8 @@
       '<a href="' +
       detailHref +
       '">현재 모습 보기</a> · ' +
-      '<a href="map-demo.html">지도에서 위치</a>' +
+      '<a href="map-demo.html">지도에서 위치</a> · ' +
+      '<a href="#archive-top">맨 위로</a>' +
       "</p>" +
       "</article>"
     );
@@ -740,7 +777,17 @@
       return;
     }
 
-    root.innerHTML = places.map(buildArchiveCard).join("");
+    var cardsHtml = places
+      .map(function (place, i) {
+        return buildArchiveCardSummary(place, i);
+      })
+      .join("");
+
+    var detailsHtml = places.map(buildArchiveDetail).join("");
+
+    root.innerHTML =
+      '<div id="archive-top" class="cases">' + cardsHtml + '</div>' +
+      '<div class="archive-details">' + detailsHtml + '</div>';
 
     var cards = root.querySelectorAll(".archive-card");
     for (var i = 0; i < cards.length; i++) {
@@ -750,13 +797,30 @@
       attachFloorPlanListeners(card, getPlaceFromCard(card, places));
     }
 
+    var anchors = root.querySelectorAll("[data-archive-anchor]");
+    for (var j = 0; j < anchors.length; j++) {
+      (function (a) {
+        a.addEventListener("click", function (e) {
+          var id = a.getAttribute("data-archive-anchor");
+          var target = document.getElementById(id);
+          if (target && typeof target.scrollIntoView === "function") {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            if (global.history && global.history.replaceState) {
+              global.history.replaceState(null, "", "#" + id);
+            }
+          }
+        });
+      })(anchors[j]);
+    }
+
     if (global.location.hash) {
-      var target = document.getElementById(
+      var hashTarget = document.getElementById(
         decodeURIComponent(global.location.hash.slice(1))
       );
-      if (target && typeof target.scrollIntoView === "function") {
+      if (hashTarget && typeof hashTarget.scrollIntoView === "function") {
         setTimeout(function () {
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          hashTarget.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 60);
       }
     }
