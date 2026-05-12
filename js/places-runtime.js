@@ -261,17 +261,18 @@
     }
   }
 
-  function buildPhotoStripInline(place) {
-    var bp = place.beforePhotos;
-    if (!bp || !Array.isArray(bp.items) || !bp.items.length) {
+  function buildPhotoStrip(photos, fallbackTitle, idPrefix) {
+    if (!photos || !Array.isArray(photos.items) || !photos.items.length) {
       return "";
     }
 
-    var title = bp.title || "현장 사진 — 변경 전";
-    var alt = bp.alt || "변경 전 사진";
-    var basePath = bp.basePath || "";
+    var prefix = idPrefix || "photos";
+    var title = photos.title || fallbackTitle || "현장 사진";
+    var alt = photos.alt || title;
+    var basePath = photos.basePath || "";
+    var headingId = prefix + "-heading";
 
-    var slides = bp.items
+    var slides = photos.items
       .map(function (file, idx) {
         var src = basePath + file;
         var num = idx + 1;
@@ -292,11 +293,17 @@
       .join("");
 
     return (
-      '<section class="ba-section ba-photos-section" aria-labelledby="photos-heading">' +
-      '<h2 id="photos-heading">' +
+      '<section class="ba-section ba-photos-section" data-strip="' +
+      escapeHtml(prefix) +
+      '" aria-labelledby="' +
+      headingId +
+      '">' +
+      '<h2 id="' +
+      headingId +
+      '">' +
       escapeHtml(title) +
       "</h2>" +
-      '<div class="ba-photos" data-ba-photos>' +
+      '<div class="ba-photos">' +
       '<div class="ba-photos-frame">' +
       '<div class="ba-photos-track" data-photos-track tabindex="0" aria-roledescription="carousel" aria-label="' +
       escapeHtml(alt) +
@@ -316,14 +323,11 @@
     );
   }
 
-  function attachPhotoStripListeners(main, place) {
-    var bp = place.beforePhotos;
-    if (!bp || !Array.isArray(bp.items) || !bp.items.length) return;
-
-    var track = main.querySelector("[data-photos-track]");
-    var prev = main.querySelector("[data-photos-prev]");
-    var next = main.querySelector("[data-photos-next]");
-    var status = main.querySelector("[data-photos-status]");
+  function attachPhotoStripListeners(scope) {
+    var track = scope.querySelector("[data-photos-track]");
+    var prev = scope.querySelector("[data-photos-prev]");
+    var next = scope.querySelector("[data-photos-next]");
+    var status = scope.querySelector("[data-photos-status]");
     if (!track || !prev || !next) return;
 
     function step(direction) {
@@ -486,11 +490,18 @@
     });
 
     parts.push("</svg></div>");
+    var dlgId = "floor-dialog-" + String(place.id).replace(/[^a-zA-Z0-9_-]/g, "");
+    var titleId = dlgId + "-title";
+    var bodyId = dlgId + "-body";
     parts.push(
-      '<dialog class="floor-dialog" id="floor-room-dialog" aria-labelledby="floor-modal-title">' +
+      '<dialog class="floor-dialog" id="' +
+        dlgId +
+        '" aria-labelledby="' +
+        titleId +
+        '">' +
         '<form method="dialog" class="floor-dialog-form">' +
-        '<h3 id="floor-modal-title"></h3>' +
-        '<p id="floor-modal-body" class="floor-dialog-body"></p>' +
+        '<h3 id="' + titleId + '" class="floor-dialog-title"></h3>' +
+        '<p id="' + bodyId + '" class="floor-dialog-body"></p>' +
         '<button type="submit" class="btn btn-primary floor-dialog-close">닫기</button>' +
         "</form>" +
         "</dialog>"
@@ -508,9 +519,9 @@
       byId[it.id] = it;
     });
 
-    var dialog = main.querySelector("#floor-room-dialog");
-    var titleEl = main.querySelector("#floor-modal-title");
-    var bodyEl = main.querySelector("#floor-modal-body");
+    var dialog = main.querySelector(".floor-dialog");
+    var titleEl = main.querySelector(".floor-dialog-title");
+    var bodyEl = main.querySelector(".floor-dialog-body");
     if (!dialog || !titleEl || !bodyEl) return;
 
     function openRoom(id) {
@@ -552,40 +563,69 @@
       })
       .join("");
 
+    var statusHtml = place.status
+      ? '<p class="status-line"><span class="status-pill">' +
+        escapeHtml(place.status) +
+        "</span></p>"
+      : "";
+
     root.innerHTML =
+      statusHtml +
       "<h1>" +
       escapeHtml(place.title) +
       "</h1>" +
-      "<p class=\"lead\">" +
+      '<p class="lead">' +
       escapeHtml(place.lead) +
       "</p>" +
-      "<ul class=\"tags\">" +
+      '<ul class="tags">' +
       tagsHtml +
       "</ul>";
 
-    var floorHtml = buildFloorPlanSection(place);
-    var photoStripHtml = buildPhotoStripInline(place);
+    var hasAfter =
+      place.afterReady === true &&
+      place.afterPhotos &&
+      Array.isArray(place.afterPhotos.items) &&
+      place.afterPhotos.items.length;
 
-    main.innerHTML =
-      photoStripHtml +
-      floorHtml +
-      '<section class="detail-story" aria-labelledby="story-heading">' +
-      '<h2 id="story-heading">프로그램 · 운영 포인트</h2>' +
-      "<ul>" +
-      place.bullets
-        .map(function (b) {
-          return "<li>" + escapeHtml(b) + "</li>";
-        })
-        .join("") +
-      "</ul>" +
-      "</section>" +
-      '<p style="margin-top:2rem;font-size:0.88rem;color:var(--ink-mute)">' +
-      '<a href="booking.html">이런 프로젝트 상담 신청</a> · ' +
-      '<a href="map-demo.html">다른 위치 보기</a>' +
+    var archiveHref = "archive.html#" + encodeURIComponent(place.id);
+    var bottomLinks =
+      '<p class="detail-actions">' +
+      '<a href="' +
+      archiveHref +
+      '">진행 과정·기록 보기</a> · ' +
+      '<a href="map-demo.html">다른 위치 보기</a> · ' +
+      '<a href="booking.html">상담 신청</a>' +
       "</p>";
 
-    attachFloorPlanListeners(main, place);
-    attachPhotoStripListeners(main, place);
+    if (hasAfter) {
+      var afterStrip = buildPhotoStrip(
+        place.afterPhotos,
+        "현장 사진 — 변경 후",
+        "after"
+      );
+      var afterSummaryHtml = place.afterSummary
+        ? '<section class="detail-story" aria-labelledby="result-heading">' +
+          '<h2 id="result-heading">결과 · 콘셉트</h2>' +
+          "<p>" +
+          escapeHtml(place.afterSummary) +
+          "</p>" +
+          "</section>"
+        : "";
+      main.innerHTML = afterStrip + afterSummaryHtml + bottomLinks;
+      var afterScope = main.querySelector('[data-strip="after"]');
+      if (afterScope) attachPhotoStripListeners(afterScope);
+    } else {
+      main.innerHTML =
+        '<section class="detail-after-pending" aria-labelledby="pending-heading">' +
+        '<h2 id="pending-heading">변경 후 모습은 곧 공개됩니다.</h2>' +
+        "<p>현재 콘셉트 검토 및 현장 협의 단계의 프로젝트입니다. " +
+        "진행 과정·현장 사진·평면 등 자세한 기록은 " +
+        '<a href="' +
+        archiveHref +
+        '">기록 페이지</a>에서 확인하실 수 있습니다.</p>' +
+        "</section>" +
+        bottomLinks;
+    }
   }
 
   function initDetailPage() {
@@ -626,9 +666,134 @@
       });
   }
 
+  function buildArchiveCard(place) {
+    var tagsHtml = place.tags
+      .map(function (t) {
+        return "<li>" + escapeHtml(t) + "</li>";
+      })
+      .join("");
+
+    var statusHtml = place.status
+      ? '<span class="status-pill">' + escapeHtml(place.status) + "</span>"
+      : "";
+
+    var photoStrip = buildPhotoStrip(
+      place.beforePhotos,
+      "현장 사진 — 변경 전",
+      "before-" + place.id
+    );
+
+    var floorHtml = buildFloorPlanSection(place);
+
+    var bulletsHtml = (Array.isArray(place.bullets) ? place.bullets : [])
+      .map(function (b) {
+        return "<li>" + escapeHtml(b) + "</li>";
+      })
+      .join("");
+
+    var bulletsBlock = bulletsHtml
+      ? '<section class="archive-bullets" aria-label="콘셉트·운영 포인트">' +
+        '<h3>콘셉트 · 운영 포인트</h3>' +
+        "<ul>" +
+        bulletsHtml +
+        "</ul>" +
+        "</section>"
+      : "";
+
+    var detailHref = "place-detail.html?id=" + encodeURIComponent(place.id);
+
+    return (
+      '<article class="archive-card" id="' +
+      escapeHtml(place.id) +
+      '">' +
+      '<header class="archive-head">' +
+      statusHtml +
+      "<h2>" +
+      escapeHtml(place.title) +
+      "</h2>" +
+      '<p class="lead">' +
+      escapeHtml(place.lead) +
+      "</p>" +
+      '<ul class="tags">' +
+      tagsHtml +
+      "</ul>" +
+      "</header>" +
+      photoStrip +
+      floorHtml +
+      bulletsBlock +
+      '<p class="archive-actions">' +
+      '<a href="' +
+      detailHref +
+      '">현재 모습 보기</a> · ' +
+      '<a href="map-demo.html">지도에서 위치</a>' +
+      "</p>" +
+      "</article>"
+    );
+  }
+
+  function renderArchive(root, places) {
+    document.title = "기록 — 행로";
+
+    if (!places || !places.length) {
+      root.innerHTML =
+        '<p class="lead">아직 등록된 프로젝트가 없습니다.</p>';
+      return;
+    }
+
+    root.innerHTML = places.map(buildArchiveCard).join("");
+
+    var cards = root.querySelectorAll(".archive-card");
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var stripScope = card.querySelector('[data-strip^="before-"]');
+      if (stripScope) attachPhotoStripListeners(stripScope);
+      attachFloorPlanListeners(card, getPlaceFromCard(card, places));
+    }
+
+    if (global.location.hash) {
+      var target = document.getElementById(
+        decodeURIComponent(global.location.hash.slice(1))
+      );
+      if (target && typeof target.scrollIntoView === "function") {
+        setTimeout(function () {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 60);
+      }
+    }
+  }
+
+  function getPlaceFromCard(card, places) {
+    var id = card.getAttribute("id");
+    for (var i = 0; i < places.length; i++) {
+      if (places[i].id === id) return places[i];
+    }
+    return null;
+  }
+
+  function initArchivePage() {
+    var root = document.getElementById("archive-root");
+    if (!root) return;
+
+    loadPlaces()
+      .then(function (bundle) {
+        renderArchive(root, bundle.places);
+      })
+      .catch(function (err) {
+        console.error("[행로 기록]", err);
+        root.innerHTML =
+          '<div class="unknown-box">' +
+          '<p style="margin:0 0 1rem;color:var(--ink-mute)">' +
+          escapeHtml(err.message || "데이터를 불러오지 못했습니다.") +
+          "</p>" +
+          '<a href="map-demo.html">지도로 돌아가기</a>' +
+          "</div>";
+      });
+  }
+
   global.HAENG_RUNTIME = {
     loadPlaces: loadPlaces,
     initMapPage: initMapPage,
     initDetailPage: initDetailPage,
+    initArchivePage: initArchivePage,
   };
 })(typeof window !== "undefined" ? window : this);

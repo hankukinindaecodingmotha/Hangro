@@ -15,13 +15,14 @@
 | `map-demo.html`        | OSM + Leaflet 지도 (핀 클릭 → 주소 카드 팝업)         |
 | `booking.html`         | 상담 예약 폼 (데모 — 실제 전송 X)                    |
 | `team.html`            | 팀 4인 카드 그리드                                    |
-| `place-detail.html`    | 프로젝트별 상세 (`?id=` 쿼리스트링)                  |
+| `place-detail.html`    | 지도 핀 진입 — 변경 후/현재 모습만 노출              |
+| `archive.html`         | 진행 중·완료 프로젝트 기록 (변경 전 사진·평면·콘셉트) |
 | `styles.css`           | 공통 스타일                                          |
 | `data/places.json`     | 지도·상세 공통 장소 데이터 (주소·좌표·평면·Before 사진) |
 | `js/places-runtime.js` | JSON 로드 + 지도/상세 렌더 런타임                    |
 | `Asset/Home_1/before/` | 첫 번째 유후공간 변경 전 사진 자산                   |
 
-상단 네비게이션 순서는 모든 페이지에서 **소개 / 지도 / 예약 / 팀**으로 통일되어 있습니다.
+상단 네비게이션 순서는 모든 페이지에서 **소개 / 지도 / 기록 / 예약 / 팀**으로 통일되어 있습니다.
 
 ---
 
@@ -32,8 +33,13 @@
 - 핀 클릭 시 즉시 상세 페이지로 이동하지 않고 **위치 카드 팝업**(제목 · 주소 · "자세히 보기" 링크) 표시.
 
 ### 상세 (`place-detail.html?id=…`)
-- **현장 사진 스트립** — 변경 전 현장 사진을 한 장씩 넘겨 보는 컴팩트 형태(인스타 피드 톤).
-- **내부 평면 SVG** — 방을 누르면 다이얼로그 팝업으로 설명.
+- 지도 핀 클릭 시 진입. **변경 후/현재 모습**만 노출.
+- `places.json`의 `afterReady`가 `true`이고 `afterPhotos`가 있으면 사진 스트립 + 결과 콘셉트 노출.
+- 그 외는 "변경 후 모습은 곧 공개됩니다" 안내 + 기록 페이지 링크.
+
+### 기록 (`archive.html`)
+- 진행 중·완료 프로젝트 전체 기록. 각 프로젝트의 **변경 전 현장 사진(인스타 피드 톤 스트립) · 평면 SVG · 콘셉트/운영 포인트**를 한 자리에 모아서 표시.
+- `archive.html#<id>` 형태로 특정 프로젝트로 직접 스크롤.
 
 ### 예약 (`booking.html`)
 - 클라이언트 측 유효성 검증 후 제출 시뮬레이션. 서버 전송은 아직 없음.
@@ -48,18 +54,23 @@
 {
   "id": "my-place",            // URL 식별자
   "lat": 36.0859, "lng": 129.4166,
-  "address": "경상북도 …",     // 핀 팝업에 표시
+  "address": "경상북도 …",     // (선택) 핀 팝업에 표시
   "tooltip": "…",              // 핀 hover 툴팁
+  "status": "진행 중",          // 진행 중 / 완료 / 공개 준비 중 등
+  "afterReady": false,          // true면 detail에 변경 후 사진 노출
   "title": "…", "lead": "…",
   "tags": ["…"],
-  "beforeCaption": "…", "afterCaption": "…",
-  "beforeText": "…", "afterText": "…",
   "bullets": ["…"],
-  "beforePhotos": {            // (선택) 사진 슬라이더
+  "beforePhotos": {            // (선택) 기록 페이지에 노출
     "basePath": "Asset/My_Place/before/",
     "items": ["file_01.jpeg", "file_02.jpeg"]
   },
-  "floorPlan": { /* (선택) SVG 평면 */ }
+  "afterPhotos": {             // (선택) detail 페이지에 노출, afterReady=true 시
+    "basePath": "Asset/My_Place/after/",
+    "items": ["after_01.jpeg"]
+  },
+  "afterSummary": "…",         // (선택) detail의 결과 콘셉트 문단
+  "floorPlan": { /* (선택) SVG 평면, 기록 페이지에 노출 */ }
 }
 ```
 

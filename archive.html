@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="행로 — 빈집·유후시설 재생 작업 기록"
+    />
+    <title>기록 — 행로</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      #archive-root {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(2.75rem, 6vw, 4.25rem);
+        margin-top: clamp(1.5rem, 4vw, 2.5rem);
+      }
+
+      .archive-card {
+        scroll-margin-top: 5rem;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.25rem, 3vw, 1.75rem);
+      }
+
+      .archive-head {
+        max-width: 44rem;
+      }
+
+      .status-pill {
+        display: inline-block;
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+        padding: 0.2rem 0.55rem;
+        border: 1px solid var(--rule, rgba(0, 0, 0, 0.1));
+        border-radius: 999px;
+        background: var(--paper, var(--bg-elevated, #f6f1e5));
+        margin-bottom: 0.7rem;
+      }
+
+      .archive-head h2 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: clamp(1.45rem, 3.4vw, 2.1rem);
+        margin: 0 0 0.55rem;
+        letter-spacing: -0.025em;
+      }
+
+      .archive-head .lead {
+        margin: 0 0 0.85rem;
+        color: var(--ink-soft, var(--text-muted, #4a4f44));
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .archive-head .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .archive-head .tags li {
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+      }
+
+      .archive-head .tags li + li::before {
+        content: "·";
+        margin-right: 0.4rem;
+        color: var(--rule, rgba(0, 0, 0, 0.2));
+      }
+
+      .archive-bullets {
+        padding: clamp(1.1rem, 3vw, 1.5rem);
+        background: var(--paper, var(--bg-elevated, #f6f1e5));
+        border-radius: var(--radius-lg, var(--radius, 12px));
+        max-width: 44rem;
+      }
+
+      .archive-bullets h3 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: 1.05rem;
+        margin: 0 0 0.65rem;
+        letter-spacing: -0.01em;
+      }
+
+      .archive-bullets ul {
+        margin: 0;
+        padding-left: 1.15rem;
+        color: var(--ink-soft, var(--text-muted, #4a4f44));
+        font-size: 0.94rem;
+        line-height: 1.7;
+      }
+
+      .archive-actions {
+        margin: 0;
+        font-size: 0.88rem;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+      }
+
+      .archive-actions a {
+        color: var(--ink, currentColor);
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+        padding-bottom: 1px;
+      }
+
+      .archive-actions a:hover {
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body class="sub">
+    <header>
+      <div class="wrap nav">
+        <a href="index.html" class="logo">행로</a>
+        <nav class="nav-links" aria-label="주요 메뉴">
+          <a href="index.html">소개</a>
+          <a href="map-demo.html">지도</a>
+          <a href="archive.html" aria-current="page">기록</a>
+          <a href="booking.html">예약</a>
+          <a href="team.html">팀</a>
+        </nav>
+        <a class="nav-cta" href="booking.html">상담 예약</a>
+      </div>
+    </header>
+
+    <div class="page-hero">
+      <div class="wrap">
+        <p class="badge">Archive · 작업 기록</p>
+        <h1>행로가 만난 공간들.</h1>
+        <p>
+          답사·기획부터 현장 사진, 내부 구조, 운영 방향까지 — 각 프로젝트의
+          진행 기록을 모아 둡니다. 운영 중인 공간은 지도와 상세 페이지에서
+          현재 모습을 함께 확인할 수 있습니다.
+        </p>
+      </div>
+    </div>
+
+    <main class="page-fill">
+      <div class="wrap" id="archive-root"></div>
+    </main>
+
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 행로 · Hangro Studio</span>
+        <span>작업 기록</span>
+      </div>
+    </footer>
+
+    <script src="js/places-runtime.js"></script>
+    <script>
+      if (window.HAENG_RUNTIME && typeof HAENG_RUNTIME.initArchivePage === "function") {
+        HAENG_RUNTIME.initArchivePage();
+      }
+    </script>
+  </body>
+</html>
