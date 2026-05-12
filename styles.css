@@ -755,15 +755,18 @@ main.page-fill { min-height: 50vh; }
 
 /* ── 푸터 ───────────────────────────────── */
 footer {
-  margin-top: clamp(3rem, 6vw, 5rem);
-  padding: 2.5rem 0 3rem;
-  font-size: 0.8rem;
-  color: var(--ink-mute);
+  margin-top: clamp(4rem, 8vw, 6rem);
+  padding: clamp(2.5rem, 5vw, 3.5rem) 0 clamp(2rem, 4vw, 3rem);
+  font-size: 0.86rem;
+  color: var(--ink-soft);
   background: var(--bg);
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
-footer a { color: var(--ink-soft); }
-footer a:hover { color: var(--ink); opacity: 1; }
+footer a {
+  color: var(--ink);
+  font-weight: 500;
+}
+footer a:hover { color: var(--ink); opacity: 0.65; }
 
 .footer-inner { display: flex; flex-direction: column; gap: 0.85rem; }
 @media (min-width: 640px) {
@@ -773,3 +776,246 @@ footer a:hover { color: var(--ink); opacity: 1; }
     align-items: center;
   }
 }
+
+/* 풀 푸터 (multi-column) */
+.footer-rich {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+  grid-template-columns: 1fr;
+  margin-bottom: 2rem;
+}
+@media (min-width: 640px) {
+  .footer-rich {
+    grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr));
+  }
+}
+.footer-brand {
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-size: clamp(1.6rem, 2.6vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+  color: var(--ink);
+  line-height: 1.15;
+}
+.footer-tag {
+  margin: 0 0 0.85rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 32ch;
+}
+.footer-col h4 {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 1rem;
+}
+.footer-col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.footer-col li a {
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.footer-col p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.footer-meta {
+  padding-top: 1.5rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* ── 히어로 매거진 마스트헤드 ──────────────── */
+.hero-masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.hero-masthead .issue {
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-style: italic;
+  font-size: 0.98rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+/* 히어로 우측 — 메타 데이터 스택 */
+.hero-meta-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.hero-meta-row {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+}
+.hero-meta-key {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.hero-meta-val {
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.hero-meta-val small {
+  display: block;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+  margin-top: 0.2rem;
+}
+
+/* ── 섹션 마커 (No. 01 — About) ──────────── */
+.section-marker {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.section-marker .num {
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+.section-marker .rule {
+  flex: 1;
+  height: 1px;
+  background: var(--ink);
+  opacity: 0.4;
+  align-self: center;
+  max-width: 4rem;
+}
+
+/* ── Pillar 벤토 (첫 번째 카드 강조) ──── */
+@media (min-width: 760px) {
+  .pillars.bento {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+  }
+  .pillars.bento > .pillar:nth-child(1) {
+    grid-row: span 2;
+    padding: 2.25rem 2rem 2.5rem;
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .pillars.bento > .pillar:nth-child(1) .pillar-icon { color: rgba(239, 233, 220, 0.6); }
+  .pillars.bento > .pillar:nth-child(1) h3 { color: var(--bg); font-size: 1.45rem; }
+  .pillars.bento > .pillar:nth-child(1) p { color: rgba(239, 233, 220, 0.78); font-size: 1rem; }
+}
+
+/* ── Case 이미지 슬롯 ─────────────────── */
+.case-image {
+  display: block;
+  background: var(--bg);
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  margin: -0.5rem -0.5rem 0.6rem;
+  overflow: hidden;
+  position: relative;
+}
+.case-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.case-image-empty {
+  display: flex;
+  align-items: flex-end;
+  padding: 0.85rem 1rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* status pill (Cases / Archive 공용) */
+.status-pill {
+  display: inline-block;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--bg);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+}
+.status-pill.live { color: var(--bg); background: var(--green-deep); }
+.status-pill.draft { color: var(--ink); background: var(--yellow); }
+
+/* ── Step에 progress dot ───────────── */
+@media (min-width: 880px) {
+  .flow.connected .step {
+    position: relative;
+  }
+  .flow.connected .step + .step::before {
+    content: "";
+    position: absolute;
+    left: -1rem;
+    top: 2.6rem;
+    width: 0.55rem;
+    height: 1px;
+    background: var(--ink);
+    opacity: 0.35;
+  }
+}
+
+/* ── 작은 디테일 — 본문 inline 강조 ── */
+.hero h1 em {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--ink);
+  position: relative;
+}
+
