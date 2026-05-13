@@ -261,6 +261,154 @@
     }
   }
 
+
+  function photoSlotFromFilename(filename) {
+    var m = String(filename || "").match(/_(\d+)\.(jpe?g|png)$/i);
+    return m ? parseInt(m[1], 10) : null;
+  }
+
+  function padSlot(n) {
+    return n < 10 ? "0" + n : String(n);
+  }
+
+  function buildPairedBeforeAfterSection(place) {
+    var bp = place.beforePhotos;
+    var ap = place.afterPhotos;
+    if (!bp || !Array.isArray(bp.items) || !bp.items.length) {
+      return "";
+    }
+    if (!ap || !Array.isArray(ap.items) || !ap.items.length) {
+      return buildPhotoStrip(
+        bp,
+        "현장 사진 — 변경 전",
+        "before-" + place.id
+      );
+    }
+
+    var bb = bp.basePath || "";
+    var ab = ap.basePath || "";
+    var beforeMap = {};
+    var afterMap = {};
+    var i;
+    for (i = 0; i < bp.items.length; i++) {
+      var sb = photoSlotFromFilename(bp.items[i]);
+      if (sb !== null) beforeMap[sb] = bp.items[i];
+    }
+    for (i = 0; i < ap.items.length; i++) {
+      var sa = photoSlotFromFilename(ap.items[i]);
+      if (sa !== null) afterMap[sa] = ap.items[i];
+    }
+
+    var paired = [];
+    var bk = Object.keys(beforeMap);
+    for (i = 0; i < bk.length; i++) {
+      var k = parseInt(bk[i], 10);
+      if (afterMap[k]) paired.push(k);
+    }
+    paired.sort(function (a, b) { return a - b; });
+    if (!paired.length) {
+      return buildPhotoStrip(
+        bp,
+        "현장 사진 — 변경 전",
+        "before-" + place.id
+      );
+    }
+
+    var bAlt = bp.alt || "변경 전";
+    var aAlt = ap.alt || "변경 후";
+    var secId = "pair-" + String(place.id).replace(/[^a-zA-Z0-9_-]/g, "");
+    var options = "";
+    for (i = 0; i < paired.length; i++) {
+      var n = paired[i];
+      var bSrc = bb + beforeMap[n];
+      var aSrc = ab + afterMap[n];
+      options +=
+        '<option value="' +
+        n +
+        '" data-b-src="' +
+        escapeHtml(bSrc) +
+        '" data-a-src="' +
+        escapeHtml(aSrc) +
+        '">' +
+        padSlot(n) +
+        "번</option>";
+    }
+
+    var hint =
+      "같은 번호(예: 08번)의 변경 전·후 파일만 짝을 이루어 비교합니다.";
+
+    return (
+      '<section class="ba-section archive-pair-section" aria-labelledby="' +
+      secId +
+      '-heading" data-pair-gallery="' +
+      escapeHtml(place.id) +
+      '">' +
+      '<h2 id="' +
+      secId +
+      '-heading">변경 전 · 변경 후 (동일 번호)</h2>' +
+      '<p class="hint">' +
+      escapeHtml(hint) +
+      "</p>" +
+      '<div class="archive-pair-toolbar">' +
+      '<label for="' +
+      secId +
+      '-select">비교 장면</label> ' +
+      '<select id="' +
+      secId +
+      '-select" data-pair-select class="archive-pair-select">' +
+      options +
+      "</select>" +
+      "</div>" +
+      '<div class="archive-pair-grid">' +
+      "<figure>" +
+      '<figcaption class="archive-pair-cap">' +
+      escapeHtml(bAlt) +
+      "</figcaption>" +
+      '<img class="archive-pair-img" data-pair-before src="" alt="" loading="lazy" decoding="async" />' +
+      "</figure>" +
+      "<figure>" +
+      '<figcaption class="archive-pair-cap">' +
+      escapeHtml(aAlt) +
+      "</figcaption>" +
+      '<img class="archive-pair-img" data-pair-after src="" alt="" loading="lazy" decoding="async" />' +
+      "</figure>" +
+      "</div>" +
+      '<p class="archive-pair-status" data-pair-status aria-live="polite"></p>' +
+      "</section>"
+    );
+  }
+
+  function attachPairedGalleryListeners(galleryEl) {
+    var sel = galleryEl.querySelector("[data-pair-select]");
+    var imgB = galleryEl.querySelector("[data-pair-before]");
+    var imgA = galleryEl.querySelector("[data-pair-after]");
+    var status = galleryEl.querySelector("[data-pair-status]");
+    if (!sel || !imgB || !imgA) return;
+
+    function applySelection() {
+      var opt = sel.options[sel.selectedIndex];
+      if (!opt) return;
+      var n = parseInt(opt.value, 10);
+      var bSrc = opt.getAttribute("data-b-src") || "";
+      var aSrc = opt.getAttribute("data-a-src") || "";
+      imgB.src = bSrc;
+      imgA.src = aSrc;
+      imgB.alt = "변경 전 " + padSlot(n) + "번";
+      imgA.alt = "변경 후 " + padSlot(n) + "번";
+      if (status) {
+        status.textContent =
+          "비교 가능 " +
+          sel.options.length +
+          "장면 · " +
+          padSlot(n) +
+          "번";
+      }
+    }
+
+    sel.addEventListener("change", applySelection);
+    applySelection();
+  }
+
   function buildPhotoStrip(photos, fallbackTitle, idPrefix) {
     if (!photos || !Array.isArray(photos.items) || !photos.items.length) {
       return "";
@@ -713,11 +861,7 @@
       ? '<span class="status-pill">' + escapeHtml(place.status) + "</span>"
       : "";
 
-    var photoStrip = buildPhotoStrip(
-      place.beforePhotos,
-      "현장 사진 — 변경 전",
-      "before-" + place.id
-    );
+    var photoStrip = buildPairedBeforeAfterSection(place);
 
     var floorHtml = buildFloorPlanSection(place);
 
@@ -792,6 +936,8 @@
     var cards = root.querySelectorAll(".archive-card");
     for (var i = 0; i < cards.length; i++) {
       var card = cards[i];
+      var pairG = card.querySelector("[data-pair-gallery]");
+      if (pairG) attachPairedGalleryListeners(pairG);
       var stripScope = card.querySelector('[data-strip^="before-"]');
       if (stripScope) attachPhotoStripListeners(stripScope);
       attachFloorPlanListeners(card, getPlaceFromCard(card, places));

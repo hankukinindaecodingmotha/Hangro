@@ -17,20 +17,10 @@
     <link rel="stylesheet" href="styles.css" />
     <style>
       #archive-root {
-        margin-top: clamp(1.5rem, 4vw, 2.5rem);
-      }
-
-      #archive-top {
-        margin-top: 0;
-      }
-
-      .archive-details {
-        margin-top: clamp(3rem, 7vw, 5rem);
-        padding-top: clamp(2rem, 5vw, 3rem);
-        border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.1));
         display: flex;
         flex-direction: column;
         gap: clamp(2.75rem, 6vw, 4.25rem);
+        margin-top: clamp(1.5rem, 4vw, 2.5rem);
       }
 
       .archive-card {
@@ -135,6 +125,88 @@
       .archive-actions a:hover {
         opacity: 0.7;
       }
+
+      .archive-pair-section {
+        max-width: 56rem;
+      }
+
+      .archive-pair-section h2 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+        margin: 0 0 0.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      .archive-pair-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 1rem;
+        margin: 0 0 1rem;
+        font-size: 0.82rem;
+        color: var(--ink-soft, var(--text-muted, #4a4f44));
+      }
+
+      .archive-pair-toolbar label {
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+      }
+
+      .archive-pair-select {
+        font-family: inherit;
+        font-size: 0.88rem;
+        padding: 0.35rem 0.75rem;
+        border: 1px solid var(--rule, rgba(0, 0, 0, 0.12));
+        border-radius: var(--radius, 8px);
+        background: var(--paper, var(--bg-elevated, #f6f1e5));
+        color: var(--ink, currentColor);
+      }
+
+      .archive-pair-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(0.75rem, 2vw, 1.25rem);
+      }
+
+      @media (max-width: 640px) {
+        .archive-pair-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .archive-pair-grid figure {
+        margin: 0;
+        background: var(--paper, var(--bg-elevated, #f6f1e5));
+        border-radius: var(--radius-lg, var(--radius, 12px));
+        overflow: hidden;
+      }
+
+      .archive-pair-cap {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+        border-bottom: 1px solid var(--rule-soft, rgba(0, 0, 0, 0.06));
+      }
+
+      .archive-pair-img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: rgba(0, 0, 0, 0.04);
+      }
+
+      .archive-pair-status {
+        margin: 0.65rem 0 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+      }
     </style>
   </head>
   <body class="sub">
@@ -169,38 +241,9 @@
     </main>
 
     <footer>
-      <div class="wrap">
-        <div class="footer-rich">
-          <div>
-            <p class="footer-brand">행로 · Hangro</p>
-            <p class="footer-tag">
-              빈 공간에 지역의 색과 이야기를 입혀, 머물고 싶은 한 권의
-              마을로 다시 설계합니다.
-            </p>
-            <a class="btn-link" href="booking.html">상담 신청</a>
-          </div>
-          <div class="footer-col">
-            <h4>Sitemap</h4>
-            <ul>
-              <li><a href="index.html">소개</a></li>
-              <li><a href="map-demo.html">지도</a></li>
-              <li><a href="archive.html">기록</a></li>
-              <li><a href="booking.html">예약</a></li>
-              <li><a href="team.html">팀</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Studio</h4>
-            <p>
-              경상북도 · 서울<br />
-              <a href="mailto:projecthangrow@gmail.com">projecthangrow@gmail.com</a>
-            </p>
-          </div>
-        </div>
-        <div class="footer-meta footer-inner">
-          <span>© 2026 행로 · Hangro Studio</span>
-          <span>작업 기록</span>
-        </div>
+      <div class="wrap footer-inner">
+        <span>© 행로 · Hangro Studio</span>
+        <span>작업 기록</span>
       </div>
     </footer>
 

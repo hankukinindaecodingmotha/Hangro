@@ -6,7 +6,8 @@
       "lat": 36.0859258945224,
       "lng": 129.416663964891,
       "status": "진행 중",
-      "afterReady": false,
+      "afterReady": true,
+      "afterSummary": "같은 장면 번호 기준으로 정리한 변경 후 현장 사진입니다. 전체 변천 기록은 기록 페이지에서 확인할 수 있습니다.",
       "tooltip": "첫 번째 유후공간 — 클릭하여 위치 확인",
       "title": "첫 번째 유후공간 프로젝트",
       "lead": "행로가 지도에 표시하는 첫 유후 공간 위치입니다. 좌표는 WGS84 기준 실제 값이며, 소개 문구·사진은 현장 협의에 따라 갱신됩니다.",
@@ -40,6 +41,16 @@
           "Home_1_before_13.jpeg",
           "Home_1_before_14.jpeg",
           "Home_1_before_15.jpeg"
+        ]
+      },
+      "afterPhotos": {
+        "title": "현장 사진 — 변경 후",
+        "alt": "첫 번째 유후공간 변경 후 사진",
+        "basePath": "Asset/Home_1/after/",
+        "items": [
+          "Home_1_after_08.jpeg",
+          "Home_1_after_09.jpeg",
+          "Home_1_after_12.jpeg"
         ]
       },
       "floorPlan": {
