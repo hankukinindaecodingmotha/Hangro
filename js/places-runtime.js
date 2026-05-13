@@ -863,7 +863,10 @@
 
     var photoStrip = buildPairedBeforeAfterSection(place);
 
-    var floorHtml = buildFloorPlanSection(place);
+    /* 내부 구조 스케매틱: buildFloorPlanSection·floorPlan·attachFloorPlanListeners 코드는 유지,
+       사이트 노출만 중단. 복구 시 이 블록 주석 해제 + renderArchive 루프의 attach 주석도 해제. */
+    /* var floorHtml = buildFloorPlanSection(place); */
+    var floorHtml = "";
 
     var bulletsHtml = (Array.isArray(place.bullets) ? place.bullets : [])
       .map(function (b) {
@@ -940,7 +943,7 @@
       if (pairG) attachPairedGalleryListeners(pairG);
       var stripScope = card.querySelector('[data-strip^="before-"]');
       if (stripScope) attachPhotoStripListeners(stripScope);
-      attachFloorPlanListeners(card, getPlaceFromCard(card, places));
+      /* attachFloorPlanListeners(card, getPlaceFromCard(card, places)); */
     }
 
     var anchors = root.querySelectorAll("[data-archive-anchor]");
