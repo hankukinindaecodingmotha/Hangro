@@ -616,7 +616,7 @@ section {
 
 /* ── 서브 페이지 상단 ───────────────────── */
 .page-hero {
-  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(1.5rem, 3vw, 2.25rem);
   background: var(--bg);
 }
 .page-hero h1 {
