@@ -59,6 +59,15 @@ body {
   padding-bottom: var(--safe-bottom);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* 한국어 단어 중간 끊김 방지 + 영문 긴 단어는 안전 줄바꿈 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 헤딩에서도 한국어 어절 단위 줄바꿈 */
+h1, h2, h3, h4 {
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 a {
@@ -223,11 +232,11 @@ header .wrap.nav {
   font-family: "Nanum Myeongjo", "Times New Roman", serif;
   font-size: clamp(2.2rem, 5.6vw, 3.85rem);
   font-weight: 700;
-  line-height: 1.18;
+  line-height: 1.22;
   letter-spacing: -0.035em;
   margin: 0 0 1.6rem;
   color: var(--ink);
-  max-width: 16ch;
+  max-width: 18ch;
 }
 .hero-lead {
   font-size: clamp(1rem, 1.4vw, 1.08rem);
@@ -384,8 +393,8 @@ section {
   margin: 0;
   letter-spacing: -0.03em;
   color: var(--ink);
-  line-height: 1.2;
-  max-width: 14ch;
+  line-height: 1.25;
+  max-width: 20ch;
 }
 .section-head p {
   margin: 0;
@@ -588,8 +597,8 @@ section {
   margin: 0;
   color: var(--bg);
   letter-spacing: -0.03em;
-  line-height: 1.2;
-  max-width: 18ch;
+  line-height: 1.25;
+  max-width: 22ch;
 }
 .banner-side p {
   margin: 0 0 1.5rem;
@@ -616,8 +625,8 @@ section {
   margin: 0 0 0.85rem;
   letter-spacing: -0.03em;
   color: var(--ink);
-  line-height: 1.2;
-  max-width: 18ch;
+  line-height: 1.25;
+  max-width: 22ch;
 }
 .page-hero p {
   margin: 0;
@@ -964,6 +973,49 @@ footer a:hover { color: var(--ink); opacity: 0.65; }
   .pillars.bento > .pillar:nth-child(1) .pillar-icon { color: rgba(239, 233, 220, 0.6); }
   .pillars.bento > .pillar:nth-child(1) h3 { color: var(--bg); font-size: 1.45rem; }
   .pillars.bento > .pillar:nth-child(1) p { color: rgba(239, 233, 220, 0.78); font-size: 1rem; }
+}
+
+/* ── About(01): 상단 마커·헤더 호버 시 벤토 박스 반응 ─ */
+#about .pillars.bento .pillar {
+  transition:
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.42s ease;
+  will-change: transform;
+}
+
+#about:has(.section-marker:hover) .pillars.bento .pillar,
+#about:has(.section-head:hover) .pillars.bento .pillar {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(26, 36, 25, 0.1);
+}
+
+#about:has(.section-marker:hover) .pillars.bento .pillar:nth-child(1),
+#about:has(.section-head:hover) .pillars.bento .pillar:nth-child(1) {
+  transition-delay: 0s;
+}
+#about:has(.section-marker:hover) .pillars.bento .pillar:nth-child(2),
+#about:has(.section-head:hover) .pillars.bento .pillar:nth-child(2) {
+  transition-delay: 0.05s;
+}
+#about:has(.section-marker:hover) .pillars.bento .pillar:nth-child(3),
+#about:has(.section-head:hover) .pillars.bento .pillar:nth-child(3) {
+  transition-delay: 0.1s;
+}
+
+#about:has(.section-marker:hover) .pillars.bento > .pillar:nth-child(1),
+#about:has(.section-head:hover) .pillars.bento > .pillar:nth-child(1) {
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #about .pillars.bento .pillar {
+    transition: none;
+  }
+  #about:has(.section-marker:hover) .pillars.bento .pillar,
+  #about:has(.section-head:hover) .pillars.bento .pillar {
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 /* ── Case 이미지 슬롯 ─────────────────── */
