@@ -851,6 +851,44 @@
       });
   }
 
+  function archiveListCoverFromPlace(place) {
+    var ap = place.afterPhotos;
+    if (!ap || !Array.isArray(ap.items) || !ap.items.length) {
+      return { src: "", alt: "" };
+    }
+    var base = ap.basePath || "";
+    var altStem = ap.alt || place.title || "변경 후";
+    var labels = place.photoSlotLabels || {};
+    var slot = null;
+    var lk;
+    for (lk in labels) {
+      if (Object.prototype.hasOwnProperty.call(labels, lk) && String(labels[lk]) === "침실") {
+        slot = parseInt(lk, 10);
+        break;
+      }
+    }
+    if (!isFiniteNum(slot) && isFiniteNum(place.archiveListCoverSlot)) {
+      slot = place.archiveListCoverSlot;
+    }
+    if (!isFiniteNum(slot)) {
+      slot = 9;
+    }
+    var idx;
+    for (idx = 0; idx < ap.items.length; idx++) {
+      var sn = photoSlotFromFilename(ap.items[idx]);
+      if (sn === slot) {
+        return {
+          src: base + ap.items[idx],
+          alt: altStem + " — 침실 · 변경 후",
+        };
+      }
+    }
+    return {
+      src: base + ap.items[0],
+      alt: altStem + " — 변경 후",
+    };
+  }
+
   function buildArchiveCardSummary(place, index) {
     var caseNo = "Case " + (index + 1 < 10 ? "0" : "") + (index + 1);
     var locationTag = "";
@@ -868,12 +906,22 @@
       ? '<span>' + escapeHtml(place.status) + '</span>'
       : "";
 
+    var cov = archiveListCoverFromPlace(place);
+    var coverHtml = cov.src
+      ? '<span class="case-image"><img src="' +
+        escapeHtml(cov.src) +
+        '" alt="' +
+        escapeHtml(cov.alt) +
+        '" loading="lazy" decoding="async" /></span>'
+      : '<span class="case-image case-image-empty">현장 사진 준비 중</span>';
+
     return (
       '<a class="case" href="#' +
       escapeHtml(place.id) +
       '" data-archive-anchor="' +
       escapeHtml(place.id) +
       '">' +
+      coverHtml +
       '<div class="case-meta">' +
       '<span class="case-no">' + escapeHtml(caseNo) + '</span>' +
       (locationTag ? '<span>' + locationTag + '</span>' : "") +
