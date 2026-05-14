@@ -31,7 +31,7 @@
       }
 
       .archive-head {
-        max-width: 44rem;
+        max-width: 56rem;
         display: flex;
         flex-direction: column;
         gap: 0.95rem;
@@ -94,7 +94,7 @@
         padding: clamp(1.1rem, 3vw, 1.5rem);
         background: var(--paper, var(--bg-elevated, #f6f1e5));
         border-radius: var(--radius-lg, var(--radius, 12px));
-        max-width: 44rem;
+        max-width: 56rem;
       }
 
       .archive-bullets h3 {
@@ -131,7 +131,7 @@
       }
 
       .archive-story-block {
-        max-width: 44rem;
+        max-width: 56rem;
         padding: clamp(1.1rem, 2.8vw, 1.5rem) 0 clamp(0.15rem, 0.8vw, 0.35rem);
       }
 
@@ -172,7 +172,7 @@
         display: grid;
         grid-template-columns: 4.25rem 1fr;
         gap: 0.5rem 1rem;
-        align-items: start;
+        align-items: center;
         padding: 0.95rem 1.05rem;
         background: var(--paper, var(--bg-elevated, #f6f1e5));
         border-radius: var(--radius-lg, var(--radius, 12px));
@@ -182,6 +182,10 @@
       @media (max-width: 520px) {
         .archive-story-shift {
           grid-template-columns: 1fr;
+        }
+
+        .archive-story-space {
+          padding-top: 0;
         }
       }
 
@@ -195,6 +199,11 @@
 
       .archive-story-shift-body {
         min-width: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.45rem 0.75rem;
       }
 
       .archive-story-lbl {
@@ -211,20 +220,20 @@
 
       .archive-story-before,
       .archive-story-after {
-        margin: 0.3rem 0 0;
+        margin: 0;
+        flex: 1 1 9rem;
+        min-width: 0;
         font-size: 0.9rem;
-        line-height: 1.62;
+        line-height: 1.55;
         color: var(--ink-soft, var(--text-muted, #4a4f44));
       }
 
-      .archive-story-before {
-        margin-top: 0;
-      }
-
       .archive-story-arrow {
-        margin: 0.2rem 0;
-        text-align: center;
-        font-size: 0.95rem;
+        margin: 0;
+        flex: 0 0 auto;
+        line-height: 1;
+        font-size: 1rem;
+        font-weight: 600;
         color: var(--green-deep, #3d6e2c);
       }
 

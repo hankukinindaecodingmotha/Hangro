@@ -909,7 +909,7 @@
           '<p class="archive-story-before"><span class="archive-story-lbl">이전</span> ' +
           escapeHtml(String(row.before || "")) +
           "</p>" +
-          '<p class="archive-story-arrow" aria-hidden="true">↓</p>' +
+          '<p class="archive-story-arrow" aria-hidden="true">→</p>' +
           '<p class="archive-story-after"><span class="archive-story-lbl">방향</span> ' +
           escapeHtml(String(row.after || "")) +
           "</p>" +
