@@ -851,11 +851,100 @@
       });
   }
 
+  function buildArchiveStorySection(place) {
+    var st = place.archiveStory;
+    if (!st || typeof st !== "object") {
+      return "";
+    }
+    var hid = String(place.id).replace(/[^a-zA-Z0-9_-]/g, "") + "-story-heading";
+    var parts = [];
+    parts.push(
+      '<section class="archive-story-block" aria-labelledby="' +
+      escapeHtml(hid) +
+      '">'
+    );
+    if (st.eyebrow) {
+      parts.push(
+        '<p class="archive-story-eyebrow">' +
+        escapeHtml(String(st.eyebrow)) +
+        "</p>"
+      );
+    }
+    if (st.title) {
+      parts.push(
+        '<h2 class="archive-story-title" id="' +
+        escapeHtml(hid) +
+        '">' +
+        escapeHtml(String(st.title)) +
+        "</h2>"
+      );
+    }
+    if (Array.isArray(st.paragraphs)) {
+      var pi;
+      for (pi = 0; pi < st.paragraphs.length; pi++) {
+        parts.push(
+          '<p class="archive-story-p">' +
+          escapeHtml(String(st.paragraphs[pi])) +
+          "</p>"
+        );
+      }
+    }
+    if (Array.isArray(st.highlights) && st.highlights.length) {
+      parts.push('<div class="archive-story-shifts" role="list">');
+      var hi;
+      for (hi = 0; hi < st.highlights.length; hi++) {
+        var row = st.highlights[hi];
+        if (!row || typeof row !== "object") {
+          continue;
+        }
+        var sp = row.space
+          ? '<span class="archive-story-space">' +
+            escapeHtml(String(row.space)) +
+            "</span>"
+          : "";
+        parts.push(
+          '<div class="archive-story-shift" role="listitem">' +
+          sp +
+          '<div class="archive-story-shift-body">' +
+          '<p class="archive-story-before"><span class="archive-story-lbl">이전</span> ' +
+          escapeHtml(String(row.before || "")) +
+          "</p>" +
+          '<p class="archive-story-arrow" aria-hidden="true">↓</p>' +
+          '<p class="archive-story-after"><span class="archive-story-lbl">방향</span> ' +
+          escapeHtml(String(row.after || "")) +
+          "</p>" +
+          "</div>" +
+          "</div>"
+        );
+      }
+      parts.push("</div>");
+    }
+    if (st.concept && typeof st.concept === "object") {
+      var c = st.concept;
+      parts.push('<div class="archive-story-concept">');
+      if (c.title) {
+        parts.push("<h3>" + escapeHtml(String(c.title)) + "</h3>");
+      }
+      if (Array.isArray(c.lines)) {
+        parts.push("<ul>");
+        var ci;
+        for (ci = 0; ci < c.lines.length; ci++) {
+          parts.push("<li>" + escapeHtml(String(c.lines[ci])) + "</li>");
+        }
+        parts.push("</ul>");
+      }
+      parts.push("</div>");
+    }
+    parts.push("</section>");
+    return parts.join("");
+  }
+
   function buildArchiveDetail(place) {
     var statusHtml = place.status
       ? '<span class="status-pill">' + escapeHtml(place.status) + "</span>"
       : "";
 
+    var storyHtml = buildArchiveStorySection(place);
     var photoStrip = buildPairedBeforeAfterSection(place);
 
     /* 내부 구조 스케매틱: buildFloorPlanSection·floorPlan·attachFloorPlanListeners 코드는 유지,
@@ -890,6 +979,7 @@
       escapeHtml(place.title) +
       "</h2>" +
       "</header>" +
+      storyHtml +
       photoStrip +
       floorHtml +
       bulletsBlock +
