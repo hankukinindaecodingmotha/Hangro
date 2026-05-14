@@ -420,10 +420,13 @@
     applySelection();
   }
 
-  function buildPhotoStrip(photos, fallbackTitle, idPrefix) {
+  function buildPhotoStrip(photos, fallbackTitle, idPrefix, options) {
     if (!photos || !Array.isArray(photos.items) || !photos.items.length) {
       return "";
     }
+
+    options = options || {};
+    var useGrid = options.layout === "grid";
 
     var prefix = idPrefix || "photos";
     var title = photos.title || fallbackTitle || "현장 사진";
@@ -450,6 +453,25 @@
         );
       })
       .join("");
+
+    if (useGrid) {
+      return (
+        '<section class="ba-section ba-photos-section ba-photos-section--grid" data-strip="' +
+        escapeHtml(prefix) +
+        '" aria-labelledby="' +
+        headingId +
+        '">' +
+        '<h2 id="' +
+        headingId +
+        '">' +
+        escapeHtml(title) +
+        "</h2>" +
+        '<div class="ba-photos-grid">' +
+        slides +
+        "</div>" +
+        "</section>"
+      );
+    }
 
     return (
       '<section class="ba-section ba-photos-section" data-strip="' +
@@ -757,11 +779,27 @@
       "</p>";
 
     if (hasAfter) {
+      var beforeStrip = "";
+      if (
+        place.beforePhotos &&
+        Array.isArray(place.beforePhotos.items) &&
+        place.beforePhotos.items.length
+      ) {
+        beforeStrip = buildPhotoStrip(
+          place.beforePhotos,
+          "현장 사진 — 변경 전",
+          "before-detail",
+          { layout: "grid" }
+        );
+      }
       var afterStrip = buildPhotoStrip(
         place.afterPhotos,
         "현장 사진 — 변경 후",
-        "after"
+        "after",
+        { layout: "grid" }
       );
+      var compareWrap =
+        '<div class="detail-compare-grid">' + beforeStrip + afterStrip + "</div>";
       var afterSummaryHtml = place.afterSummary
         ? '<section class="detail-story" aria-labelledby="result-heading">' +
           '<h2 id="result-heading">결과 · 콘셉트</h2>' +
@@ -770,9 +808,11 @@
           "</p>" +
           "</section>"
         : "";
-      main.innerHTML = afterStrip + afterSummaryHtml + bottomLinks;
-      var afterScope = main.querySelector('[data-strip="after"]');
-      if (afterScope) attachPhotoStripListeners(afterScope);
+      main.innerHTML = compareWrap + afterSummaryHtml + bottomLinks;
+      var photoSections = main.querySelectorAll(".ba-photos-section");
+      for (var si = 0; si < photoSections.length; si++) {
+        attachPhotoStripListeners(photoSections[si]);
+      }
     } else {
       main.innerHTML =
         '<section class="detail-after-pending" aria-labelledby="pending-heading">' +

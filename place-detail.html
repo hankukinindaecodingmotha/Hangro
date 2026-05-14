@@ -87,6 +87,43 @@
         color: var(--text-muted);
       }
 
+      /* 상세: 변경 전·후를 2열 그리드, 각 열 안 사진도 2열 */
+      .detail-compare-grid {
+        display: grid;
+        gap: clamp(1.5rem, 3.5vw, 2.75rem);
+        margin-top: 0.35rem;
+      }
+
+      @media (min-width: 800px) {
+        .detail-compare-grid {
+          grid-template-columns: 1fr 1fr;
+          align-items: start;
+        }
+
+        .detail-compare-grid > .ba-photos-section--grid:only-child {
+          grid-column: 1 / -1;
+        }
+      }
+
+      .ba-photos-section--grid > h2 {
+        margin-bottom: 0.85rem;
+      }
+
+      .ba-photos-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem 0.75rem;
+      }
+
+      .ba-photos-section--grid .ba-photo {
+        margin: 0;
+      }
+
+      .ba-photos-section--grid .ba-photo img {
+        aspect-ratio: 4 / 3;
+        border-radius: var(--radius-lg);
+      }
+
       .ba-grid {
         display: grid;
         gap: 1.25rem;
