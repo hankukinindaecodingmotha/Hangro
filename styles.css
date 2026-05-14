@@ -1102,64 +1102,77 @@ footer a:hover { color: var(--ink); opacity: 0.65; }
   max-width: 4rem;
 }
 
-/* ── Pillar 벤토 (첫 번째 카드 강조) ──── */
+/* ── Pillar 벤토 (기본 동등, 호버한 카드만 강조) ──── */
 @media (min-width: 760px) {
   .pillars.bento {
-    grid-template-columns: 1.5fr 1fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto;
     gap: 1rem;
+    align-items: stretch;
   }
-  .pillars.bento > .pillar:nth-child(1) {
-    grid-row: span 2;
-    padding: 2.25rem 2rem 2.5rem;
-    background: var(--ink);
-    color: var(--bg);
-  }
-  .pillars.bento > .pillar:nth-child(1) .pillar-icon { color: rgba(239, 233, 220, 0.6); }
-  .pillars.bento > .pillar:nth-child(1) h3 { color: var(--bg); font-size: 1.45rem; }
-  .pillars.bento > .pillar:nth-child(1) p { color: rgba(239, 233, 220, 0.78); font-size: 1rem; }
 }
 
-/* ── About(01): 상단 마커·헤더 호버 시 벤토 박스 반응 ─ */
 #about .pillars.bento .pillar {
+  position: relative;
+  z-index: 0;
   transition:
-    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.42s ease;
-  will-change: transform;
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.38s ease,
+    background-color 0.38s ease,
+    color 0.38s ease,
+    opacity 0.38s ease;
 }
 
-#about:has(.section-marker:hover) .pillars.bento .pillar,
-#about:has(.section-head:hover) .pillars.bento .pillar {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 40px rgba(26, 36, 25, 0.1);
+@media (hover: hover) and (pointer: fine) {
+  #about .pillars.bento:has(> .pillar:hover) > .pillar:not(:hover) {
+    opacity: 0.52;
+    transform: scale(0.985);
+  }
 }
 
-#about:has(.section-marker:hover) .pillars.bento .pillar:nth-child(1),
-#about:has(.section-head:hover) .pillars.bento .pillar:nth-child(1) {
-  transition-delay: 0s;
-}
-#about:has(.section-marker:hover) .pillars.bento .pillar:nth-child(2),
-#about:has(.section-head:hover) .pillars.bento .pillar:nth-child(2) {
-  transition-delay: 0.05s;
-}
-#about:has(.section-marker:hover) .pillars.bento .pillar:nth-child(3),
-#about:has(.section-head:hover) .pillars.bento .pillar:nth-child(3) {
-  transition-delay: 0.1s;
+#about .pillars.bento .pillar:hover,
+#about .pillars.bento .pillar:focus-visible {
+  z-index: 2;
+  opacity: 1;
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 22px 50px rgba(26, 36, 25, 0.16);
+  background: var(--ink);
+  color: var(--bg);
+  outline: none;
 }
 
-#about:has(.section-marker:hover) .pillars.bento > .pillar:nth-child(1),
-#about:has(.section-head:hover) .pillars.bento > .pillar:nth-child(1) {
-  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.28);
+#about .pillars.bento .pillar:hover .pillar-icon,
+#about .pillars.bento .pillar:focus-visible .pillar-icon {
+  color: rgba(239, 233, 220, 0.65);
+}
+
+#about .pillars.bento .pillar:hover h3,
+#about .pillars.bento .pillar:focus-visible h3 {
+  color: var(--bg);
+  font-size: 1.38rem;
+}
+
+#about .pillars.bento .pillar:hover p,
+#about .pillars.bento .pillar:focus-visible p {
+  color: rgba(239, 233, 220, 0.82);
+  font-size: 1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
   #about .pillars.bento .pillar {
-    transition: none;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
   }
-  #about:has(.section-marker:hover) .pillars.bento .pillar,
-  #about:has(.section-head:hover) .pillars.bento .pillar {
+
+  #about .pillars.bento .pillar:hover,
+  #about .pillars.bento .pillar:focus-visible {
     transform: none;
     box-shadow: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    #about .pillars.bento:has(> .pillar:hover) > .pillar:not(:hover) {
+      transform: none;
+    }
   }
 }
 
