@@ -927,6 +927,151 @@ footer a:hover { color: var(--ink); opacity: 0.65; }
   margin-top: 0.2rem;
 }
 
+/* ── 메인: 게스트 / 공간 제공자 소개 ─────── */
+.audience-strip {
+  padding: clamp(2.25rem, 5.5vw, 3.75rem) 0 clamp(2.5rem, 6vw, 4rem);
+  border-top: 1px solid var(--rule-soft);
+  background: linear-gradient(
+    185deg,
+    color-mix(in srgb, var(--paper) 88%, var(--bg)) 0%,
+    var(--bg) 58%
+  );
+}
+
+.audience-strip-inner {
+  text-align: center;
+}
+
+.audience-eyebrow {
+  margin: 0 0 0.85rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.audience-heading {
+  margin: 0 auto 1rem;
+  max-width: 22ch;
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-size: clamp(1.45rem, 3.2vw, 2.05rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.28;
+  color: var(--ink);
+}
+
+.audience-lead {
+  margin: 0 auto 2rem;
+  max-width: 48rem;
+  font-size: clamp(0.94rem, 1.35vw, 1.02rem);
+  color: var(--ink-soft);
+  line-height: 1.75;
+  text-align: center;
+}
+
+.audience-lead strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.audience-grid {
+  display: grid;
+  gap: 1rem;
+  text-align: left;
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 720px) {
+  .audience-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.15rem 1.25rem;
+  }
+}
+
+.audience-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-height: 100%;
+  padding: 1.65rem 1.5rem 1.5rem;
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--ink) 6%, transparent);
+  box-shadow: var(--shadow);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.audience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(26, 36, 25, 0.09);
+  border-color: color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+.audience-label {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.audience-card h3 {
+  margin: 0;
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.audience-card p {
+  margin: 0;
+  flex: 1;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.72;
+}
+
+.audience-card p a {
+  font-weight: 600;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
+}
+
+.audience-card p a:hover {
+  opacity: 0.75;
+}
+
+.audience-card-foot {
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.audience-card--guest .audience-card-foot .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.audience-card--host .audience-card-foot .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audience-card {
+    transition: none;
+  }
+  .audience-card:hover {
+    transform: none;
+  }
+}
+
 /* ── 섹션 마커 (No. 01 — About) ──────────── */
 .section-marker {
   display: flex;
