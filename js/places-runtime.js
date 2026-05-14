@@ -327,7 +327,7 @@
       } else if (slotLabels[String(n)] !== undefined && slotLabels[String(n)] !== null) {
         room = String(slotLabels[String(n)]);
       }
-      var optLabel = padSlot(n) + "번" + (room ? " · " + room : "");
+      var optLabel = room ? room : padSlot(n) + "번";
       options +=
         '<option value="' +
         n +
@@ -343,7 +343,7 @@
     }
 
     var hint =
-      "같은 번호(예: 08번)의 변경 전·후 파일만 짝을 이루어 비교합니다.";
+      "같은 장면의 변경 전·후 파일만 짝을 이루어 비교합니다.";
 
     return (
       '<section class="ba-section archive-pair-section" aria-labelledby="' +
@@ -353,7 +353,7 @@
       '">' +
       '<h2 id="' +
       secId +
-      '-heading">변경 전 · 변경 후 (동일 번호)</h2>' +
+      '-heading">변경 전 · 변경 후</h2>' +
       '<p class="hint">' +
       escapeHtml(hint) +
       "</p>" +
@@ -401,19 +401,12 @@
       imgB.src = bSrc;
       imgA.src = aSrc;
       if (room) {
-        imgB.alt = "변경 전 " + room + " (" + padSlot(n) + "번)";
-        imgA.alt = "변경 후 " + room + " (" + padSlot(n) + "번)";
+        imgB.alt = "변경 전 " + room;
+        imgA.alt = "변경 후 " + room;
         if (capB) capB.textContent = "변경 전 · " + room;
         if (capA) capA.textContent = "변경 후 · " + room;
         if (status) {
-          status.textContent =
-            "비교 가능 " +
-            sel.options.length +
-            "장면 · " +
-            room +
-            " (" +
-            padSlot(n) +
-            "번)";
+          status.textContent = room + " 전·후 비교";
         }
       } else {
         imgB.alt = "변경 전 " + padSlot(n) + "번";
@@ -421,12 +414,7 @@
         if (capB) capB.textContent = "변경 전 · " + padSlot(n) + "번";
         if (capA) capA.textContent = "변경 후 · " + padSlot(n) + "번";
         if (status) {
-          status.textContent =
-            "비교 가능 " +
-            sel.options.length +
-            "장면 · " +
-            padSlot(n) +
-            "번";
+          status.textContent = padSlot(n) + "번 전·후 비교";
         }
       }
     }
@@ -877,12 +865,6 @@
   }
 
   function buildArchiveDetail(place) {
-    var tagsHtml = (Array.isArray(place.tags) ? place.tags : [])
-      .map(function (t) {
-        return "<li>" + escapeHtml(t) + "</li>";
-      })
-      .join("");
-
     var statusHtml = place.status
       ? '<span class="status-pill">' + escapeHtml(place.status) + "</span>"
       : "";
@@ -920,12 +902,6 @@
       "<h2>" +
       escapeHtml(place.title) +
       "</h2>" +
-      '<p class="lead">' +
-      escapeHtml(place.lead) +
-      "</p>" +
-      '<ul class="tags">' +
-      tagsHtml +
-      "</ul>" +
       "</header>" +
       photoStrip +
       floorHtml +

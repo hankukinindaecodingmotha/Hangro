@@ -95,6 +95,12 @@ header {
   background: var(--bg);
 }
 
+header .wrap.nav {
+  --nav-edge-extra: clamp(0.55rem, 2.8vw, 1.4rem);
+  padding-left: calc(max(var(--gutter), var(--safe-left)) + var(--nav-edge-extra));
+  padding-right: calc(max(var(--gutter), var(--safe-right)) + var(--nav-edge-extra));
+}
+
 .nav {
   display: flex;
   align-items: center;
