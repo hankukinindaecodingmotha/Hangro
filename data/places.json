@@ -52,7 +52,7 @@
         ]
       },
       "afterPhotos": {
-        "title": "현장 사진 — 변경 후",
+        "title": "프로젝트 진행 후",
         "alt": "첫 번째 유후공간 변경 후 사진",
         "basePath": "Asset/Home_1/after/",
         "items": [

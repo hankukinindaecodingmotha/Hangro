@@ -779,27 +779,13 @@
       "</p>";
 
     if (hasAfter) {
-      var beforeStrip = "";
-      if (
-        place.beforePhotos &&
-        Array.isArray(place.beforePhotos.items) &&
-        place.beforePhotos.items.length
-      ) {
-        beforeStrip = buildPhotoStrip(
-          place.beforePhotos,
-          "현장 사진 — 변경 전",
-          "before-detail",
-          { layout: "grid" }
-        );
-      }
+      /* 지도·핀에서 들어오는 상세: 진행 후(변경 후) 사진만 */
       var afterStrip = buildPhotoStrip(
         place.afterPhotos,
-        "현장 사진 — 변경 후",
+        "프로젝트 진행 후",
         "after",
         { layout: "grid" }
       );
-      var compareWrap =
-        '<div class="detail-compare-grid">' + beforeStrip + afterStrip + "</div>";
       var afterSummaryHtml = place.afterSummary
         ? '<section class="detail-story" aria-labelledby="result-heading">' +
           '<h2 id="result-heading">결과 · 콘셉트</h2>' +
@@ -808,7 +794,7 @@
           "</p>" +
           "</section>"
         : "";
-      main.innerHTML = compareWrap + afterSummaryHtml + bottomLinks;
+      main.innerHTML = afterStrip + afterSummaryHtml + bottomLinks;
       var photoSections = main.querySelectorAll(".ba-photos-section");
       for (var si = 0; si < photoSections.length; si++) {
         attachPhotoStripListeners(photoSections[si]);
