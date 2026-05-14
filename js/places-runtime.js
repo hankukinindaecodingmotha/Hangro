@@ -314,14 +314,20 @@
       );
     }
 
-    var bAlt = bp.alt || "변경 전";
-    var aAlt = ap.alt || "변경 후";
+    var slotLabels = place.photoSlotLabels || {};
     var secId = "pair-" + String(place.id).replace(/[^a-zA-Z0-9_-]/g, "");
     var options = "";
     for (i = 0; i < paired.length; i++) {
       var n = paired[i];
       var bSrc = bb + beforeMap[n];
       var aSrc = ab + afterMap[n];
+      var room = "";
+      if (slotLabels[n] !== undefined && slotLabels[n] !== null && slotLabels[n] !== "") {
+        room = String(slotLabels[n]);
+      } else if (slotLabels[String(n)] !== undefined && slotLabels[String(n)] !== null) {
+        room = String(slotLabels[String(n)]);
+      }
+      var optLabel = padSlot(n) + "번" + (room ? " · " + room : "");
       options +=
         '<option value="' +
         n +
@@ -329,9 +335,11 @@
         escapeHtml(bSrc) +
         '" data-a-src="' +
         escapeHtml(aSrc) +
+        '" data-room="' +
+        escapeHtml(room) +
         '">' +
-        padSlot(n) +
-        "번</option>";
+        escapeHtml(optLabel) +
+        "</option>";
     }
 
     var hint =
@@ -361,15 +369,11 @@
       "</div>" +
       '<div class="archive-pair-grid">' +
       "<figure>" +
-      '<figcaption class="archive-pair-cap">' +
-      escapeHtml(bAlt) +
-      "</figcaption>" +
+      '<figcaption class="archive-pair-cap" data-pair-cap-before>변경 전</figcaption>' +
       '<img class="archive-pair-img" data-pair-before src="" alt="" loading="lazy" decoding="async" />' +
       "</figure>" +
       "<figure>" +
-      '<figcaption class="archive-pair-cap">' +
-      escapeHtml(aAlt) +
-      "</figcaption>" +
+      '<figcaption class="archive-pair-cap" data-pair-cap-after>변경 후</figcaption>' +
       '<img class="archive-pair-img" data-pair-after src="" alt="" loading="lazy" decoding="async" />' +
       "</figure>" +
       "</div>" +
@@ -383,6 +387,8 @@
     var imgB = galleryEl.querySelector("[data-pair-before]");
     var imgA = galleryEl.querySelector("[data-pair-after]");
     var status = galleryEl.querySelector("[data-pair-status]");
+    var capB = galleryEl.querySelector("[data-pair-cap-before]");
+    var capA = galleryEl.querySelector("[data-pair-cap-after]");
     if (!sel || !imgB || !imgA) return;
 
     function applySelection() {
@@ -391,17 +397,37 @@
       var n = parseInt(opt.value, 10);
       var bSrc = opt.getAttribute("data-b-src") || "";
       var aSrc = opt.getAttribute("data-a-src") || "";
+      var room = (opt.getAttribute("data-room") || "").trim();
       imgB.src = bSrc;
       imgA.src = aSrc;
-      imgB.alt = "변경 전 " + padSlot(n) + "번";
-      imgA.alt = "변경 후 " + padSlot(n) + "번";
-      if (status) {
-        status.textContent =
-          "비교 가능 " +
-          sel.options.length +
-          "장면 · " +
-          padSlot(n) +
-          "번";
+      if (room) {
+        imgB.alt = "변경 전 " + room + " (" + padSlot(n) + "번)";
+        imgA.alt = "변경 후 " + room + " (" + padSlot(n) + "번)";
+        if (capB) capB.textContent = "변경 전 · " + room;
+        if (capA) capA.textContent = "변경 후 · " + room;
+        if (status) {
+          status.textContent =
+            "비교 가능 " +
+            sel.options.length +
+            "장면 · " +
+            room +
+            " (" +
+            padSlot(n) +
+            "번)";
+        }
+      } else {
+        imgB.alt = "변경 전 " + padSlot(n) + "번";
+        imgA.alt = "변경 후 " + padSlot(n) + "번";
+        if (capB) capB.textContent = "변경 전 · " + padSlot(n) + "번";
+        if (capA) capA.textContent = "변경 후 · " + padSlot(n) + "번";
+        if (status) {
+          status.textContent =
+            "비교 가능 " +
+            sel.options.length +
+            "장면 · " +
+            padSlot(n) +
+            "번";
+        }
       }
     }
 
