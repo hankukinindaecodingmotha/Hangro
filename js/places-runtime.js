@@ -196,10 +196,7 @@
 
           var address = s.address
             ? escapeHtml(s.address)
-            : "좌표 " +
-              Number(s.lat).toFixed(5) +
-              ", " +
-              Number(s.lng).toFixed(5);
+            : escapeHtml("지도에서 위치를 확인할 수 있습니다.");
 
           var detailHref =
             "place-detail.html?id=" + encodeURIComponent(s.id);
