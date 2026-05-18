@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>숙소 수정 — 집주인 · 행로</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
+  </head>
+  <body class="sub portal">
+    <header>
+      <div class="wrap nav">
+        <a href="../index.html" class="logo">행로</a>
+        <nav class="nav-links">
+          <a href="../guest/">게스트</a>
+          <a href="./" aria-current="page">집주인</a>
+          <a href="../company/">회사</a>
+        </nav>
+        <a class="nav-cta" href="../booking.html">상담 예약</a>
+      </div>
+    </header>
+    <div class="page-hero">
+      <div class="wrap">
+        <p class="badge">Host</p>
+        <h1 id="prop-title">숙소 수정</h1>
+        <p>소개·연락처·이용 안내를 편집합니다. (데모: 저장은 API 연동 후)</p>
+      </div>
+    </div>
+    <main class="page-fill">
+      <nav class="portal-subnav wrap">
+        <a href="./">홈</a>
+        <a href="properties.html" aria-current="page">내 숙소</a>
+        <a href="bookings.html">예약</a>
+        <a href="messages.html">문의함</a>
+      </nav>
+      <div class="wrap">
+        <p class="portal-breadcrumb"><a href="properties.html">내 숙소</a> / 수정</p>
+        <form class="portal-form" id="host-property-form">
+          <label for="p-name">숙소 이름</label>
+          <input id="p-name" name="name" type="text" />
+          <label for="p-summary">한 줄 소개</label>
+          <textarea id="p-summary" name="summary"></textarea>
+          <label for="p-address">주소</label>
+          <input id="p-address" name="address" type="text" />
+          <button type="submit" class="btn btn-primary">저장 (데모)</button>
+        </form>
+        <p id="portal-form-note" hidden style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem"></p>
+      </div>
+    </main>
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 행로 · Hangro Studio</span>
+        <span>집주인</span>
+      </div>
+    </footer>
+    <script src="../js/portal-data.js"></script>
+    <script src="../js/portal-ui.js"></script>
+    <script>
+      (function () {
+        var D = window.PORTAL_DATA;
+        var id = PortalUI.queryParam("id") || "home-1";
+        var p = D.getProperty(id);
+        if (!p) return;
+        document.getElementById("prop-title").textContent = p.name + " 수정";
+        document.getElementById("p-name").value = p.name;
+        document.getElementById("p-summary").value = p.summary;
+        document.getElementById("p-address").value = p.address;
+        document.getElementById("host-property-form").addEventListener("submit", function (e) {
+          e.preventDefault();
+          var note = document.getElementById("portal-form-note");
+          note.textContent = "데모: 실제 저장은 API 연동 후 반영됩니다.";
+          note.hidden = false;
+        });
+      })();
+    </script>
+  </body>
+</html>

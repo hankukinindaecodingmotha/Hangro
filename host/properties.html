@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>내 숙소 — 집주인 · 행로</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
+  </head>
+  <body class="sub portal">
+    <header>
+      <div class="wrap nav">
+        <a href="../index.html" class="logo">행로</a>
+        <nav class="nav-links">
+          <a href="../guest/">게스트</a>
+          <a href="./" aria-current="page">집주인</a>
+          <a href="../company/">회사</a>
+        </nav>
+        <a class="nav-cta" href="../booking.html">상담 예약</a>
+      </div>
+    </header>
+    <div class="page-hero">
+      <div class="wrap">
+        <p class="badge">Host</p>
+        <h1>내 숙소</h1>
+        <p>등록·운영 중인 공간 목록입니다.</p>
+      </div>
+    </div>
+    <main class="page-fill">
+      <nav class="portal-subnav wrap">
+        <a href="./">홈</a>
+        <a href="properties.html" aria-current="page">내 숙소</a>
+        <a href="bookings.html">예약</a>
+        <a href="messages.html">문의함</a>
+      </nav>
+      <div class="wrap">
+        <div id="host-properties-list" class="portal-grid portal-grid--2"></div>
+      </div>
+    </main>
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 행로 · Hangro Studio</span>
+        <span>집주인</span>
+      </div>
+    </footer>
+    <script src="../js/portal-data.js"></script>
+    <script src="../js/portal-ui.js"></script>
+    <script>
+      (function () {
+        var D = window.PORTAL_DATA;
+        var U = window.PortalUI;
+        var list = D.properties.filter(function (p) {
+          return p.hostId === D.demoHostId;
+        });
+        document.getElementById("host-properties-list").innerHTML = list
+          .map(function (p) {
+            return (
+              '<article class="portal-card"><h3>' +
+              U.escapeHtml(p.name) +
+              "</h3><p>" +
+              U.statusBadge(p.status) +
+              " " +
+              U.escapeHtml(p.summary) +
+              '</p><div class="portal-card-actions"><a class="btn btn-primary" href="property-edit.html?id=' +
+              encodeURIComponent(p.id) +
+              '">정보 수정</a></div></article>'
+            );
+          })
+          .join("");
+      })();
+    </script>
+  </body>
+</html>

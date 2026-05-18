@@ -1,0 +1,32 @@
+Hangro — 로컬 데모로 사이트·API 시험하기
+========================================
+
+1) 통합 데모 서버 (정적 페이지 + 목 API, 권장)
+
+   cd (저장소 루트)
+   python3 demo/server.py
+
+   브라우저에서 예:
+   http://127.0.0.1:9090/demo/index.html     ← 데모 허브
+   http://127.0.0.1:9090/archive.html        ← 기록 페이지 (places.json fetch)
+   http://127.0.0.1:9090/guest/              ← 게스트 포털 + 하단 API 패널
+
+   포트 변경:
+   python3 demo/server.py 8766
+   그런 다음 URL의 9090을 위에서 준 포트로 바꿉니다.
+
+2) 터미널만으로 응답 확인
+
+   chmod +x demo/smoke-test.sh
+   ./demo/smoke-test.sh
+   (다른 포트: ./demo/smoke-test.sh 8766)
+
+3) 주의
+
+   python3 -m http.server 만 켠 경우에는 /api/* 가 없어서
+   포털의 "데모 연동 점검"은 실패 메시지가 나옵니다.
+   반드시 demo/server.py 로 여세요.
+
+4) GitHub Pages
+
+   Pages는 정적 파일만 제공합니다. 이 목 API는 로컬 데모 전용입니다.

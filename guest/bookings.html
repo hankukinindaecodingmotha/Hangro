@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>내 예약 — 게스트 · 행로</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
+  </head>
+  <body class="sub portal">
+    <header>
+      <div class="wrap nav">
+        <a href="../index.html" class="logo">행로</a>
+        <nav class="nav-links" aria-label="포털 이동">
+          <a href="./" aria-current="page">게스트</a>
+          <a href="../host/">집주인</a>
+          <a href="../company/">회사</a>
+        </nav>
+        <a class="nav-cta" href="../booking.html">상담 예약</a>
+      </div>
+    </header>
+    <div class="page-hero">
+      <div class="wrap">
+        <p class="badge">Guest</p>
+        <h1>내 예약</h1>
+        <p>확정·대기·완료된 체류 일정입니다.</p>
+      </div>
+    </div>
+    <main class="page-fill">
+      <nav class="portal-subnav wrap" aria-label="게스트 메뉴">
+        <a href="./">홈</a>
+        <a href="bookings.html" aria-current="page">내 예약</a>
+        <a href="stay.html">숙소 안내</a>
+        <a href="messages.html">문의</a>
+      </nav>
+      <div class="wrap">
+        <div class="portal-table-wrap">
+          <table class="portal-table">
+            <thead>
+              <tr>
+                <th>숙소</th>
+                <th>일정</th>
+                <th>상태</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="guest-bookings-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 행로 · Hangro Studio</span>
+        <span>게스트</span>
+      </div>
+    </footer>
+    <script src="../js/portal-data.js"></script>
+    <script src="../js/portal-ui.js"></script>
+    <script>
+      (function () {
+        var D = window.PORTAL_DATA;
+        var U = window.PortalUI;
+        var rows = D.bookingsForGuest(D.demoGuestId);
+        var tbody = document.getElementById("guest-bookings-body");
+        if (!rows.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="4" class="portal-empty">예약이 없습니다.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = rows
+          .map(function (b) {
+            var p = D.getProperty(b.propertyId);
+            return (
+              "<tr><td>" +
+              U.escapeHtml(p ? p.name : b.propertyId) +
+              "</td><td>" +
+              U.formatDateRange(b.checkIn, b.checkOut) +
+              "</td><td>" +
+              U.statusBadge(b.status) +
+              '</td><td><a href="booking.html?id=' +
+              encodeURIComponent(b.id) +
+              '">상세</a></td></tr>'
+            );
+          })
+          .join("");
+      })();
+    </script>
+  </body>
+</html>

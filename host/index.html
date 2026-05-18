@@ -3,17 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="행로 — 집주인 포털" />
-    <title>집주인 — 행로</title>
+    <title>집주인 홈 — 행로</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
   </head>
-  <body class="sub">
+  <body class="sub portal">
     <header>
       <div class="wrap nav">
         <a href="../index.html" class="logo">행로</a>
@@ -21,35 +18,66 @@
           <a href="../guest/">게스트</a>
           <a href="./" aria-current="page">집주인</a>
           <a href="../company/">회사</a>
+          <a href="../demo/">데모</a>
         </nav>
         <a class="nav-cta" href="../booking.html">상담 예약</a>
       </div>
     </header>
-
     <div class="page-hero">
       <div class="wrap">
-        <p class="badge">Host portal</p>
-        <h1>집주인</h1>
-        <p>
-          숙소 등록·예약·운영 정보를 다루는 공간입니다. 노트북 API 등 백엔드와
-          연동할 엔드포인트는 이후 이 페이지 스크립트에서 호출하면 됩니다.
-        </p>
+        <p class="badge">Host</p>
+        <h1>집주인 홈</h1>
+        <p>내 숙소·예약·문의를 한곳에서 확인합니다.</p>
       </div>
     </div>
-
     <main class="page-fill">
+      <nav class="portal-subnav wrap" aria-label="집주인 메뉴">
+        <a href="./" aria-current="page">홈</a>
+        <a href="properties.html">내 숙소</a>
+        <a href="bookings.html">예약</a>
+        <a href="messages.html">문의함</a>
+      </nav>
       <div class="wrap">
-        <p style="margin: 0; color: var(--ink-soft, var(--text-muted, #4a4f44)); line-height: 1.75">
-          URL 예: <code style="font-size: 0.9em">…/저장소이름/host/</code>
-        </p>
+        <div class="portal-grid portal-grid--3" style="margin-bottom: 1.5rem">
+          <article class="portal-card portal-kpi"><strong>2</strong><span>운영 숙소</span></article>
+          <article class="portal-card portal-kpi"><strong>1</strong><span>이번 주 체크인</span></article>
+          <article class="portal-card portal-kpi"><strong>2</strong><span>미답 문의</span></article>
+        </div>
+        <h2 class="portal-section-title">내 숙소</h2>
+        <article class="portal-card">
+          <h3>첫 번째 유후공간</h3>
+          <p>운영 중 · 전남 ○○군</p>
+          <div class="portal-card-actions">
+            <a class="btn btn-primary" href="properties.html">숙소 관리</a>
+            <a class="btn btn-ghost" href="bookings.html">예약 보기</a>
+          </div>
+        </article>
+        <details class="portal-demo-fold" style="margin-top: 2rem">
+          <summary>API 데모 연동</summary>
+          <section class="demo-panel">
+            <p id="demo-api-status" class="demo-api-status">API 확인 중…</p>
+            <p style="font-size: 0.82rem; color: var(--text-muted)"><code>python3 demo/server.py</code></p>
+            <p style="font-size: 0.88rem">카운터: <code id="demo-counter-display">—</code>
+              <button type="button" class="btn btn-ghost" id="demo-counter-btn" style="margin-left: 0.5rem">+1</button></p>
+            <form id="demo-inbox-form" class="demo-inbox-form">
+              <label for="demo-inbox-text-host">메시지</label>
+              <textarea id="demo-inbox-text-host" name="text"></textarea>
+              <div class="demo-inbox-actions">
+                <button type="submit" class="btn btn-primary">전송</button>
+                <button type="button" class="btn btn-ghost" id="demo-inbox-clear">비우기</button>
+              </div>
+            </form>
+            <pre id="demo-messages" class="demo-messages"></pre>
+          </section>
+        </details>
       </div>
     </main>
-
     <footer>
       <div class="wrap footer-inner">
         <span>© 행로 · Hangro Studio</span>
         <span>집주인</span>
       </div>
     </footer>
+    <script src="../js/demo-portal.js"></script>
   </body>
 </html>

@@ -1,0 +1,273 @@
+/* 역할별 포털 (guest / host / company) */
+.portal-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  padding: 0.85rem 0 1.25rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+
+.portal-subnav a {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.portal-subnav a:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+.portal-subnav a[aria-current="page"] {
+  color: var(--accent);
+  border-color: var(--line);
+  background: var(--bg-elevated);
+  font-weight: 600;
+}
+
+.portal-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .portal-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .portal-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.portal-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.15rem 1.25rem;
+}
+
+.portal-card h2,
+.portal-card h3 {
+  font-family: "Nanum Myeongjo", serif;
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.portal-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.portal-card .portal-card-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.portal-kpi {
+  text-align: left;
+}
+
+.portal-kpi strong {
+  display: block;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
+}
+
+.portal-kpi span {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.portal-status {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  margin-bottom: 0.5rem;
+}
+
+.portal-status--confirmed {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.portal-status--pending {
+  background: rgba(200, 160, 80, 0.2);
+  color: #c9a84a;
+}
+
+.portal-status--done {
+  background: rgba(120, 120, 120, 0.2);
+  color: var(--text-muted);
+}
+
+.portal-status--open {
+  background: rgba(200, 100, 100, 0.15);
+  color: #e8a0a0;
+}
+
+.portal-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+}
+
+.portal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.portal-table th,
+.portal-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.portal-table th {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--bg-elevated) 80%, var(--bg));
+}
+
+.portal-table tr:last-child td {
+  border-bottom: none;
+}
+
+.portal-table a {
+  font-weight: 600;
+}
+
+.portal-section-title {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.15rem;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+}
+
+.portal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 32rem;
+}
+
+.portal-form label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.portal-form input,
+.portal-form textarea,
+.portal-form select {
+  font-family: inherit;
+  font-size: 0.92rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: calc(var(--radius) - 4px);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.portal-form textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.portal-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.portal-list li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.portal-list li:last-child {
+  border-bottom: none;
+}
+
+.portal-list a {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.portal-list .meta {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.portal-demo-fold {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.portal-demo-fold summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.portal-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.portal-breadcrumb {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.portal-breadcrumb a {
+  color: var(--text-muted);
+}
+
+.portal-guide dt {
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-top: 0.85rem;
+}
+
+.portal-guide dt:first-child {
+  margin-top: 0;
+}
+
+.portal-guide dd {
+  margin: 0.25rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}

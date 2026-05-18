@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>문의·이슈 — 회사 · 행로</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
+  </head>
+  <body class="sub portal">
+    <header>
+      <div class="wrap nav">
+        <a href="../index.html" class="logo">행로</a>
+        <nav class="nav-links">
+          <a href="../guest/">게스트</a>
+          <a href="../host/">집주인</a>
+          <a href="./" aria-current="page">회사</a>
+        </nav>
+        <a class="nav-cta" href="../archive.html">기록</a>
+      </div>
+    </header>
+    <div class="page-hero">
+      <div class="wrap">
+        <p class="badge">Company</p>
+        <h1>문의·이슈</h1>
+        <p>게스트·집주인 간 메시지와 미처리 항목입니다.</p>
+      </div>
+    </div>
+    <main class="page-fill">
+      <nav class="portal-subnav wrap">
+        <a href="./">대시보드</a>
+        <a href="properties.html">숙소</a>
+        <a href="bookings.html">예약</a>
+        <a href="messages.html" aria-current="page">문의</a>
+        <a href="content.html">공지·콘텐츠</a>
+      </nav>
+      <div class="wrap">
+        <div id="company-messages-list" class="portal-card"></div>
+      </div>
+    </main>
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 행로 · Hangro Studio</span>
+        <span>회사</span>
+      </div>
+    </footer>
+    <script src="../js/portal-data.js"></script>
+    <script src="../js/portal-ui.js"></script>
+    <script>
+      (function () {
+        var D = window.PORTAL_DATA;
+        var U = window.PortalUI;
+        document.getElementById("company-messages-list").innerHTML =
+          '<ul class="portal-list">' +
+          D.messages
+            .map(function (m) {
+              var p = D.getProperty(m.propertyId);
+              return (
+                "<li><strong>" +
+                U.escapeHtml(m.subject) +
+                '</strong><span class="meta">' +
+                U.escapeHtml(p ? p.name : "") +
+                " · " +
+                U.escapeHtml(m.fromName) +
+                " · " +
+                U.statusBadge(m.status) +
+                "<br>" +
+                U.escapeHtml(m.body) +
+                "</span></li>"
+              );
+            })
+            .join("") +
+          "</ul>";
+      })();
+    </script>
+  </body>
+</html>

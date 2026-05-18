@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>숙소 안내 — 게스트 · 행로</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
+  </head>
+  <body class="sub portal">
+    <header>
+      <div class="wrap nav">
+        <a href="../index.html" class="logo">행로</a>
+        <nav class="nav-links" aria-label="포털 이동">
+          <a href="./" aria-current="page">게스트</a>
+          <a href="../host/">집주인</a>
+          <a href="../company/">회사</a>
+        </nav>
+        <a class="nav-cta" href="../booking.html">상담 예약</a>
+      </div>
+    </header>
+    <div class="page-hero">
+      <div class="wrap">
+        <p class="badge">Guest</p>
+        <h1>숙소 안내</h1>
+        <p>체크인·이용 규칙·연락처입니다.</p>
+      </div>
+    </div>
+    <main class="page-fill">
+      <nav class="portal-subnav wrap" aria-label="게스트 메뉴">
+        <a href="./">홈</a>
+        <a href="bookings.html">내 예약</a>
+        <a href="stay.html" aria-current="page">숙소 안내</a>
+        <a href="messages.html">문의</a>
+      </nav>
+      <div class="wrap">
+        <article class="portal-card">
+          <h2>첫 번째 유후공간</h2>
+          <dl class="portal-guide" id="stay-guide"></dl>
+        </article>
+        <p style="margin-top: 1rem; font-size: 0.88rem; color: var(--text-muted)">
+          <a href="../place-detail.html">공개 상세 페이지</a> ·
+          <a href="../archive.html">작업 기록</a>
+        </p>
+      </div>
+    </main>
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 행로 · Hangro Studio</span>
+        <span>게스트</span>
+      </div>
+    </footer>
+    <script src="../js/portal-data.js"></script>
+    <script src="../js/portal-ui.js"></script>
+    <script>
+      (function () {
+        var g = window.PORTAL_DATA.stayGuide["home-1"];
+        var U = window.PortalUI;
+        var dl = document.getElementById("stay-guide");
+        if (!g) return;
+        var keys = [
+          ["checkIn", "체크인"],
+          ["checkOut", "체크아웃"],
+          ["wifi", "Wi‑Fi"],
+          ["parking", "주차"],
+          ["rules", "이용 규칙"],
+          ["contact", "연락처"],
+        ];
+        dl.innerHTML = keys
+          .map(function (pair) {
+            return (
+              "<dt>" +
+              pair[1] +
+              "</dt><dd>" +
+              U.escapeHtml(g[pair[0]]) +
+              "</dd>"
+            );
+          })
+          .join("");
+      })();
+    </script>
+  </body>
+</html>

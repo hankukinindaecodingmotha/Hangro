@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>데모 허브 — 행로</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body class="sub">
+    <header>
+      <div class="wrap nav">
+        <a href="../index.html" class="logo">행로</a>
+        <nav class="nav-links" aria-label="포털 이동">
+          <a href="../guest/">게스트</a>
+          <a href="../host/">집주인</a>
+          <a href="../company/">회사</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="page-hero">
+      <div class="wrap">
+        <p class="badge">Local demo</p>
+        <h1>데모 허브</h1>
+        <p>
+          터미널에서 <code>python3 demo/server.py</code> 실행 뒤, 아래 링크는 모두
+          <strong>같은 주소(예: 127.0.0.1:9090)</strong>로 열어야 API 점검이
+          동작합니다.
+        </p>
+      </div>
+    </div>
+
+    <main class="page-fill">
+      <div class="wrap demo-panel">
+        <h2>빠른 링크</h2>
+        <ul class="demo-hub-links">
+          <li><a href="../index.html">소개 (홈)</a></li>
+          <li><a href="../archive.html">기록</a></li>
+          <li><a href="../guest/">게스트 포털 + API 패널</a></li>
+          <li><a href="../host/">집주인 포털 + API 패널</a></li>
+          <li><a href="../company/">회사 포털 + API 패널</a></li>
+        </ul>
+
+        <h2>원클릭 API 점검</h2>
+        <p id="demo-hub-health" class="demo-api-status">확인 중…</p>
+        <p id="demo-hub-places" class="demo-api-status demo-api-status--muted">—</p>
+        <p id="demo-hub-counters" class="demo-api-status demo-api-status--muted">—</p>
+
+        <h2>터미널 스모크 테스트</h2>
+        <pre class="demo-pre">chmod +x demo/smoke-test.sh
+./demo/smoke-test.sh 9090</pre>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 행로 · Hangro Studio</span>
+        <span>데모</span>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var h = document.getElementById("demo-hub-health");
+        var p = document.getElementById("demo-hub-places");
+        var c = document.getElementById("demo-hub-counters");
+        function ok(el, msg) {
+          el.textContent = msg;
+          el.className = "demo-api-status demo-api-status--ok";
+        }
+        function bad(el, msg) {
+          el.textContent = msg;
+          el.className = "demo-api-status demo-api-status--err";
+        }
+        fetch("/api/health")
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (d) {
+            ok(h, "GET /api/health → " + JSON.stringify(d));
+            return fetch("/api/places-json");
+          })
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (d) {
+            ok(p, "GET /api/places-json → " + JSON.stringify(d));
+            return fetch("/api/counters");
+          })
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (d) {
+            ok(c, "GET /api/counters → " + JSON.stringify(d));
+          })
+          .catch(function () {
+            bad(h, "API 실패 — python3 demo/server.py 후 이 페이지를 127.0.0.1:9090/demo/ 로 여세요.");
+            bad(p, "—");
+            bad(c, "—");
+          });
+      })();
+    </script>
+  </body>
+</html>

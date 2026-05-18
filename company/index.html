@@ -3,53 +3,73 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="행로 — 회사 포털" />
-    <title>회사 — 행로</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../styles.css" />
+    <title>운영 대시보드 — 회사 · 행로</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
   </head>
-  <body class="sub">
+  <body class="sub portal">
     <header>
       <div class="wrap nav">
         <a href="../index.html" class="logo">행로</a>
-        <nav class="nav-links" aria-label="포털 이동">
+        <nav class="nav-links">
           <a href="../guest/">게스트</a>
           <a href="../host/">집주인</a>
           <a href="./" aria-current="page">회사</a>
+          <a href="../demo/">데모</a>
         </nav>
         <a class="nav-cta" href="../archive.html">기록</a>
       </div>
     </header>
-
     <div class="page-hero">
       <div class="wrap">
-        <p class="badge">Company portal</p>
-        <h1>회사</h1>
-        <p>
-          전체 숙소·계정·운영 지표를 보는 내부용 공간입니다. 접근 제한·로그인은
-          이후 API·인증과 함께 붙이면 됩니다.
-        </p>
+        <p class="badge">Company</p>
+        <h1>운영 대시보드</h1>
+        <p>전체 숙소·예약·문의를 한곳에서 봅니다.</p>
       </div>
     </div>
-
     <main class="page-fill">
+      <nav class="portal-subnav wrap">
+        <a href="./" aria-current="page">대시보드</a>
+        <a href="properties.html">숙소</a>
+        <a href="bookings.html">예약</a>
+        <a href="messages.html">문의</a>
+        <a href="content.html">공지·콘텐츠</a>
+      </nav>
       <div class="wrap">
-        <p style="margin: 0; color: var(--ink-soft, var(--text-muted, #4a4f44)); line-height: 1.75">
-          URL 예: <code style="font-size: 0.9em">…/저장소이름/company/</code>
-        </p>
+        <div class="portal-grid portal-grid--3" style="margin-bottom: 1.5rem">
+          <article class="portal-card portal-kpi"><strong>3</strong><span>등록 숙소</span></article>
+          <article class="portal-card portal-kpi"><strong>3</strong><span>예약 건</span></article>
+          <article class="portal-card portal-kpi"><strong>2</strong><span>미답 문의</span></article>
+        </div>
+        <h2 class="portal-section-title">최근 활동</h2>
+        <ul class="portal-list portal-card" style="list-style: none; padding: 0 1.25rem">
+          <li><strong>게스트 김여행</strong><span class="meta">체크인 시간 문의 · home-1</span></li>
+          <li><strong>예약 대기</strong><span class="meta">이숙박 · 3/25–27 · home-1</span></li>
+        </ul>
+        <details class="portal-demo-fold" style="margin-top: 2rem">
+          <summary>API 데모 연동</summary>
+          <section class="demo-panel">
+            <p id="demo-api-status" class="demo-api-status">API 확인 중…</p>
+            <form id="demo-inbox-form" class="demo-inbox-form">
+              <label for="demo-inbox-text-company">메시지</label>
+              <textarea id="demo-inbox-text-company" name="text"></textarea>
+              <div class="demo-inbox-actions">
+                <button type="submit" class="btn btn-primary">전송</button>
+                <button type="button" class="btn btn-ghost" id="demo-inbox-clear">비우기</button>
+              </div>
+            </form>
+            <pre id="demo-messages" class="demo-messages"></pre>
+          </section>
+        </details>
       </div>
     </main>
-
     <footer>
       <div class="wrap footer-inner">
         <span>© 행로 · Hangro Studio</span>
         <span>회사</span>
       </div>
     </footer>
+    <script src="../js/demo-portal.js"></script>
   </body>
 </html>

@@ -3,17 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="행로 — 게스트 포털" />
-    <title>게스트 — 행로</title>
+    <meta name="description" content="행로 게스트 포털 — 예약·숙소 안내" />
+    <title>게스트 홈 — 행로</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
   </head>
-  <body class="sub">
+  <body class="sub portal">
     <header>
       <div class="wrap nav">
         <a href="../index.html" class="logo">행로</a>
@@ -21,6 +22,7 @@
           <a href="./" aria-current="page">게스트</a>
           <a href="../host/">집주인</a>
           <a href="../company/">회사</a>
+          <a href="../demo/">데모</a>
         </nav>
         <a class="nav-cta" href="../booking.html">상담 예약</a>
       </div>
@@ -28,20 +30,75 @@
 
     <div class="page-hero">
       <div class="wrap">
-        <p class="badge">Guest portal</p>
-        <h1>게스트</h1>
-        <p>
-          숙소 이용·안내·문의를 위한 공간입니다. 이후 예약 상태·공지 등 API
-          연동 UI를 이 경로에 두면 됩니다.
-        </p>
+        <p class="badge">Guest</p>
+        <h1>게스트 홈</h1>
+        <p>다가오는 체류와 숙소 안내를 확인합니다.</p>
       </div>
     </div>
 
     <main class="page-fill">
+      <nav class="portal-subnav wrap" aria-label="게스트 메뉴">
+        <a href="./" aria-current="page">홈</a>
+        <a href="bookings.html">내 예약</a>
+        <a href="stay.html">숙소 안내</a>
+        <a href="messages.html">문의</a>
+      </nav>
+
       <div class="wrap">
-        <p style="margin: 0; color: var(--ink-soft, var(--text-muted, #4a4f44)); line-height: 1.75">
-          URL 예: <code style="font-size: 0.9em">…/저장소이름/guest/</code>
-        </p>
+        <div class="portal-grid portal-grid--2" style="margin-bottom: 1.5rem">
+          <article class="portal-card">
+            <span class="portal-status portal-status--confirmed">다음 체크인</span>
+            <h2>첫 번째 유후공간</h2>
+            <p>2026-03-20 → 2026-03-22 · 확정</p>
+            <div class="portal-card-actions">
+              <a class="btn btn-primary" href="booking.html?id=b1">예약 상세</a>
+              <a class="btn btn-ghost" href="stay.html">숙소 안내</a>
+            </div>
+          </article>
+          <article class="portal-card">
+            <h2>빠른 이동</h2>
+            <p>예약 목록, 이용 규칙, 집주인에게 문의하기</p>
+            <div class="portal-card-actions">
+              <a class="btn btn-ghost" href="bookings.html">내 예약</a>
+              <a class="btn btn-ghost" href="messages.html">문의하기</a>
+            </div>
+          </article>
+        </div>
+
+        <h2 class="portal-section-title">최근 문의</h2>
+        <div class="portal-card">
+          <ul class="portal-list">
+            <li>
+              <a href="messages.html">체크인 시간 문의</a>
+              <span class="meta">2026-03-18 · 미답</span>
+            </li>
+          </ul>
+        </div>
+
+        <details class="portal-demo-fold">
+          <summary>API 데모 연동</summary>
+          <section class="demo-panel" aria-labelledby="demo-title-guest">
+            <h2 id="demo-title-guest">데모 연동 점검</h2>
+            <p id="demo-api-status" class="demo-api-status">API 확인 중…</p>
+            <p style="margin: 0.35rem 0 0; font-size: 0.82rem; color: var(--text-muted)">
+              <code>python3 demo/server.py</code> 후
+              <code>127.0.0.1:9090/guest/</code>
+            </p>
+            <p style="margin: 0.65rem 0 0; font-size: 0.88rem">
+              카운터: <code id="demo-counter-display">—</code>
+              <button type="button" class="btn btn-ghost" id="demo-counter-btn" style="margin-left: 0.5rem">+1</button>
+            </p>
+            <form id="demo-inbox-form" class="demo-inbox-form">
+              <label for="demo-inbox-text-guest">메시지</label>
+              <textarea id="demo-inbox-text-guest" name="text" placeholder="짧은 메모"></textarea>
+              <div class="demo-inbox-actions">
+                <button type="submit" class="btn btn-primary">전송</button>
+                <button type="button" class="btn btn-ghost" id="demo-inbox-clear">비우기</button>
+              </div>
+            </form>
+            <pre id="demo-messages" class="demo-messages" aria-live="polite"></pre>
+          </section>
+        </details>
       </div>
     </main>
 
@@ -51,5 +108,6 @@
         <span>게스트</span>
       </div>
     </footer>
+    <script src="../js/demo-portal.js"></script>
   </body>
 </html>

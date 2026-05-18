@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>예약 관리 — 집주인 · 행로</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
+  </head>
+  <body class="sub portal">
+    <header>
+      <div class="wrap nav">
+        <a href="../index.html" class="logo">행로</a>
+        <nav class="nav-links">
+          <a href="../guest/">게스트</a>
+          <a href="./" aria-current="page">집주인</a>
+          <a href="../company/">회사</a>
+        </nav>
+        <a class="nav-cta" href="../booking.html">상담 예약</a>
+      </div>
+    </header>
+    <div class="page-hero">
+      <div class="wrap">
+        <p class="badge">Host</p>
+        <h1>예약 관리</h1>
+        <p>내 숙소에 들어온 예약 요청·확정 일정입니다.</p>
+      </div>
+    </div>
+    <main class="page-fill">
+      <nav class="portal-subnav wrap">
+        <a href="./">홈</a>
+        <a href="properties.html">내 숙소</a>
+        <a href="bookings.html" aria-current="page">예약</a>
+        <a href="messages.html">문의함</a>
+      </nav>
+      <div class="wrap">
+        <div class="portal-table-wrap">
+          <table class="portal-table">
+            <thead>
+              <tr>
+                <th>게스트</th>
+                <th>숙소</th>
+                <th>일정</th>
+                <th>상태</th>
+              </tr>
+            </thead>
+            <tbody id="host-bookings-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 행로 · Hangro Studio</span>
+        <span>집주인</span>
+      </div>
+    </footer>
+    <script src="../js/portal-data.js"></script>
+    <script src="../js/portal-ui.js"></script>
+    <script>
+      (function () {
+        var D = window.PORTAL_DATA;
+        var U = window.PortalUI;
+        var rows = D.bookingsForHost(D.demoHostId);
+        document.getElementById("host-bookings-body").innerHTML = rows
+          .map(function (b) {
+            var p = D.getProperty(b.propertyId);
+            return (
+              "<tr><td>" +
+              U.escapeHtml(b.guestName) +
+              "</td><td>" +
+              U.escapeHtml(p ? p.name : "") +
+              "</td><td>" +
+              U.formatDateRange(b.checkIn, b.checkOut) +
+              "</td><td>" +
+              U.statusBadge(b.status) +
+              "</td></tr>"
+            );
+          })
+          .join("");
+      })();
+    </script>
+  </body>
+</html>
