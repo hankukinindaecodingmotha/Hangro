@@ -1,87 +1,25 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>예약 상세 — 게스트 · 행로</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../css/styles.css" />
-        <link rel="stylesheet" href="../css/portal.css" />
-    <link rel="stylesheet" href="../css/portal-shell.css" />
-    <link rel="stylesheet" href="../css/portal-guest.css" />
-      <script src="../js/portal-guard.js"></script>
-  </head>
-  <body class="portal-guest">
-        <header class="portal-shell-header">
-      <div class="wrap portal-shell-bar">
-        <div class="portal-shell-brand">
-          <span class="portal-shell-mark" aria-hidden="true"></span>
-          <span class="portal-shell-title">머무름</span>
-          <span class="portal-shell-role">게스트</span>
-        </div>
-      </div>
-    </header>
-    <div class="page-hero">
-      <div class="wrap">
-        <p class="badge">Guest</p>
-        <h1 id="booking-title">예약 상세</h1>
-        <p id="booking-sub">불러오는 중…</p>
-      </div>
-    </div>
-    <main class="page-fill">
-      <nav class="portal-subnav wrap" aria-label="게스트 메뉴">
-        <a href="./">홈</a>
-        <a href="bookings.html">내 예약</a>
-        <a href="stay.html">숙소 안내</a>
-        <a href="messages.html">문의</a>
-      </nav>
-      <div class="wrap">
-        <p class="portal-breadcrumb"><a href="bookings.html">내 예약</a> / 상세</p>
-        <div id="booking-detail" class="portal-card"></div>
-        <div class="portal-card-actions" style="margin-top: 1rem">
-          <a class="btn btn-primary" href="stay.html">숙소 안내 보기</a>
-          <a class="btn btn-ghost" href="messages.html">문의하기</a>
-        </div>
-      </div>
-    </main>
-        <footer class="portal-shell-footer wrap">
-      <span>숙소 이용 안내 · 행로</span>
-    </footer>
-    <script src="../js/portal-data.js"></script>
-    <script src="../js/portal-ui.js"></script>
-    <script>
-      (function () {
-        var D = window.PORTAL_DATA;
-        var U = window.PortalUI;
-        var id = U.queryParam("id") || "b1";
-        var b = D.getBooking(id);
-        var el = document.getElementById("booking-detail");
-        var title = document.getElementById("booking-title");
-        var sub = document.getElementById("booking-sub");
-        if (!b) {
-          title.textContent = "예약을 찾을 수 없음";
-          sub.textContent = "";
-          el.innerHTML = "<p>목록에서 다시 선택해 주세요.</p>";
-          return;
-        }
-        var p = D.getProperty(b.propertyId);
-        title.textContent = p ? p.name : b.propertyId;
-        sub.textContent = b.checkIn + " → " + b.checkOut;
-        el.innerHTML =
-          U.statusBadge(b.status) +
-          "<dl class=\"portal-guide\"><dt>숙소</dt><dd>" +
-          U.escapeHtml(p ? p.name : "") +
-          "</dd><dt>주소</dt><dd>" +
-          U.escapeHtml(p ? p.address : "") +
-          "</dd><dt>메모</dt><dd>" +
-          U.escapeHtml(b.note || "—") +
-          "</dd></dl>";
-      })();
-    </script>
-  </body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>예약 상세 — 머무름 · 행로</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/guest-airbnb.css" />
+<script src="../js/portal-guard.js"></script>
+</head>
+<body class="ga-body">
+<div id="ga-header-mount"></div>
+<main class="ga-main"><div class="ga-wrap"><div id="ga-trip-root"></div></div></main>
+<footer class="ga-footer"><div class="ga-wrap">© 행로 · Hangro — 게스트</div></footer>
+<script src="../js/portal-data.js"></script>
+<script src="../js/portal-ui.js"></script>
+<script src="../js/guest-app.js"></script>
+<script>
+GuestApp.mountHeader("trips");
+GuestApp.renderTripDetail();
+</script>
+</body>
 </html>

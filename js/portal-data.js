@@ -12,6 +12,27 @@
       hostId: "host-a",
       status: "active",
       summary: "우드·화이트 톤으로 정리한 유후시설 재생 숙소",
+      region: "전남",
+      locationLabel: "전남 ○○군",
+      pricePerNight: 95000,
+      rating: 4.92,
+      reviewCount: 31,
+      guests: 4,
+      bedrooms: 2,
+      beds: 3,
+      baths: 1,
+      propertyType: "전체 숙소",
+      amenities: ["주방", "와이파이", "무료 주차", "세탁기", "야외 정원"],
+      photos: [
+        "../Asset/Home_1/after/Home_1_after_08.jpeg",
+        "../Asset/Home_1/after/Home_1_after_09.jpeg",
+        "../Asset/Home_1/after/Home_1_after_12.jpeg",
+        "../Asset/Home_1/after/Home_1_after_08.jpeg",
+      ],
+      hostName: "민수",
+      hostBio: "마을 재생 숙소를 함께 운영하고 있습니다.",
+      description:
+        "오래 비어 있던 유후시설을 지역 브랜드에 맞게 정리한 체류형 숙소입니다. 거실·침실·부엌이 분리되어 있어 2~4인 가족·친구 여행에 적합합니다.",
     },
     {
       id: "home-2",
@@ -20,6 +41,23 @@
       hostId: "host-b",
       status: "active",
       summary: "단독 체류형, 조용한 마을 풍경",
+      region: "전남",
+      locationLabel: "전남 ○○군",
+      pricePerNight: 72000,
+      rating: 4.78,
+      reviewCount: 19,
+      guests: 2,
+      bedrooms: 1,
+      beds: 1,
+      baths: 1,
+      propertyType: "독채",
+      amenities: ["와이파이", "주차", "테라스", "바베큐"],
+      photos: [],
+      photoTheme: "forest",
+      hostName: "지연",
+      hostBio: "마을 풍경을 살린 소규모 숙소를 운영합니다.",
+      description:
+        "마을 끝 언덕에 있는 작은채로, 창밖으로 논과 산책로가 보입니다. 조용한 휴식과 산책을 원하는 분께 추천합니다.",
     },
     {
       id: "home-3",
@@ -28,6 +66,23 @@
       hostId: "host-a",
       status: "paused",
       summary: "리노베이션 준비 중",
+      region: "전남",
+      locationLabel: "전남 ○○군",
+      pricePerNight: 68000,
+      rating: 4.65,
+      reviewCount: 8,
+      guests: 3,
+      bedrooms: 1,
+      beds: 2,
+      baths: 1,
+      propertyType: "게스트룸",
+      amenities: ["와이파이", "공용 주방"],
+      photos: [],
+      photoTheme: "hanok",
+      hostName: "민수",
+      hostBio: "학당 인근 공간 리노베이션을 준비 중입니다.",
+      description:
+        "옛 학당 옆 부속 공간을 게스트룸으로 전환하는 프로젝트입니다. 현재 예약은 일시 중단되었습니다.",
     },
   ];
 
@@ -140,6 +195,14 @@
       return PROPERTIES.find(function (p) {
         return p.id === id;
       });
+    },
+    listBookable: function () {
+      return PROPERTIES.filter(function (p) {
+        return p.status === "active";
+      });
+    },
+    formatPrice: function (n) {
+      return "₩" + Number(n).toLocaleString("ko-KR");
     },
     getBooking: function (id) {
       return BOOKINGS.find(function (b) {

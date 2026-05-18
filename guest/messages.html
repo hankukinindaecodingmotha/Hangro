@@ -1,94 +1,34 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>문의 — 게스트 · 행로</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../css/styles.css" />
-        <link rel="stylesheet" href="../css/portal.css" />
-    <link rel="stylesheet" href="../css/portal-shell.css" />
-    <link rel="stylesheet" href="../css/portal-guest.css" />
-      <script src="../js/portal-guard.js"></script>
-  </head>
-  <body class="portal-guest">
-        <header class="portal-shell-header">
-      <div class="wrap portal-shell-bar">
-        <div class="portal-shell-brand">
-          <span class="portal-shell-mark" aria-hidden="true"></span>
-          <span class="portal-shell-title">머무름</span>
-          <span class="portal-shell-role">게스트</span>
-        </div>
-      </div>
-    </header>
-    <div class="page-hero">
-      <div class="wrap">
-        <p class="badge">Guest</p>
-        <h1>문의</h1>
-        <p>집주인·운영팀에게 보낸 메시지입니다.</p>
-      </div>
-    </div>
-    <main class="page-fill">
-      <nav class="portal-subnav wrap" aria-label="게스트 메뉴">
-        <a href="./">홈</a>
-        <a href="bookings.html">내 예약</a>
-        <a href="stay.html">숙소 안내</a>
-        <a href="messages.html" aria-current="page">문의</a>
-      </nav>
-      <div class="wrap">
-        <h2 class="portal-section-title">받은·보낸 문의</h2>
-        <div class="portal-card" id="guest-messages-list"></div>
-
-        <h2 class="portal-section-title" style="margin-top: 2rem">새 문의</h2>
-        <form id="guest-message-form" class="portal-form">
-          <label for="msg-subject">제목</label>
-          <input id="msg-subject" name="subject" type="text" placeholder="예: 체크인 시간" required />
-          <label for="msg-body">내용</label>
-          <textarea id="msg-body" name="body" placeholder="문의 내용을 입력하세요" required></textarea>
-          <button type="submit" class="btn btn-primary">보내기 (데모)</button>
-        </form>
-        <p id="portal-form-note" hidden style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem"></p>
-        <div id="portal-local-messages" style="margin-top: 1.5rem"></div>
-      </div>
-    </main>
-        <footer class="portal-shell-footer wrap">
-      <span>숙소 이용 안내 · 행로</span>
-    </footer>
-    <script src="../js/portal-data.js"></script>
-    <script src="../js/portal-ui.js"></script>
-    <script>
-      (function () {
-        var D = window.PORTAL_DATA;
-        var U = window.PortalUI;
-        var list = D.messages.filter(function (m) {
-          return m.fromRole === "guest" || m.bookingId === "b1";
-        });
-        var el = document.getElementById("guest-messages-list");
-        el.innerHTML =
-          '<ul class="portal-list">' +
-          list
-            .map(function (m) {
-              return (
-                "<li><strong>" +
-                U.escapeHtml(m.subject) +
-                '</strong><span class="meta">' +
-                U.escapeHtml(m.createdAt) +
-                " · " +
-                U.escapeHtml(m.fromName) +
-                "<br>" +
-                U.escapeHtml(m.body) +
-                "</span></li>"
-              );
-            })
-            .join("") +
-          "</ul>";
-        PortalUI.initMessageForm("guest-message-form", "guest");
-      })();
-    </script>
-  </body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>메시지 — 머무름 · 행로</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/guest-airbnb.css" />
+<script src="../js/portal-guard.js"></script>
+</head>
+<body class="ga-body">
+<div id="ga-header-mount"></div>
+<main class="ga-main"><div class="ga-wrap"><h1 class="ga-section-title">메시지</h1>
+<div id="ga-messages-list"></div>
+<h2 class="ga-h2">새 문의</h2>
+<form id="guest-message-form" class="ga-form">
+<label>제목<input name="subject" type="text" required /></label>
+<label>내용<textarea name="body" required></textarea></label>
+<button type="submit" class="ga-btn ga-btn--primary">보내기 (데모)</button>
+</form>
+<p id="portal-form-note" hidden style="font-size:0.85rem;color:var(--ga-muted)"></p>
+<div id="portal-local-messages"></div></div></main>
+<footer class="ga-footer"><div class="ga-wrap">© 행로 · Hangro — 게스트</div></footer>
+<script src="../js/portal-data.js"></script>
+<script src="../js/portal-ui.js"></script>
+<script src="../js/guest-app.js"></script>
+<script>
+GuestApp.mountHeader("messages");
+GuestApp.renderMessages();
+</script>
+</body>
 </html>

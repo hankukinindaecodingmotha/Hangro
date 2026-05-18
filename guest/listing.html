@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>여행 — 머무름 · 행로</title>
+<title>숙소 상세 — 머무름 · 행로</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -12,14 +12,14 @@
 </head>
 <body class="ga-body">
 <div id="ga-header-mount"></div>
-<main class="ga-main"><div class="ga-wrap"><h1 class="ga-section-title">내 여행</h1><div id="ga-trips-list" class="ga-trips"></div></div></main>
+<main class="ga-main"><div class="ga-wrap"><div id="ga-listing-root"></div></div></main>
 <footer class="ga-footer"><div class="ga-wrap">© 행로 · Hangro — 게스트</div></footer>
 <script src="../js/portal-data.js"></script>
 <script src="../js/portal-ui.js"></script>
 <script src="../js/guest-app.js"></script>
 <script>
-GuestApp.mountHeader("trips");
-GuestApp.renderTrips();
+GuestApp.mountHeader("explore");
+GuestApp.renderListing();
 </script>
 </body>
 </html>

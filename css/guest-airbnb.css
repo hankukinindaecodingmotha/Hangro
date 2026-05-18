@@ -1,0 +1,684 @@
+/* 게스트 · 에어비앤비형 숙소 예약 UI */
+:root {
+  --ga-rose: #ff385c;
+  --ga-rose-dark: #e31c5f;
+  --ga-ink: #222222;
+  --ga-muted: #717171;
+  --ga-line: #dddddd;
+  --ga-bg: #ffffff;
+  --ga-paper: #f7f7f7;
+  --ga-radius: 12px;
+  --ga-radius-pill: 40px;
+  --ga-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  --ga-max: 1280px;
+  --ga-gutter: clamp(1rem, 3vw, 1.5rem);
+}
+
+.ga-body {
+  margin: 0;
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+  color: var(--ga-ink);
+  background: var(--ga-bg);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ga-wrap {
+  max-width: var(--ga-max);
+  margin: 0 auto;
+  padding: 0 var(--ga-gutter);
+}
+
+.ga-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--ga-bg);
+  border-bottom: 1px solid var(--ga-line);
+}
+
+.ga-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4rem;
+}
+
+.ga-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--ga-rose);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.ga-logo-mark {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--ga-rose);
+}
+
+.ga-nav-links {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.ga-nav-links a {
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--ga-radius-pill);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ga-ink);
+  text-decoration: none;
+}
+
+.ga-nav-links a:hover {
+  background: var(--ga-paper);
+}
+
+.ga-nav-links a[aria-current="page"] {
+  background: var(--ga-paper);
+  font-weight: 600;
+}
+
+.ga-avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--ga-ink);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ga-main {
+  padding: 1.5rem 0 3rem;
+}
+
+.ga-hero-compact {
+  padding: 1.25rem 0 0.5rem;
+}
+
+.ga-hero-compact h1 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.ga-hero-compact p {
+  margin: 0;
+  color: var(--ga-muted);
+  font-size: 0.95rem;
+}
+
+/* 검색 바 */
+.ga-search {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr) auto;
+  gap: 0;
+  border: 1px solid var(--ga-line);
+  border-radius: var(--ga-radius-pill);
+  box-shadow: var(--ga-shadow);
+  overflow: hidden;
+  margin: 1.25rem 0 2rem;
+  background: #fff;
+}
+
+.ga-search--compact {
+  margin: 1rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ga-search-field {
+  padding: 0.65rem 1rem;
+  border-right: 1px solid var(--ga-line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ga-search-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ga-search-field input,
+.ga-search-field select {
+  border: none;
+  padding: 0;
+  font: inherit;
+  background: transparent;
+  color: var(--ga-ink);
+  min-width: 0;
+}
+
+.ga-search-field input:focus,
+.ga-search-field select:focus {
+  outline: none;
+}
+
+.ga-search-btn {
+  border: none;
+  background: var(--ga-rose);
+  color: #fff;
+  font-weight: 600;
+  padding: 0 1.35rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.ga-search-btn:hover {
+  background: var(--ga-rose-dark);
+}
+
+/* 숙소 카드 그리드 */
+.ga-section-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.ga-listings {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem 1.25rem;
+}
+
+.ga-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.ga-card-photo {
+  aspect-ratio: 1 / 0.95;
+  border-radius: var(--ga-radius);
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+
+.ga-card-body h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.ga-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.ga-rating {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.ga-card-loc,
+.ga-card-meta {
+  margin: 0.1rem 0;
+  font-size: 0.88rem;
+  color: var(--ga-muted);
+}
+
+.ga-card-price {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+}
+
+.ga-card-price strong {
+  font-weight: 600;
+}
+
+.ga-card-price span {
+  color: var(--ga-muted);
+  font-weight: 400;
+}
+
+/* 상세 페이지 */
+.ga-mosaic {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.5rem;
+  border-radius: var(--ga-radius);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  min-height: 320px;
+}
+
+.ga-mosaic-item--0 {
+  grid-row: 1 / 3;
+}
+
+.ga-mosaic-item {
+  min-height: 120px;
+  background: var(--ga-paper);
+}
+
+.ga-listing-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 360px);
+  gap: 3rem;
+  align-items: start;
+}
+
+.ga-listing-main h1 {
+  font-size: clamp(1.5rem, 3vw, 1.85rem);
+  margin: 0 0 0.5rem;
+}
+
+.ga-listing-sub {
+  color: var(--ga-muted);
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+}
+
+.ga-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+}
+
+.ga-stats li:not(:last-child)::after {
+  content: "·";
+  margin-left: 1.25rem;
+  color: var(--ga-muted);
+}
+
+.ga-rule {
+  border: none;
+  border-top: 1px solid var(--ga-line);
+  margin: 1.25rem 0;
+}
+
+.ga-host-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.ga-host-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--ga-ink);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.ga-host-row span {
+  color: var(--ga-muted);
+  font-size: 0.9rem;
+}
+
+.ga-h2 {
+  font-size: 1.15rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.ga-amenities {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.ga-amenities li::before {
+  content: "✓ ";
+  color: var(--ga-rose);
+}
+
+/* 예약 위젯 */
+.ga-widget {
+  position: sticky;
+  top: 5rem;
+  border: 1px solid var(--ga-line);
+  border-radius: var(--ga-radius);
+  padding: 1.25rem;
+  box-shadow: var(--ga-shadow);
+}
+
+.ga-widget-price {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.ga-widget-price span {
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.ga-widget-form label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.ga-widget-dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.ga-widget-dates input,
+.ga-widget-form select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--ga-line);
+  border-radius: 8px;
+  font: inherit;
+  margin-bottom: 0.75rem;
+}
+
+.ga-price-lines {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.ga-price-lines li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+  color: var(--ga-muted);
+}
+
+.ga-price-total {
+  font-weight: 600;
+  color: var(--ga-ink) !important;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--ga-line);
+  margin-top: 0.5rem !important;
+}
+
+.ga-widget-note {
+  font-size: 0.78rem;
+  color: var(--ga-muted);
+  margin: 0.75rem 0 0;
+  text-align: center;
+}
+
+/* 버튼 */
+.ga-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ga-btn--primary {
+  background: var(--ga-rose);
+  color: #fff;
+}
+
+.ga-btn--primary:hover {
+  background: var(--ga-rose-dark);
+  color: #fff;
+}
+
+.ga-btn--ghost {
+  background: #fff;
+  border-color: var(--ga-ink);
+  color: var(--ga-ink);
+}
+
+.ga-btn--block {
+  width: 100%;
+}
+
+.ga-btn--disabled {
+  background: var(--ga-line);
+  color: var(--ga-muted);
+  cursor: not-allowed;
+}
+
+/* 체크아웃 */
+.ga-checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 380px);
+  gap: 3rem;
+  align-items: start;
+}
+
+.ga-form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.ga-form input,
+.ga-form textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--ga-line);
+  border-radius: 8px;
+  font: inherit;
+}
+
+.ga-form h2 {
+  font-size: 1rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.ga-checkout-card {
+  border: 1px solid var(--ga-line);
+  border-radius: var(--ga-radius);
+  padding: 1.25rem;
+  position: sticky;
+  top: 5rem;
+}
+
+.ga-checkout-photo {
+  aspect-ratio: 16/10;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.ga-checkout-total {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+/* 여행 · 메시지 */
+.ga-trips {
+  display: grid;
+  gap: 1rem;
+}
+
+.ga-trip-card {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1rem;
+  border: 1px solid var(--ga-line);
+  border-radius: var(--ga-radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+
+.ga-trip-card:hover {
+  box-shadow: var(--ga-shadow);
+}
+
+.ga-trip-photo {
+  min-height: 120px;
+}
+
+.ga-trip-body {
+  padding: 1rem 1rem 1rem 0;
+}
+
+.ga-trip-body h2 {
+  font-size: 1.05rem;
+  margin: 0 0 0.25rem;
+}
+
+.ga-trip-status {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: var(--ga-paper);
+}
+
+.ga-trip-detail .ga-trip-hero {
+  aspect-ratio: 21/9;
+  border-radius: var(--ga-radius);
+  margin-bottom: 1rem;
+}
+
+.ga-trip-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.ga-guide {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 0.5rem 1rem;
+  font-size: 0.92rem;
+}
+
+.ga-guide dt {
+  font-weight: 600;
+  margin: 0;
+}
+
+.ga-guide dd {
+  margin: 0;
+  color: var(--ga-muted);
+}
+
+.ga-banner {
+  background: #fff8f0;
+  border: 1px solid #ffe0b2;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.25rem;
+  font-size: 0.92rem;
+}
+
+.ga-msg {
+  border: 1px solid var(--ga-line);
+  border-radius: var(--ga-radius);
+  padding: 1rem 1.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.ga-msg-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.ga-msg-head time {
+  font-size: 0.82rem;
+  color: var(--ga-muted);
+}
+
+.ga-msg-prop {
+  font-size: 0.85rem;
+  color: var(--ga-muted);
+  margin: 0 0 0.35rem;
+}
+
+.ga-empty,
+.ga-empty-box {
+  text-align: center;
+  color: var(--ga-muted);
+  padding: 3rem 1rem;
+}
+
+.ga-empty-box .ga-btn {
+  margin-top: 1rem;
+}
+
+.ga-footer {
+  border-top: 1px solid var(--ga-line);
+  padding: 1.5rem 0;
+  font-size: 0.82rem;
+  color: var(--ga-muted);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .ga-search {
+    grid-template-columns: 1fr 1fr;
+    border-radius: var(--ga-radius);
+  }
+  .ga-search-field {
+    border-right: none;
+    border-bottom: 1px solid var(--ga-line);
+  }
+  .ga-search-btn {
+    grid-column: 1 / -1;
+    padding: 0.85rem;
+  }
+  .ga-mosaic {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .ga-mosaic-item--0 {
+    grid-row: auto;
+    grid-column: 1 / -1;
+    min-height: 200px;
+  }
+  .ga-listing-layout,
+  .ga-checkout-grid {
+    grid-template-columns: 1fr;
+  }
+  .ga-widget,
+  .ga-checkout-card {
+    position: static;
+  }
+  .ga-nav-links {
+    display: none;
+  }
+}
