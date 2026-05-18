@@ -1,0 +1,53 @@
+/* 게스트 전용 앱 — 다른 포털과 분리된 톤 */
+body.portal-guest {
+  --bg: #faf6ef;
+  --bg-elevated: #ffffff;
+  --text: #1a2419;
+  --text-muted: #5a6358;
+  --accent: #3d7a52;
+  --accent-soft: rgba(61, 122, 82, 0.14);
+  --line: rgba(26, 36, 25, 0.1);
+}
+
+body.portal-guest .portal-shell-header {
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--line);
+}
+
+body.portal-guest .portal-shell-title {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+body.portal-guest .portal-shell-role {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+
+body.portal-guest .page-hero {
+  background: linear-gradient(165deg, #fff 0%, var(--bg) 100%);
+  border-bottom-color: var(--line);
+}
+
+body.portal-guest .badge {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+body.portal-guest .btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+body.portal-guest .portal-card {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+}

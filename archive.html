@@ -170,12 +170,13 @@
 
       .archive-story-shift {
         display: grid;
-        grid-template-columns: 4.5rem 1fr;
-        gap: 0.6rem 1.25rem;
-        align-items: start;
-        padding: 1.05rem 1.25rem 1.15rem;
+        grid-template-columns: 4.25rem 1fr;
+        gap: 0.5rem 1rem;
+        align-items: center;
+        padding: 0.95rem 1.05rem;
         background: var(--paper, var(--bg-elevated, #f6f1e5));
         border-radius: var(--radius-lg, var(--radius, 12px));
+        border: 1px solid var(--rule-soft, rgba(0, 0, 0, 0.06));
       }
 
       @media (max-width: 520px) {
@@ -190,46 +191,50 @@
 
       .archive-story-space {
         font-family: "Nanum Myeongjo", serif;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         font-weight: 700;
         color: var(--ink, currentColor);
-        padding-top: 0.18rem;
-        letter-spacing: -0.01em;
+        padding-top: 0.12rem;
       }
 
       .archive-story-shift-body {
         min-width: 0;
         display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.45rem 0.75rem;
       }
 
       .archive-story-lbl {
         display: inline-block;
-        min-width: 2.5rem;
+        min-width: 2.35rem;
         font-family: "Helvetica Neue", system-ui, sans-serif;
         font-size: 0.62rem;
         font-weight: 600;
         letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--ink-mute, var(--text-muted, #87897d));
-        margin-right: 0.5rem;
+        margin-right: 0.3rem;
       }
 
       .archive-story-before,
       .archive-story-after {
         margin: 0;
-        font-size: 0.94rem;
-        line-height: 1.6;
+        flex: 1 1 9rem;
+        min-width: 0;
+        font-size: 0.9rem;
+        line-height: 1.55;
         color: var(--ink-soft, var(--text-muted, #4a4f44));
       }
 
-      .archive-story-after {
-        color: var(--ink, #1a2419);
-      }
-
       .archive-story-arrow {
-        display: none;
+        margin: 0;
+        flex: 0 0 auto;
+        line-height: 1;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--green-deep, #3d6e2c);
       }
 
       .archive-story-after .archive-story-lbl {
@@ -237,13 +242,14 @@
       }
 
       .archive-story-concept {
-        padding: 1.15rem 1.25rem 1.25rem;
+        padding: 1.05rem 1.15rem 1.15rem;
         background: color-mix(
           in srgb,
-          var(--green-soft, #b7c9a4) 22%,
+          var(--green-soft, #b7c9a4) 24%,
           var(--paper, #f6f1e5)
         );
         border-radius: var(--radius-lg, var(--radius, 12px));
+        border: 1px solid var(--rule-soft, rgba(0, 0, 0, 0.06));
       }
 
       .archive-story-concept h3 {

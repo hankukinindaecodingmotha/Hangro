@@ -1,0 +1,48 @@
+/* 집주인 전용 앱 — 게스트·회사와 다른 다크·우드 톤 */
+body.portal-host {
+  --bg: #14181c;
+  --bg-elevated: #1e242b;
+  --text: #e8ecef;
+  --text-muted: #8b959e;
+  --accent: #c4a35a;
+  --accent-soft: rgba(196, 163, 90, 0.16);
+  --line: rgba(232, 236, 239, 0.1);
+}
+
+body.portal-host .portal-shell-header {
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--line);
+}
+
+body.portal-host .portal-shell-title {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+body.portal-host .portal-shell-role {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+body.portal-host .page-hero {
+  background: linear-gradient(180deg, #1e242b 0%, var(--bg) 100%);
+}
+
+body.portal-host .badge {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+body.portal-host .btn-primary {
+  background: var(--accent);
+  color: #14181c;
+}
+
+body.portal-host .portal-card {
+  border-color: var(--line);
+}

@@ -11,18 +11,19 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/styles.css" />
-    <link rel="stylesheet" href="../css/portal.css" />
+        <link rel="stylesheet" href="../css/portal.css" />
+    <link rel="stylesheet" href="../css/portal-shell.css" />
+    <link rel="stylesheet" href="../css/portal-guest.css" />
+      <script src="../js/portal-guard.js"></script>
   </head>
-  <body class="sub portal">
-    <header>
-      <div class="wrap nav">
-        <a href="../index.html" class="logo">행로</a>
-        <nav class="nav-links" aria-label="포털 이동">
-          <a href="./" aria-current="page">게스트</a>
-          <a href="../host/">집주인</a>
-          <a href="../company/">회사</a>
-        </nav>
-        <a class="nav-cta" href="../booking.html">상담 예약</a>
+  <body class="portal-guest">
+        <header class="portal-shell-header">
+      <div class="wrap portal-shell-bar">
+        <div class="portal-shell-brand">
+          <span class="portal-shell-mark" aria-hidden="true"></span>
+          <span class="portal-shell-title">머무름</span>
+          <span class="portal-shell-role">게스트</span>
+        </div>
       </div>
     </header>
     <div class="page-hero">
@@ -48,11 +49,8 @@
         </div>
       </div>
     </main>
-    <footer>
-      <div class="wrap footer-inner">
-        <span>© 행로 · Hangro Studio</span>
-        <span>게스트</span>
-      </div>
+        <footer class="portal-shell-footer wrap">
+      <span>숙소 이용 안내 · 행로</span>
     </footer>
     <script src="../js/portal-data.js"></script>
     <script src="../js/portal-ui.js"></script>

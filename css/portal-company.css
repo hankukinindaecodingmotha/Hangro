@@ -1,0 +1,54 @@
+/* 회사(운영) — 관리자 톤, 게스트·집주인 진입 링크 */
+body.portal-company {
+  --bg: #0c1014;
+  --bg-elevated: #151b22;
+  --text: #e6eaef;
+  --text-muted: #8a939c;
+  --accent: #6b9fd4;
+  --accent-soft: rgba(107, 159, 212, 0.15);
+  --line: rgba(230, 234, 239, 0.1);
+}
+
+body.portal-company .portal-hub-links {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+}
+
+@media (min-width: 520px) {
+  body.portal-company .portal-hub-links {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+body.portal-company .portal-hub-card {
+  display: block;
+  padding: 1rem 1.15rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--bg-elevated);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s ease;
+}
+
+body.portal-company .portal-hub-card:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+body.portal-company .portal-hub-card strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+body.portal-company .portal-hub-card span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+body.portal-company .nav-links a[href*="/guest/"],
+body.portal-company .nav-links a[href*="/host/"] {
+  color: var(--accent);
+}
