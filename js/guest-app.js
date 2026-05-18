@@ -42,8 +42,17 @@
     if (p.photos && p.photos.length) {
       return "background-image:url('" + escapeHtml(p.photos[0]) + "');background-size:cover;background-position:center";
     }
-    var themes = { forest: "linear-gradient(135deg,#2d5a4a,#7cb88a)", hanok: "linear-gradient(135deg,#8b6914,#c4a35a)" };
-    return "background:" + (themes[p.photoTheme] || "linear-gradient(135deg,#5a6358,#9aa89a)");
+    var themes = {
+      forest: "linear-gradient(135deg,#2d5a4a 0%,#7cb88a 100%)",
+      hanok: "linear-gradient(135deg,#8b6914 0%,#c4a35a 100%)",
+      ocean: "linear-gradient(135deg,#1a5f7a 0%,#57c5d4 100%)",
+      mountain: "linear-gradient(135deg,#4a5568 0%,#a0aec0 100%)",
+      sunset: "linear-gradient(135deg,#c05621 0%,#f6ad55 100%)",
+      lavender: "linear-gradient(135deg,#6b46c1 0%,#b794f4 100%)",
+      rural: "linear-gradient(135deg,#744210 0%,#d69e2e 100%)",
+      studio: "linear-gradient(135deg,#2d3748 0%,#718096 100%)",
+    };
+    return "background:" + (themes[p.photoTheme] || "linear-gradient(135deg,#5a6358 0%,#9aa89a 100%)");
   }
   function renderHeader(active) {
     var items = [
