@@ -1,0 +1,867 @@
+/* ============================================================
+   행로 · 게스트 포털 — Travel agency 톤 (TravelPerk 풍)
+   브랜드: 딥블루 + 오렌지 액센트 + 화이트
+   본 사이트(에디토리얼 베이지)와 의도적으로 분리된 톤
+   ============================================================ */
+
+:root {
+  /* 팔레트 */
+  --gt-blue-900: #0A1F3C;
+  --gt-blue-700: #15407D;
+  --gt-blue-600: #1E5AB8;
+  --gt-blue-500: #2E73D6;
+  --gt-blue-100: #E8F0FB;
+  --gt-blue-50:  #F4F8FE;
+
+  --gt-orange: #F08A24;
+  --gt-orange-dark: #D17112;
+  --gt-yellow: #FFC857;
+
+  --gt-bg: #FFFFFF;
+  --gt-paper: #F7FAFE;
+  --gt-ink: #0A1F3C;
+  --gt-ink-soft: #3A4B6B;
+  --gt-ink-mute: #7C8AA4;
+  --gt-line: rgba(10, 31, 60, 0.10);
+  --gt-line-soft: rgba(10, 31, 60, 0.05);
+
+  --gt-radius-sm: 10px;
+  --gt-radius: 18px;
+  --gt-radius-lg: 28px;
+  --gt-radius-pill: 999px;
+
+  --gt-shadow-sm: 0 2px 8px rgba(10, 31, 60, 0.06);
+  --gt-shadow-md: 0 12px 32px rgba(10, 31, 60, 0.10);
+  --gt-shadow-lg: 0 24px 56px rgba(10, 31, 60, 0.14);
+
+  --gt-max: 1240px;
+  --gt-gutter: clamp(1.25rem, 3vw, 2rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: "Inter", "Noto Sans KR", system-ui, sans-serif;
+  background: var(--gt-bg);
+  color: var(--gt-ink);
+  line-height: 1.65;
+  font-size: 16px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+a { color: var(--gt-blue-600); text-decoration: none; }
+a:hover { color: var(--gt-blue-700); }
+
+img, svg { display: block; max-width: 100%; }
+
+.gt-wrap {
+  max-width: var(--gt-max);
+  margin: 0 auto;
+  padding: 0 var(--gt-gutter);
+}
+
+/* ── 헤더 ────────────────────────────────────── */
+.gt-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--gt-line-soft);
+}
+
+.gt-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.95rem 0;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.gt-logo {
+  font-family: "Inter", "Helvetica Neue", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+  color: var(--gt-blue-700);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gt-logo::before {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--gt-blue-600);
+  display: inline-block;
+  position: relative;
+}
+
+.gt-logo span {
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.78rem;
+  color: var(--gt-ink-mute);
+  letter-spacing: 0;
+  margin-left: 0.25rem;
+}
+
+.gt-nav-links {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.92rem;
+}
+
+.gt-nav-links a {
+  color: var(--gt-ink-soft);
+  font-weight: 500;
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--gt-radius-pill);
+  display: inline-block;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.gt-nav-links a:hover { background: var(--gt-blue-50); color: var(--gt-blue-700); }
+.gt-nav-links a[aria-current="page"] {
+  background: var(--gt-ink);
+  color: var(--gt-bg);
+}
+
+.gt-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.gt-search-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gt-paper);
+  border: 1px solid var(--gt-line);
+  border-radius: var(--gt-radius-pill);
+  padding: 0.5rem 0.95rem 0.5rem 0.85rem;
+  color: var(--gt-ink-mute);
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.gt-search-trigger::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--gt-ink-mute);
+  display: inline-block;
+  position: relative;
+}
+
+.gt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--gt-radius-pill);
+  font-weight: 600;
+  font-size: 0.92rem;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  white-space: nowrap;
+}
+
+.gt-btn-primary {
+  background: var(--gt-orange);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(240, 138, 36, 0.30);
+}
+.gt-btn-primary:hover { background: var(--gt-orange-dark); transform: translateY(-1px); }
+
+.gt-btn-blue {
+  background: var(--gt-blue-600);
+  color: #fff;
+}
+.gt-btn-blue:hover { background: var(--gt-blue-700); }
+
+.gt-btn-ghost {
+  background: transparent;
+  color: var(--gt-bg);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.gt-btn-ghost:hover { background: rgba(255, 255, 255, 0.12); }
+
+.gt-btn-outline {
+  background: transparent;
+  color: var(--gt-blue-700);
+  border: 1px solid var(--gt-blue-600);
+}
+.gt-btn-outline:hover { background: var(--gt-blue-600); color: #fff; }
+
+/* ── 히어로 ────────────────────────────────── */
+.gt-hero {
+  position: relative;
+  background:
+    linear-gradient(135deg, rgba(10, 31, 60, 0.55) 0%, rgba(30, 90, 184, 0.35) 100%),
+    radial-gradient(ellipse at 70% 30%, #4892E8 0%, #1E5AB8 40%, #0A1F3C 100%);
+  color: #fff;
+  overflow: hidden;
+  padding: clamp(4rem, 9vw, 8rem) 0 clamp(8rem, 14vw, 11rem);
+}
+
+.gt-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 85% 20%, rgba(255, 200, 87, 0.12) 0%, transparent 35%),
+    radial-gradient(circle at 15% 80%, rgba(240, 138, 36, 0.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.gt-hero-inner {
+  position: relative;
+  max-width: 720px;
+}
+
+.gt-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--gt-radius-pill);
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(6px);
+}
+
+.gt-hero-tag .dot {
+  width: 0.5rem; height: 0.5rem;
+  border-radius: 50%;
+  background: var(--gt-yellow);
+}
+
+.gt-hero h1 {
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-size: clamp(2.6rem, 6.5vw, 5rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.5rem;
+  color: #fff;
+}
+
+.gt-hero h1 em {
+  font-style: italic;
+  color: var(--gt-yellow);
+}
+
+.gt-hero-lead {
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  max-width: 36rem;
+  margin: 0 0 2.25rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.gt-hero-actions {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.gt-hero-strip {
+  margin-top: 3rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.gt-hero-strip strong {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: "Nanum Myeongjo", serif;
+  margin-bottom: 0.2rem;
+}
+
+/* ── Booking widget (히어로 위로 떠있는) ─── */
+.gt-booking-widget {
+  position: relative;
+  margin-top: -5rem;
+  background: #fff;
+  border-radius: var(--gt-radius-lg);
+  padding: 1.25rem 1.5rem 1.5rem;
+  box-shadow: var(--gt-shadow-lg);
+  z-index: 5;
+}
+
+.gt-booking-tabs {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--gt-line);
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.gt-booking-tabs button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gt-ink-mute);
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.gt-booking-tabs button[aria-selected="true"] {
+  color: var(--gt-blue-700);
+  border-bottom-color: var(--gt-blue-600);
+}
+
+.gt-booking-fields {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  gap: 0.5rem;
+  align-items: end;
+}
+
+@media (max-width: 880px) {
+  .gt-booking-fields { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .gt-booking-fields { grid-template-columns: 1fr; }
+}
+
+.gt-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--gt-radius-sm);
+}
+
+.gt-field:hover { background: var(--gt-paper); }
+
+.gt-field label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gt-ink-mute);
+}
+
+.gt-field input, .gt-field select {
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--gt-ink);
+  padding: 0;
+  outline: none;
+  font-weight: 500;
+}
+
+.gt-booking-fields .gt-btn {
+  padding: 0.9rem 1.5rem;
+  height: 100%;
+}
+
+/* ── 섹션 공통 ─────────────────────────── */
+.gt-section {
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+}
+
+.gt-section.alt {
+  background: var(--gt-blue-50);
+}
+
+.gt-section-head {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.gt-section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gt-blue-600);
+  background: var(--gt-blue-100);
+  padding: 0.4rem 0.95rem;
+  border-radius: var(--gt-radius-pill);
+  margin-bottom: 1rem;
+}
+
+.gt-section-head h2 {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: clamp(1.85rem, 3.6vw, 2.65rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+  color: var(--gt-ink);
+}
+
+.gt-section-head p {
+  margin: 0 auto;
+  color: var(--gt-ink-soft);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 38rem;
+}
+
+/* ── Featured tours / cards ─────────────── */
+.gt-tour-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.gt-tour-card {
+  background: #fff;
+  border-radius: var(--gt-radius);
+  overflow: hidden;
+  box-shadow: var(--gt-shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.gt-tour-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--gt-shadow-md);
+}
+
+.gt-tour-image {
+  aspect-ratio: 5 / 4;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.gt-tour-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(10, 31, 60, 0.30) 100%);
+}
+
+.gt-tour-tag {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  background: var(--gt-orange);
+  color: #fff;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--gt-radius-pill);
+  z-index: 2;
+}
+
+.gt-tour-body {
+  padding: 1.1rem 1.25rem 1.35rem;
+}
+
+.gt-tour-meta {
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gt-ink-mute);
+  margin-bottom: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gt-tour-body h3 {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.4rem;
+  color: var(--gt-ink);
+}
+
+.gt-tour-body .gt-tour-desc {
+  font-size: 0.86rem;
+  color: var(--gt-ink-soft);
+  margin: 0 0 1rem;
+  line-height: 1.55;
+}
+
+.gt-tour-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--gt-line-soft);
+}
+
+.gt-tour-price strong {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.15rem;
+  color: var(--gt-blue-700);
+  font-weight: 700;
+}
+
+.gt-tour-price span {
+  font-size: 0.74rem;
+  color: var(--gt-ink-mute);
+  margin-left: 0.2rem;
+}
+
+.gt-tour-link {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gt-blue-600);
+}
+
+/* ── Destinations (oval cards) ──────────── */
+.gt-dest-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.gt-dest-card {
+  position: relative;
+  border-radius: 280px / 200px;
+  overflow: hidden;
+  aspect-ratio: 5 / 7;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  color: #fff;
+  text-align: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.gt-dest-card:hover { transform: scale(1.02); }
+
+.gt-dest-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 31, 60, 0.10) 30%, rgba(10, 31, 60, 0.70) 100%);
+}
+
+.gt-dest-card-content {
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+
+.gt-dest-card-meta {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 0.3rem;
+}
+
+.gt-dest-card h3 {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+.gt-dest-card p {
+  margin: 0;
+  font-size: 0.84rem;
+  opacity: 0.88;
+  line-height: 1.45;
+}
+
+/* ── Reviews ────────────────────────────── */
+.gt-reviews {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.gt-review-card {
+  background: #fff;
+  border-radius: var(--gt-radius);
+  padding: 1.65rem 1.65rem 1.5rem;
+  box-shadow: var(--gt-shadow-sm);
+}
+
+.gt-review-stars {
+  color: var(--gt-orange);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.65rem;
+}
+
+.gt-review-card p {
+  font-size: 0.96rem;
+  color: var(--gt-ink-soft);
+  line-height: 1.7;
+  margin: 0 0 1.25rem;
+}
+
+.gt-review-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gt-review-avatar {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--gt-blue-100);
+  color: var(--gt-blue-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.92rem;
+  font-family: "Nanum Myeongjo", serif;
+}
+
+.gt-review-author-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--gt-ink);
+}
+
+.gt-review-author-meta {
+  font-size: 0.78rem;
+  color: var(--gt-ink-mute);
+}
+
+/* ── Stories / Insights ─────────────────── */
+.gt-stories {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.gt-story-card {
+  background: #fff;
+  border-radius: var(--gt-radius);
+  overflow: hidden;
+  box-shadow: var(--gt-shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gt-story-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--gt-shadow-md);
+}
+
+.gt-story-image {
+  aspect-ratio: 16 / 10;
+  background-size: cover;
+  background-position: center;
+}
+
+.gt-story-body {
+  padding: 1.1rem 1.25rem 1.35rem;
+}
+
+.gt-story-cat {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gt-blue-600);
+  background: var(--gt-blue-100);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--gt-radius-pill);
+  margin-bottom: 0.6rem;
+}
+
+.gt-story-body h3 {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--gt-ink);
+  letter-spacing: -0.015em;
+  line-height: 1.4;
+}
+
+.gt-story-body p {
+  margin: 0 0 0.85rem;
+  font-size: 0.86rem;
+  color: var(--gt-ink-soft);
+  line-height: 1.55;
+}
+
+.gt-story-meta {
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: var(--gt-ink-mute);
+}
+
+/* ── CTA Banner ─────────────────────────── */
+.gt-cta-banner {
+  background: linear-gradient(135deg, var(--gt-blue-700) 0%, var(--gt-blue-600) 100%);
+  border-radius: var(--gt-radius-lg);
+  padding: clamp(2.25rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
+  color: #fff;
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 760px) {
+  .gt-cta-banner {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+.gt-cta-banner::before {
+  content: "";
+  position: absolute;
+  top: -50%; right: -10%;
+  width: 60%; height: 200%;
+  background: radial-gradient(circle, rgba(255, 200, 87, 0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.gt-cta-banner h2 {
+  position: relative;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  margin: 0 0 0.55rem;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  color: #fff;
+}
+
+.gt-cta-banner p {
+  position: relative;
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  max-width: 36rem;
+}
+
+.gt-cta-banner .gt-btn {
+  position: relative;
+}
+
+/* ── Footer ─────────────────────────────── */
+.gt-footer {
+  background: var(--gt-ink);
+  color: rgba(255, 255, 255, 0.78);
+  padding: clamp(3rem, 5vw, 4rem) 0 1.5rem;
+  font-size: 0.9rem;
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.gt-footer a { color: rgba(255, 255, 255, 0.78); }
+.gt-footer a:hover { color: #fff; }
+
+.gt-footer-rich {
+  display: grid;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+  .gt-footer-rich {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+}
+
+.gt-footer-brand {
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1.45rem;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin: 0 0 0.6rem;
+}
+
+.gt-footer-tag {
+  margin: 0 0 1rem;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 28ch;
+}
+
+.gt-footer-col h4 {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 1.1rem;
+}
+
+.gt-footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.gt-footer-meta {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.04em;
+}

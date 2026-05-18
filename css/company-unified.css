@@ -1,0 +1,22 @@
+/* 회사·공개 소개 통합 사이트 (/company/) */
+.company-nav .nav-links {
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+}
+
+.company-nav .nav-links a[href*="guest"],
+.company-nav .nav-links a[href*="host"] {
+  font-size: 0.82rem;
+  opacity: 0.85;
+}
+
+.company-nav .nav-cta {
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .company-nav.wrap.nav {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+}

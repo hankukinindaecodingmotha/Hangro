@@ -3,11 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="행로 — 지역 빈집·유휴 시설을 숙소·체험으로 재생합니다. 머무는 분과 공간을 내어주시는 분을 위한 소개."
-    />
-    <title>행로 — 지역에 머무는 숙소, 함께 여는 공간</title>
+    <meta name="description" content="행로 — 게스트·집주인·운영 포털" />
+    <title>행로</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,318 +12,89 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/portal.css" />
+    <style>
+      .gate {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        padding: clamp(3rem, 8vw, 5rem) 0;
+      }
+      .gate h1 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: clamp(1.85rem, 4.5vw, 2.75rem);
+        margin: 0 0 0.75rem;
+        letter-spacing: -0.03em;
+      }
+      .gate-lead {
+        color: var(--text-muted);
+        max-width: 36ch;
+        margin: 0 0 2rem;
+        line-height: 1.75;
+      }
+      .gate-cards {
+        display: grid;
+        gap: 1rem;
+      }
+      @media (min-width: 640px) {
+        .gate-cards {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      .gate-card {
+        display: block;
+        padding: 1.35rem 1.25rem;
+        border-radius: var(--radius);
+        border: 1px solid var(--line);
+        background: var(--bg-elevated);
+        text-decoration: none;
+        color: var(--text);
+        transition: border-color 0.15s ease, transform 0.15s ease;
+      }
+      .gate-card:hover {
+        border-color: var(--accent);
+        text-decoration: none;
+        transform: translateY(-2px);
+      }
+      .gate-card strong {
+        display: block;
+        font-size: 1.05rem;
+        margin-bottom: 0.35rem;
+      }
+      .gate-card span {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        line-height: 1.55;
+      }
+      .gate-card--company {
+        border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+      }
+    </style>
   </head>
-  <body class="home">
-    <header>
-      <div class="wrap nav">
-        <a href="index.html" class="logo">행로</a>
-        <nav class="nav-links" aria-label="주요 메뉴">
-          <a href="index.html" aria-current="page">소개</a>
-          <a href="map-demo.html">지도</a>
-          <a href="archive.html">기록</a>
-          <a href="booking.html">예약</a>
-          <a href="team.html">팀</a>
-        </nav>
-        <a class="nav-cta" href="booking.html">상담 예약</a>
-      </div>
-    </header>
-
-    <main>
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="wrap">
-          <div class="hero-masthead">
-            <span>Hangro Studio · 행로</span>
-            <span class="issue">Vol. 01 — 첫 번째 유후공간</span>
-            <span>Spring 2026</span>
-          </div>
-
-          <div class="hero-inner">
-            <div>
-              <h1 id="hero-title">
-                빈 공간에 지역의 색을<br />
-                <em>다시 켭니다.</em>
-              </h1>
-              <p class="hero-lead">
-                지역에 머무는 숙소·체험을 준비하는 분께는 차분한 톤과 동선을,
-                빈 공간을 새롭게 열고 싶은 분께는 기획부터 운영 연계까지를
-                함께합니다. 행로는 두 분이 만나는 지점에서 공간을 다시 설계합니다.
-              </p>
-              <div class="hero-actions">
-                <a class="btn" href="#cases">숙소·체험 살펴보기</a>
-                <a class="btn btn-ghost" href="booking.html">공간 제휴 상담</a>
-                <a class="btn-link" href="map-demo.html">지도</a>
-              </div>
-            </div>
-
-            <aside class="hero-meta-stack" aria-label="현황 요약">
-              <div class="hero-meta-row">
-                <span class="hero-meta-key">Focus</span>
-                <span class="hero-meta-val">
-                  공간 × 지역 × 체류
-                  <small>숙소·체험 경험과 소유주·지역 파트너를 함께 고려합니다</small>
-                </span>
-              </div>
-              <div class="hero-meta-row">
-                <span class="hero-meta-key">Active</span>
-                <span class="hero-meta-val">
-                  No. 01 / 경상북도
-                  <small>현장 답사·도면 정리 · 진행 중</small>
-                </span>
-              </div>
-              <div class="hero-meta-row">
-                <span class="hero-meta-key">Method</span>
-                <span class="hero-meta-val">
-                  발굴 · 기획 · 운영
-                  <small>한 권의 마을 이야기로 엮어내는 작업</small>
-                </span>
-              </div>
-            </aside>
-          </div>
-        </div>
-      </section>
-
-      <section class="audience-strip" aria-labelledby="audience-heading">
-        <div class="wrap audience-strip-inner">
-          <p class="audience-eyebrow">Hangro for guests &amp; hosts</p>
-          <h2 id="audience-heading" class="audience-heading">
-            머무는 분과, 공간을 내어주시는 분을 위해
-          </h2>
-          <p class="audience-lead">
-            이 페이지는 행로 서비스를 <strong>숙소·체험으로 이용</strong>하실 분과
-            <strong>집·시설을 제공</strong>하고자 하시는 분께 드리는 소개입니다.
-            아래에서 각각의 여정을 살펴보실 수 있습니다.
-          </p>
-          <div class="audience-grid">
-            <article class="audience-card audience-card--guest">
-              <span class="audience-label">숙소 · 체험을 찾는 분</span>
-              <h3>지역에 스며드는 머무름</h3>
-              <p>
-                행로가 다루는 공간은 단순한 숙박을 넘어, 마을의 이야기·풍경·리듬과
-                맞닿도록 기획됩니다. 오픈되는 공간과 프로그램은
-                <a href="archive.html">기록</a>과 <a href="map-demo.html">지도</a>를 통해
-                차례로 안내됩니다.
-              </p>
-              <div class="audience-card-foot">
-                <a class="btn btn-ghost" href="#cases">사례와 콘셉트 보기</a>
-              </div>
-            </article>
-            <article class="audience-card audience-card--host">
-              <span class="audience-label">공간을 제공하시는 분</span>
-              <h3>빈집·유휴 시설, 함께 엽니다</h3>
-              <p>
-                답사와 진단, 콘셉트·설계 방향, 브랜딩과 예약 구조까지 한 흐름으로
-                제안드립니다. 지자체·이웃과의 협의가 필요한 단계도 함께 정리합니다.
-              </p>
-              <div class="audience-card-foot">
-                <a class="btn" href="booking.html">제휴·상담 신청</a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-
-      <section id="about" aria-labelledby="about-title">
-        <div class="wrap">
-          <div class="section-marker">
-            <span class="num">01</span>
-            <span>What we do</span>
-            <span class="rule"></span>
-          </div>
-          <div class="section-head">
-            <div class="head-left">
-              <h2 id="about-title">
-                방치된 공간을, 지역 브랜드 자산으로.
-              </h2>
-            </div>
-            <p>
-              빈 주택·점포·유후 시설을 지역 브랜드와 관광 수요에 맞게
-              재구성합니다. 머무는 분께는 일관된 경험을, 공간을 맡기시는 분께는
-              신뢰할 수 있는 운영 구조를 함께 짓는 일입니다.
-            </p>
-          </div>
-          <div class="pillars bento">
-            <article class="pillar">
-              <span class="pillar-icon">No. 01 · Discovery</span>
-              <h3>발굴과 진단</h3>
-              <p>
-                빈 주택·점포·유후 시설 등 대상 부지의 여건과 규제, 주변 관광
-                동선을 함께 봅니다. 행로의 첫 번째 작업은 늘 현장에서
-                시작합니다.
-              </p>
-            </article>
-            <article class="pillar">
-              <span class="pillar-icon">No. 02</span>
-              <h3>지역 맞춤 기획</h3>
-              <p>
-                마을 자원과 톤에 맞춰 숙박·체험·굿즈·디지털 콘텐츠 연계까지
-                설계합니다.
-              </p>
-            </article>
-            <article class="pillar">
-              <span class="pillar-icon">No. 03</span>
-              <h3>운영까지 연결</h3>
-              <p>
-                오픈 이후 브랜딩과 예약 채널, 지역 파트너 협업 구조까지
-                이어지는 실행 로드맵을 제안합니다.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="flow" aria-labelledby="flow-title">
-        <div class="wrap">
-          <div class="section-marker">
-            <span class="num">02</span>
-            <span>How it works</span>
-            <span class="rule"></span>
-          </div>
-          <div class="section-head">
-            <div class="head-left">
-              <h2 id="flow-title">진행 흐름</h2>
-            </div>
-            <p>
-              실제 계약 및 일정은 지자체·소유주와 협의에 따라 조정됩니다. 아래는
-              이해를 돕기 위한 단순 플로우입니다.
-            </p>
-          </div>
-          <div class="flow connected">
-            <div class="step">
-              <span class="step-num">Step 01</span>
-              <h3>현장·데이터 확인</h3>
-              <p>입지, 건축 상태, 이용 가능 범위를 정리합니다.</p>
-            </div>
-            <div class="step">
-              <span class="step-num">Step 02</span>
-              <h3>콘셉트 설정</h3>
-              <p>지역 내러티브와 타깃 게스트를 정의합니다.</p>
-            </div>
-            <div class="step">
-              <span class="step-num">Step 03</span>
-              <h3>공간·콘텐츠 설계</h3>
-              <p>평면, 인테리어 방향, 체험·굿즈·채널을 맞춥니다.</p>
-            </div>
-            <div class="step">
-              <span class="step-num">Step 04</span>
-              <h3>런치·연계</h3>
-              <p>운영 매뉴얼과 지역 협업 시나리오를 전달합니다.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="cases" aria-labelledby="cases-title">
-        <div class="wrap">
-          <div class="section-marker">
-            <span class="num">03</span>
-            <span>Cases · 현재 진행 중</span>
-            <span class="rule"></span>
-          </div>
-          <div class="section-head">
-            <div class="head-left">
-              <h2 id="cases-title">첫 번째 유후공간.</h2>
-            </div>
-            <p>
-              첫 번째로 손보고 있는 공간입니다. 숙소·체험으로 열릴 모습은
-              기록에서 단계적으로 공개되며, 위치는 지도에서 확인하실 수 있습니다.
-            </p>
-          </div>
-
-          <div class="cases">
-            <a class="case" href="archive.html#sakjeon-hanok">
-              <span class="case-image">
-                <img
-                  src="Asset/Home_1/after/Home_1_after_09.jpeg"
-                  alt="첫 번째 유후공간 — 침실 · 변경 후"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </span>
-              <div class="case-meta">
-                <span class="case-no">Case 01 · 경상북도</span>
-                <span class="status-pill draft">진행 중</span>
-              </div>
-              <h3>첫 번째 유후공간 프로젝트</h3>
-              <p>
-                장기간 사용되지 않은 공간을 지역 브랜드·체류 수요에 맞는
-                숙박·체험 콘셉트로 재기획하기 위해 현장 답사와 도면 정리를
-                진행 중입니다.
-              </p>
-              <ul class="case-tags">
-                <li>유후공간</li>
-                <li>첫 프로젝트</li>
-                <li>경상북도</li>
-              </ul>
-              <span class="case-link">기록에서 자세히 보기</span>
-            </a>
-          </div>
-
-          <div class="cases-foot">
-            <span class="meta">전체 위치</span>
-            <a class="btn-link" href="map-demo.html">지도에서 위치 보기</a>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" aria-labelledby="contact-title">
-        <div class="wrap">
-          <div class="section-marker">
-            <span class="num">04</span>
-            <span>Contact</span>
-            <span class="rule"></span>
-          </div>
-          <div class="banner">
-            <h2 id="contact-title">
-              머무름과 공간, 함께 이야기해요
-            </h2>
-            <div class="banner-side">
-              <p>
-                <strong>공간을 내어주실 분</strong>께는 제휴·운영 방향을,
-                <strong>지역 협업·콘텐츠</strong>를 검토 중이신 분께는 파트너십을
-                함께 나눕니다. 숙소 이용 문의도 아래로 주시면 안내드립니다.
-              </p>
-              <a class="btn" href="booking.html">상담·문의 신청</a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer>
+  <body class="sub portal">
+    <main class="gate">
       <div class="wrap">
-        <div class="footer-rich">
-          <div>
-            <p class="footer-brand">행로 · Hangro</p>
-            <p class="footer-tag">
-              머무는 분께는 지역의 온기 있는 숙소·체험을, 공간을 내어주시는 분께는
-              믿을 수 있는 재생 파트너를 지향합니다.
-            </p>
-            <a class="btn-link" href="booking.html">상담 신청</a>
-          </div>
-          <div class="footer-col">
-            <h4>Sitemap</h4>
-            <ul>
-              <li><a href="index.html">소개</a></li>
-              <li><a href="map-demo.html">지도</a></li>
-              <li><a href="archive.html">기록</a></li>
-              <li><a href="booking.html">예약</a></li>
-              <li><a href="team.html">팀</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Studio</h4>
-            <p>
-              경상북도 · 서울<br />
-              <a href="mailto:projecthangrow@gmail.com">projecthangrow@gmail.com</a>
-            </p>
-          </div>
-        </div>
-        <div class="footer-meta footer-inner">
-          <span>© 2026 행로 · Hangro Studio</span>
-          <span>빈 공간 · 지역성 · 관광 콘텐츠</span>
+        <p class="badge">Hangro</p>
+        <h1>행로에 오신 것을 환영합니다</h1>
+        <p class="gate-lead">
+          이용하시는 분, 공간을 내어주시는 분, 운영·소개를 보시는 분에 맞는 화면으로
+          이동해 주세요.
+        </p>
+        <div class="gate-cards">
+          <a class="gate-card" href="guest/">
+            <strong>게스트</strong>
+            <span>예약·숙소 안내·문의 — 머무름</span>
+          </a>
+          <a class="gate-card" href="host/">
+            <strong>집주인</strong>
+            <span>숙소·예약·문의함 — 집터</span>
+          </a>
+          <a class="gate-card gate-card--company" href="company/">
+            <strong>회사 · 소개</strong>
+            <span>소개·지도·기록·팀·운영</span>
+          </a>
         </div>
       </div>
-    </footer>
+    </main>
   </body>
 </html>
