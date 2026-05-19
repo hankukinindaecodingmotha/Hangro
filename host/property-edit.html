@@ -6,13 +6,13 @@
     <title>숙소 수정 — 집주인 · 행로</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../css/styles.css" />
-        <link rel="stylesheet" href="../css/portal.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
     <link rel="stylesheet" href="../css/portal-shell.css" />
-    <link rel="stylesheet" href="../css/portal-host.css" />
-      <script src="../js/portal-guard.js"></script>
+    <link rel="stylesheet" href="../css/portal-host.css?v=3" />
+    <script src="../js/portal-guard.js"></script>
   </head>
-  <body class="portal-host">
-        <header class="portal-shell-header">
+  <body class="portal-host" data-ha-page="property-edit">
+    <header class="portal-shell-header">
       <div class="wrap portal-shell-bar">
         <div class="portal-shell-brand">
           <span class="portal-shell-mark" aria-hidden="true"></span>
@@ -25,7 +25,7 @@
       <div class="wrap">
         <p class="badge">Host</p>
         <h1 id="prop-title">숙소 수정</h1>
-        <p>소개·연락처·이용 안내를 편집합니다. (데모: 저장은 API 연동 후)</p>
+        <p>사진·세부 정보·숙소 안내를 편집합니다. 저장 시 게스트 화면에 반영됩니다 (데모).</p>
       </div>
     </div>
     <main class="page-fill">
@@ -37,39 +37,19 @@
       </nav>
       <div class="wrap">
         <p class="portal-breadcrumb"><a href="properties.html">내 숙소</a> / 수정</p>
-        <form class="portal-form" id="host-property-form">
-          <label for="p-name">숙소 이름</label>
-          <input id="p-name" name="name" type="text" />
-          <label for="p-summary">한 줄 소개</label>
-          <textarea id="p-summary" name="summary"></textarea>
-          <label for="p-address">주소</label>
-          <input id="p-address" name="address" type="text" />
-          <button type="submit" class="btn btn-primary">저장 (데모)</button>
-        </form>
-        <p id="portal-form-note" hidden style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem"></p>
+        <div id="ha-property-edit-root"><p class="portal-empty">불러오는 중…</p></div>
       </div>
     </main>
-        <footer class="portal-shell-footer wrap">
-      <span>숙소 운영 · 행로</span>
-    </footer>
-    <script src="../js/portal-data.js"></script>
-    <script src="../js/portal-ui.js"></script>
+    <footer class="portal-shell-footer wrap"><span>숙소 운영 · 행로</span></footer>
+    <script src="../js/portal-data.js?v=5"></script>
+    <script src="../js/portal-ui.js?v=3"></script>
+    <script src="../js/host-app.js?v=3"></script>
     <script>
+      HostApp.autoBoot();
       (function () {
-        var D = window.PORTAL_DATA;
-        var id = PortalUI.queryParam("id") || "home-1";
-        var p = D.getProperty(id);
-        if (!p) return;
-        document.getElementById("prop-title").textContent = p.name + " 수정";
-        document.getElementById("p-name").value = p.name;
-        document.getElementById("p-summary").value = p.summary;
-        document.getElementById("p-address").value = p.address;
-        document.getElementById("host-property-form").addEventListener("submit", function (e) {
-          e.preventDefault();
-          var note = document.getElementById("portal-form-note");
-          note.textContent = "데모: 실제 저장은 API 연동 후 반영됩니다.";
-          note.hidden = false;
-        });
+        var id = new URLSearchParams(location.search).get("id") || "home-1";
+        var p = window.PORTAL_DATA && window.PORTAL_DATA.getProperty(id);
+        if (p) document.getElementById("prop-title").textContent = p.name + " 수정";
       })();
     </script>
   </body>

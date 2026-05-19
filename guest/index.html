@@ -8,10 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/guest-airbnb.css?v=2" />
+    <link rel="stylesheet" href="../css/guest-airbnb.css?v=5" />
     <script src="../js/portal-guard.js"></script>
   </head>
-  <body class="ga-body">
+  <body class="ga-body" data-ga-page="explore">
     <div id="ga-header-mount"></div>
     <main class="ga-main">
       <div class="ga-wrap">
@@ -29,27 +29,8 @@
     <footer class="ga-footer">
       <div class="ga-wrap">© 행로 · Hangro — 게스트</div>
     </footer>
-    <script src="../js/portal-data.js?v=2"></script>
-    <script src="../js/guest-app.js?v=2"></script>
-    <script>
-      (function () {
-        function boot() {
-          var list = document.getElementById("ga-listings");
-          if (!window.PORTAL_DATA || !window.GuestApp) {
-            if (list) {
-              list.innerHTML = "<p class=\"ga-empty\">목록을 불러오지 못했습니다. <strong>강력 새로고침</strong>(Mac: Cmd+Shift+R) 후 다시 시도해 주세요.</p>";
-            }
-            return;
-          }
-          GuestApp.mountHeader("explore");
-          GuestApp.renderExplore();
-        }
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", boot);
-        } else {
-          boot();
-        }
-      })();
-    </script>
+    <script src="../js/portal-data.js?v=5"></script>
+    <script src="../js/guest-app.js?v=5"></script>
+    <script>GuestApp.autoBoot();</script>
   </body>
 </html>

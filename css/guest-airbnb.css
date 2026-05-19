@@ -1,26 +1,68 @@
-/* 게스트 · 에어비앤비형 숙소 예약 UI */
+/* ============================================================
+   게스트 플로우 — 행로 본 사이트 에디토리얼 톤
+   (베이지 + 잉크 + Nanum Myeongjo, 본 styles.css 와 동일 시스템)
+   클래스명은 guest-app.js 호환을 위해 ga-* 유지
+   ============================================================ */
+
 :root {
-  --ga-rose: #ff385c;
-  --ga-rose-dark: #e31c5f;
-  --ga-ink: #222222;
-  --ga-muted: #717171;
-  --ga-line: #dddddd;
-  --ga-bg: #ffffff;
-  --ga-paper: #f7f7f7;
-  --ga-radius: 12px;
-  --ga-radius-pill: 40px;
-  --ga-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  --ga-max: 1280px;
-  --ga-gutter: clamp(1rem, 3vw, 1.5rem);
+  /* 행로 본 사이트 팔레트 */
+  --ga-green-deep: #3D6E2C;
+  --ga-ink: #1A2419;
+  --ga-ink-soft: #4A4F44;
+  --ga-muted: #87897D;
+  --ga-line: rgba(26, 36, 25, 0.10);
+  --ga-line-strong: rgba(26, 36, 25, 0.18);
+  --ga-bg: #EFE9DC;
+  --ga-paper: #F6F1E5;
+  --ga-paper-warm: #FAF6EC;
+
+  /* 호환 alias (옛 변수명 참조 코드 대비) */
+  --ga-rose: var(--ga-ink);
+  --ga-rose-dark: #000;
+
+  --ga-radius-sm: 6px;
+  --ga-radius: 10px;
+  --ga-radius-lg: 16px;
+  --ga-radius-pill: 999px;
+  --ga-shadow: 0 6px 18px rgba(26, 36, 25, 0.08);
+  --ga-shadow-sm: 0 2px 6px rgba(26, 36, 25, 0.05);
+  --ga-max: 1240px;
+  --ga-gutter: clamp(1rem, 3vw, 1.75rem);
 }
 
 .ga-body {
   margin: 0;
-  font-family: "Noto Sans KR", system-ui, sans-serif;
+  font-family: "Noto Sans KR", "Helvetica Neue", system-ui, sans-serif;
   color: var(--ga-ink);
   background: var(--ga-bg);
-  line-height: 1.5;
+  line-height: 1.7;
+  font-size: 15px;
+  letter-spacing: -0.005em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.ga-body img,
+.ga-body video,
+.ga-preview-frame,
+.ga-mosaic,
+.ga-listing-layout,
+.ga-checkout-grid {
+  max-width: 100%;
+}
+
+.ga-body h1,
+.ga-body h2,
+.ga-body h3,
+.ga-body h4 {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  letter-spacing: -0.02em;
+  color: var(--ga-ink);
 }
 
 .ga-wrap {
@@ -29,6 +71,7 @@
   padding: 0 var(--ga-gutter);
 }
 
+/* ── 헤더 ────────────────────────────────────── */
 .ga-header {
   position: sticky;
   top: 0;
@@ -48,42 +91,49 @@
 .ga-logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  font-weight: 800;
-  font-size: 1.15rem;
-  color: var(--ga-rose);
+  gap: 0.5rem;
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--ga-ink);
   text-decoration: none;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 .ga-logo-mark {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
-  background: var(--ga-rose);
+  background: var(--ga-ink);
 }
 
 .ga-nav-links {
   display: flex;
   gap: 0.25rem;
   flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .ga-nav-links a {
-  padding: 0.5rem 0.85rem;
+  padding: 0.5rem 0.9rem;
   border-radius: var(--ga-radius-pill);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  color: var(--ga-ink);
+  color: var(--ga-ink-soft);
   text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
 .ga-nav-links a:hover {
   background: var(--ga-paper);
+  color: var(--ga-ink);
 }
 
 .ga-nav-links a[aria-current="page"] {
-  background: var(--ga-paper);
+  background: var(--ga-ink);
+  color: var(--ga-bg);
   font-weight: 600;
 }
 
@@ -92,67 +142,74 @@
   height: 2.25rem;
   border-radius: 50%;
   background: var(--ga-ink);
-  color: #fff;
+  color: var(--ga-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 0.85rem;
   font-weight: 700;
   text-decoration: none;
 }
 
 .ga-main {
-  padding: 1.5rem 0 3rem;
+  padding: 1.75rem 0 3rem;
 }
 
+/* ── 컴팩트 히어로 ───────────────────────────── */
 .ga-hero-compact {
-  padding: 1.25rem 0 0.5rem;
+  padding: 1.5rem 0 0.75rem;
 }
 
 .ga-hero-compact h1 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.75rem, 3.5vw, 2.4rem);
   font-weight: 700;
-  margin: 0 0 0.35rem;
-  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  max-width: 22ch;
 }
 
 .ga-hero-compact p {
   margin: 0;
-  color: var(--ga-muted);
-  font-size: 0.95rem;
+  color: var(--ga-ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.7;
+  max-width: 46ch;
 }
 
-/* 검색 바 */
+/* ── 검색 바 ─────────────────────────────────── */
 .ga-search {
   display: grid;
   grid-template-columns: 1.4fr repeat(3, 1fr) auto;
   gap: 0;
-  border: 1px solid var(--ga-line);
-  border-radius: var(--ga-radius-pill);
+  border-radius: var(--ga-radius-lg);
   box-shadow: var(--ga-shadow);
   overflow: hidden;
-  margin: 1.25rem 0 2rem;
-  background: #fff;
+  margin: 1.5rem 0 2.5rem;
+  background: var(--ga-paper);
 }
 
 .ga-search--compact {
   margin: 1rem 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--ga-shadow-sm);
 }
 
 .ga-search-field {
-  padding: 0.65rem 1rem;
+  padding: 0.75rem 1.1rem;
   border-right: 1px solid var(--ga-line);
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.2rem;
 }
 
 .ga-search-label {
-  font-size: 0.68rem;
-  font-weight: 700;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.14em;
+  color: var(--ga-muted);
 }
 
 .ga-search-field input,
@@ -162,6 +219,7 @@
   font: inherit;
   background: transparent;
   color: var(--ga-ink);
+  font-weight: 500;
   min-width: 0;
 }
 
@@ -172,49 +230,64 @@
 
 .ga-search-btn {
   border: none;
-  background: var(--ga-rose);
-  color: #fff;
+  background: var(--ga-ink);
+  color: var(--ga-bg);
   font-weight: 600;
-  padding: 0 1.35rem;
+  padding: 0 1.5rem;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
 .ga-search-btn:hover {
-  background: var(--ga-rose-dark);
+  background: var(--ga-paper);
+  color: var(--ga-ink);
 }
 
-/* 숙소 카드 그리드 */
+/* ── 숙소 카드 그리드 ─────────────────────────── */
 .ga-section-title {
-  font-size: 1.35rem;
-  font-weight: 600;
-  margin: 0 0 1rem;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+  letter-spacing: -0.025em;
+  color: var(--ga-ink);
 }
 
 .ga-listings {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem 1.25rem;
+  gap: 1.75rem 1.25rem;
 }
 
 .ga-card {
   text-decoration: none;
   color: inherit;
   display: block;
+  transition: transform 0.2s ease;
+}
+
+.ga-card:hover {
+  transform: translateY(-3px);
 }
 
 .ga-card-photo {
   aspect-ratio: 1 / 0.95;
   border-radius: var(--ga-radius);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
   overflow: hidden;
+  background: var(--ga-paper);
 }
 
 .ga-card-body h2 {
-  font-size: 1rem;
-  font-weight: 600;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.05rem;
+  font-weight: 700;
   margin: 0;
   line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--ga-ink);
 }
 
 .ga-card-top {
@@ -222,28 +295,32 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 0.5rem;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 }
 
 .ga-rating {
   font-size: 0.85rem;
+  color: var(--ga-ink);
   white-space: nowrap;
+  font-weight: 500;
 }
 
 .ga-card-loc,
 .ga-card-meta {
-  margin: 0.1rem 0;
-  font-size: 0.88rem;
+  margin: 0.15rem 0;
+  font-size: 0.86rem;
   color: var(--ga-muted);
 }
 
 .ga-card-price {
-  margin: 0.35rem 0 0;
-  font-size: 0.95rem;
+  margin: 0.45rem 0 0;
+  font-size: 0.94rem;
+  color: var(--ga-ink);
 }
 
 .ga-card-price strong {
-  font-weight: 600;
+  font-family: "Nanum Myeongjo", serif;
+  font-weight: 700;
 }
 
 .ga-card-price span {
@@ -251,16 +328,16 @@
   font-weight: 400;
 }
 
-/* 상세 페이지 */
+/* ── 상세 페이지 ─────────────────────────────── */
 .ga-mosaic {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 0.5rem;
-  border-radius: var(--ga-radius);
+  border-radius: var(--ga-radius-lg);
   overflow: hidden;
-  margin-bottom: 1.5rem;
-  min-height: 320px;
+  margin-bottom: 1.75rem;
+  min-height: 340px;
 }
 
 .ga-mosaic-item--0 {
@@ -280,14 +357,18 @@
 }
 
 .ga-listing-main h1 {
-  font-size: clamp(1.5rem, 3vw, 1.85rem);
-  margin: 0 0 0.5rem;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: clamp(1.65rem, 3.2vw, 2.1rem);
+  margin: 0 0 0.6rem;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
 }
 
 .ga-listing-sub {
-  color: var(--ga-muted);
-  margin: 0 0 1rem;
-  font-size: 0.95rem;
+  color: var(--ga-ink-soft);
+  margin: 0 0 1.2rem;
+  font-size: 0.96rem;
+  line-height: 1.7;
 }
 
 .ga-stats {
@@ -296,8 +377,9 @@
   gap: 0.5rem 1.25rem;
   list-style: none;
   padding: 0;
-  margin: 0 0 1rem;
+  margin: 0 0 1.2rem;
   font-size: 0.9rem;
+  color: var(--ga-ink-soft);
 }
 
 .ga-stats li:not(:last-child)::after {
@@ -309,7 +391,7 @@
 .ga-rule {
   border: none;
   border-top: 1px solid var(--ga-line);
-  margin: 1.25rem 0;
+  margin: 1.5rem 0;
 }
 
 .ga-host-row {
@@ -323,10 +405,11 @@
   height: 3rem;
   border-radius: 50%;
   background: var(--ga-ink);
-  color: #fff;
+  color: var(--ga-bg);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Nanum Myeongjo", serif;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -337,88 +420,114 @@
 }
 
 .ga-h2 {
-  font-size: 1.15rem;
-  margin: 1.5rem 0 0.75rem;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 1.75rem 0 0.85rem;
+  letter-spacing: -0.02em;
+  color: var(--ga-ink);
 }
 
 .ga-amenities {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 0.5rem;
+  gap: 0.55rem 0.85rem;
   list-style: none;
   padding: 0;
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+  color: var(--ga-ink-soft);
 }
 
 .ga-amenities li::before {
   content: "✓ ";
-  color: var(--ga-rose);
+  color: var(--ga-green-deep);
+  font-weight: 600;
+  margin-right: 0.2rem;
 }
 
-/* 예약 위젯 */
+/* ── 예약 위젯 ───────────────────────────────── */
 .ga-widget {
   position: sticky;
   top: 5rem;
-  border: 1px solid var(--ga-line);
-  border-radius: var(--ga-radius);
-  padding: 1.25rem;
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius-lg);
+  padding: 1.5rem;
   box-shadow: var(--ga-shadow);
 }
 
 .ga-widget-price {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0 0 1rem;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--ga-ink);
 }
 
 .ga-widget-price span {
+  font-family: "Noto Sans KR", system-ui, sans-serif;
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 0.94rem;
+  color: var(--ga-muted);
 }
 
 .ga-widget-form label {
   display: block;
-  font-size: 0.75rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+  color: var(--ga-ink);
 }
 
 .ga-widget-dates {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
 }
 
 .ga-widget-dates input,
 .ga-widget-form select {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid var(--ga-line);
-  border-radius: 8px;
+  padding: 0.6rem 0.65rem;
+  border: 1px solid var(--ga-line-strong);
+  border-radius: var(--ga-radius-sm);
+  background: var(--ga-bg);
+  color: var(--ga-ink);
   font: inherit;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
+  transition: border-color 0.18s ease;
+}
+
+.ga-widget-dates input:focus,
+.ga-widget-form select:focus {
+  outline: none;
+  border-color: var(--ga-ink);
 }
 
 .ga-price-lines {
   list-style: none;
   padding: 0;
-  margin: 1rem 0;
+  margin: 1.15rem 0;
   font-size: 0.9rem;
 }
 
 .ga-price-lines li {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.35rem;
-  color: var(--ga-muted);
+  margin-bottom: 0.4rem;
+  color: var(--ga-ink-soft);
 }
 
 .ga-price-total {
-  font-weight: 600;
+  font-weight: 700 !important;
+  font-family: "Nanum Myeongjo", serif;
   color: var(--ga-ink) !important;
-  padding-top: 0.5rem;
+  padding-top: 0.65rem;
   border-top: 1px solid var(--ga-line);
   margin-top: 0.5rem !important;
 }
@@ -426,39 +535,46 @@
 .ga-widget-note {
   font-size: 0.78rem;
   color: var(--ga-muted);
-  margin: 0.75rem 0 0;
+  margin: 0.85rem 0 0;
   text-align: center;
 }
 
-/* 버튼 */
+/* ── 버튼 (행로 본 사이트 .btn 과 동일 톤) ────── */
 .ga-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.25rem;
-  border-radius: 8px;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--ga-radius-pill);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
   text-decoration: none;
-  border: 1px solid transparent;
+  border: 1px solid var(--ga-ink);
   cursor: pointer;
   font-family: inherit;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
 .ga-btn--primary {
-  background: var(--ga-rose);
-  color: #fff;
+  background: var(--ga-ink);
+  color: var(--ga-bg);
 }
 
 .ga-btn--primary:hover {
-  background: var(--ga-rose-dark);
-  color: #fff;
+  background: transparent;
+  color: var(--ga-ink);
 }
 
 .ga-btn--ghost {
-  background: #fff;
+  background: transparent;
   border-color: var(--ga-ink);
   color: var(--ga-ink);
+}
+
+.ga-btn--ghost:hover {
+  background: var(--ga-ink);
+  color: var(--ga-bg);
 }
 
 .ga-btn--block {
@@ -466,12 +582,13 @@
 }
 
 .ga-btn--disabled {
-  background: var(--ga-line);
+  background: var(--ga-line-strong);
+  border-color: transparent;
   color: var(--ga-muted);
   cursor: not-allowed;
 }
 
-/* 체크아웃 */
+/* ── 체크아웃 ────────────────────────────────── */
 .ga-checkout-grid {
   display: grid;
   grid-template-columns: 1fr minmax(280px, 380px);
@@ -481,69 +598,95 @@
 
 .ga-form label {
   display: block;
-  margin-bottom: 1rem;
-  font-size: 0.88rem;
-  font-weight: 500;
+  margin-bottom: 1.1rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ga-ink);
 }
 
 .ga-form input,
 .ga-form textarea {
   display: block;
   width: 100%;
-  margin-top: 0.35rem;
-  padding: 0.65rem 0.75rem;
-  border: 1px solid var(--ga-line);
-  border-radius: 8px;
+  margin-top: 0.4rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--ga-line-strong);
+  border-radius: var(--ga-radius-sm);
+  background: var(--ga-bg);
+  color: var(--ga-ink);
   font: inherit;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.ga-form input:focus,
+.ga-form textarea:focus {
+  outline: none;
+  border-color: var(--ga-ink);
 }
 
 .ga-form h2 {
-  font-size: 1rem;
-  margin: 1.5rem 0 0.75rem;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 1.75rem 0 0.85rem;
+  letter-spacing: -0.02em;
 }
 
 .ga-checkout-card {
-  border: 1px solid var(--ga-line);
-  border-radius: var(--ga-radius);
-  padding: 1.25rem;
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius-lg);
+  padding: 1.5rem;
   position: sticky;
   top: 5rem;
 }
 
 .ga-checkout-photo {
   aspect-ratio: 16/10;
-  border-radius: 8px;
+  border-radius: var(--ga-radius-sm);
   margin-bottom: 1rem;
+  background: var(--ga-bg);
 }
 
 .ga-checkout-total {
-  font-size: 1.2rem;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.25rem;
+  font-weight: 700;
   margin-top: 1rem;
+  letter-spacing: -0.02em;
 }
 
-/* 여행 · 메시지 */
-.ga-trips {
+/* ── 여행 · 메시지 ──────────────────────────── */
+.ga-trips,
+.ga-trips-grid {
   display: grid;
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
 .ga-trip-card {
   display: grid;
   grid-template-columns: 140px 1fr;
-  gap: 1rem;
-  border: 1px solid var(--ga-line);
-  border-radius: var(--ga-radius);
+  gap: 1.15rem;
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius-lg);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
 }
 
 .ga-trip-card:hover {
   box-shadow: var(--ga-shadow);
+  transform: translateY(-2px);
 }
 
 .ga-trip-photo {
   min-height: 120px;
+  background: var(--ga-bg);
 }
 
 .ga-trip-body {
@@ -551,82 +694,107 @@
 }
 
 .ga-trip-body h2 {
-  font-size: 1.05rem;
-  margin: 0 0 0.25rem;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.3rem;
+  letter-spacing: -0.02em;
 }
 
 .ga-trip-status {
   display: inline-block;
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
+  margin-top: 0.6rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
   font-weight: 600;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  background: var(--ga-paper);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--ga-radius-pill);
+  background: var(--ga-bg);
+  color: var(--ga-ink-soft);
 }
 
 .ga-trip-detail .ga-trip-hero {
   aspect-ratio: 21/9;
-  border-radius: var(--ga-radius);
-  margin-bottom: 1rem;
+  border-radius: var(--ga-radius-lg);
+  margin-bottom: 1.25rem;
+  background: var(--ga-paper);
 }
 
 .ga-trip-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
 }
 
 .ga-guide {
   display: grid;
   grid-template-columns: 7rem 1fr;
-  gap: 0.5rem 1rem;
-  font-size: 0.92rem;
+  gap: 0.6rem 1.15rem;
+  font-size: 0.94rem;
 }
 
 .ga-guide dt {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
   font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ga-ink);
   margin: 0;
+  padding-top: 0.15rem;
 }
 
 .ga-guide dd {
   margin: 0;
-  color: var(--ga-muted);
+  color: var(--ga-ink-soft);
 }
 
 .ga-banner {
-  background: #fff8f0;
-  border: 1px solid #ffe0b2;
-  padding: 0.85rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1.25rem;
-  font-size: 0.92rem;
+  background: var(--ga-paper);
+  padding: 1rem 1.15rem;
+  border-radius: var(--ga-radius);
+  margin-bottom: 1.5rem;
+  font-size: 0.94rem;
+  color: var(--ga-ink-soft);
+  line-height: 1.65;
 }
 
 .ga-msg {
-  border: 1px solid var(--ga-line);
-  border-radius: var(--ga-radius);
-  padding: 1rem 1.15rem;
-  margin-bottom: 0.75rem;
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius-lg);
+  padding: 1.15rem 1.25rem;
+  margin-bottom: 0.85rem;
 }
 
 .ga-msg-head {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.ga-msg-head strong {
+  font-family: "Nanum Myeongjo", serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ga-ink);
 }
 
 .ga-msg-head time {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--ga-muted);
 }
 
 .ga-msg-prop {
-  font-size: 0.85rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--ga-muted);
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.45rem;
 }
 
 .ga-empty,
@@ -634,24 +802,142 @@
   text-align: center;
   color: var(--ga-muted);
   padding: 3rem 1rem;
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius-lg);
 }
 
 .ga-empty-box .ga-btn {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
+}
+
+.ga-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ga-muted);
+  margin-bottom: 1.5rem;
+}
+
+.ga-breadcrumb a {
+  color: var(--ga-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ga-line-strong);
+  padding-bottom: 1px;
+}
+
+.ga-breadcrumb a:hover {
+  border-bottom-color: var(--ga-ink);
+}
+
+.ga-page-title {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: clamp(1.65rem, 3.2vw, 2.1rem);
+  font-weight: 700;
+  margin: 0 0 0.45rem;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.ga-page-lead {
+  color: var(--ga-ink-soft);
+  margin: 0 0 1.75rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 46ch;
+}
+
+.ga-reviews {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.25rem;
+}
+
+.ga-reviews li {
+  border-bottom: 1px solid var(--ga-line);
+  padding: 1.15rem 0;
+}
+
+.ga-reviews li:last-child {
+  border-bottom: none;
+}
+
+.ga-reviews li p {
+  margin: 0.4rem 0 0;
+  color: var(--ga-ink-soft);
+  line-height: 1.65;
+}
+
+.ga-muted {
+  color: var(--ga-muted);
+  font-size: 0.88rem;
+}
+
+.ga-listings--compact {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  margin-bottom: 2.25rem;
+}
+
+.ga-listings--compact .ga-card-price span {
+  display: none;
+}
+
+.ga-summary-card {
+  display: flex;
+  gap: 1.15rem;
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius-lg);
+  padding: 1.15rem;
+  margin-bottom: 1.15rem;
+}
+
+.ga-summary-photo {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--ga-radius-sm);
+  flex-shrink: 0;
+  background: var(--ga-bg);
+}
+
+.ga-summary-body h2 {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+.ga-summary-price {
+  margin: 0.6rem 0 0;
+  color: var(--ga-ink);
+}
+
+.ga-compose {
+  margin-top: 2.75rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--ga-line);
 }
 
 .ga-footer {
   border-top: 1px solid var(--ga-line);
-  padding: 1.5rem 0;
-  font-size: 0.82rem;
+  padding: 1.75rem 0;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
   color: var(--ga-muted);
   text-align: center;
+  background: var(--ga-bg);
 }
 
 @media (max-width: 900px) {
   .ga-search {
     grid-template-columns: 1fr 1fr;
-    border-radius: var(--ga-radius);
+    border-radius: var(--ga-radius-lg);
   }
   .ga-search-field {
     border-right: none;
@@ -659,7 +945,7 @@
   }
   .ga-search-btn {
     grid-column: 1 / -1;
-    padding: 0.85rem;
+    padding: 0.95rem;
   }
   .ga-mosaic {
     grid-template-columns: 1fr 1fr;
@@ -668,7 +954,7 @@
   .ga-mosaic-item--0 {
     grid-row: auto;
     grid-column: 1 / -1;
-    min-height: 200px;
+    min-height: 220px;
   }
   .ga-listing-layout,
   .ga-checkout-grid {

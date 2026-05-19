@@ -3,18 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>집주인 홈 — 행로</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>집주인 홈 — 집터</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../css/styles.css" />
-        <link rel="stylesheet" href="../css/portal.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
     <link rel="stylesheet" href="../css/portal-shell.css" />
-    <link rel="stylesheet" href="../css/portal-host.css" />
-      <script src="../js/portal-guard.js"></script>
+    <link rel="stylesheet" href="../css/portal-host.css?v=3" />
+    <script src="../js/portal-guard.js"></script>
   </head>
-  <body class="portal-host">
-        <header class="portal-shell-header">
+  <body class="portal-host" data-ha-page="dashboard">
+    <header class="portal-shell-header">
       <div class="wrap portal-shell-bar">
         <div class="portal-shell-brand">
           <span class="portal-shell-mark" aria-hidden="true"></span>
@@ -31,32 +29,18 @@
       </div>
     </div>
     <main class="page-fill">
-      <nav class="portal-subnav wrap" aria-label="집주인 메뉴">
+      <nav class="portal-subnav wrap">
         <a href="./" aria-current="page">홈</a>
         <a href="properties.html">내 숙소</a>
         <a href="bookings.html">예약</a>
         <a href="messages.html">문의함</a>
       </nav>
-      <div class="wrap">
-        <div class="portal-grid portal-grid--3" style="margin-bottom: 1.5rem">
-          <article class="portal-card portal-kpi"><strong>2</strong><span>운영 숙소</span></article>
-          <article class="portal-card portal-kpi"><strong>1</strong><span>이번 주 체크인</span></article>
-          <article class="portal-card portal-kpi"><strong>2</strong><span>미답 문의</span></article>
-        </div>
-        <h2 class="portal-section-title">내 숙소</h2>
-        <article class="portal-card">
-          <h3>첫 번째 유후공간</h3>
-          <p>운영 중 · 전남 ○○군</p>
-          <div class="portal-card-actions">
-            <a class="btn btn-primary" href="properties.html">숙소 관리</a>
-            <a class="btn btn-ghost" href="bookings.html">예약 보기</a>
-          </div>
-        </article>
-      </div>
+      <div class="wrap" id="ha-dashboard-root"><p class="portal-empty">불러오는 중…</p></div>
     </main>
-        <footer class="portal-shell-footer wrap">
-      <span>숙소 운영 · 행로</span>
-    </footer>
-    <script src="../js/demo-portal.js"></script>
+    <footer class="portal-shell-footer wrap"><span>숙소 운영 · 행로</span></footer>
+    <script src="../js/portal-data.js?v=3"></script>
+    <script src="../js/portal-ui.js?v=3"></script>
+    <script src="../js/host-app.js?v=3"></script>
+    <script>HostApp.autoBoot();</script>
   </body>
 </html>

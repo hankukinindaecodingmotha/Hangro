@@ -46,3 +46,224 @@ body.portal-host .btn-primary {
 body.portal-host .portal-card {
   border-color: var(--line);
 }
+
+.btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.82rem;
+}
+
+.ha-kpis {
+  margin-bottom: 1.5rem;
+}
+
+.ha-calendar {
+  margin-bottom: 2rem;
+  padding: 1.25rem 1.35rem;
+}
+
+.ha-cal-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.ha-cal-head h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  flex: 1;
+  min-width: 8rem;
+}
+
+.ha-cal-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.ha-cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+}
+
+.ha-cal-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ha-cal-swatch {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 3px;
+}
+
+.ha-cal-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.ha-cal-table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0.35rem;
+  text-align: center;
+}
+
+.ha-cal-day {
+  vertical-align: top;
+  border: 1px solid var(--line);
+  min-height: 5.5rem;
+  padding: 0.35rem;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.ha-cal-day--empty {
+  background: transparent;
+  border-color: transparent;
+}
+
+.ha-cal-day--today .ha-cal-num {
+  background: var(--accent);
+  color: #14181c;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.ha-cal-num {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.ha-cal-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 0.25rem;
+}
+
+.ha-cal-bar {
+  display: block;
+  font-size: 0.68rem;
+  line-height: 1.25;
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: #14181c;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ha-cal-bar--pending {
+  opacity: 0.75;
+  border: 1px dashed rgba(0, 0, 0, 0.35);
+}
+
+.ha-cal-color--0 { background: #c4a35a; }
+.ha-cal-color--1 { background: #7cb88a; }
+.ha-cal-color--2 { background: #57c5d4; }
+.ha-cal-color--3 { background: #b794f4; }
+.ha-cal-color--4 { background: #f6ad55; }
+.ha-cal-color--5 { background: #90cdf4; }
+
+.ha-actions {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.ha-actions-muted {
+  color: var(--text-muted);
+}
+
+.ha-pending-section {
+  margin-top: 2rem;
+}
+
+.ha-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ha-edit-section {
+  padding: 1.25rem 1.35rem;
+}
+
+.ha-edit-section h2 {
+  margin: 0 0 1rem;
+  font-size: 1.05rem;
+}
+
+.ha-edit-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+}
+
+.ha-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+
+.ha-photo-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.ha-photo-thumb {
+  width: 88px;
+  height: 88px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--line);
+}
+
+.ha-edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.ha-save-note {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 720px) {
+  .ha-cal-table {
+    font-size: 0.75rem;
+  }
+  .ha-cal-bar {
+    font-size: 0.6rem;
+  }
+}
+
+.ha-preview-frame {
+  width: 100%;
+  min-height: 420px;
+  border: 1px solid var(--portal-line, #e5e5e5);
+  border-radius: 12px;
+  background: #f7f7f7;
+}
+.ha-guest-preview { margin-top: 1rem; }
+.ha-photo-preview { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.ha-photo-thumb { width: 72px; height: 72px; border-radius: 8px; background-size: cover; background-position: center; }

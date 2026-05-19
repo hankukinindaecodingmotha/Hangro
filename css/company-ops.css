@@ -1,0 +1,18 @@
+
+.co-ops-header { border-bottom: 1px solid rgba(0,0,0,.08); background: #1a1a1a; color: #fff; }
+.co-ops-bar { display: flex; align-items: center; justify-content: space-between; padding: .75rem 0; }
+.co-ops-bar .logo { color: #fff; text-decoration: none; font-weight: 700; }
+.co-ops-badge { font-size: .75rem; opacity: .85; }
+.co-ops-hero { background: #f5f3ef; }
+.co-ops-nav { flex-wrap: wrap; gap: .25rem; }
+.co-logout-link { margin-left: auto; opacity: .8; }
+.co-quick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.co-quick-card { text-decoration: none; color: inherit; display: block; padding: 1rem; }
+.co-quick-card strong { display: block; margin-bottom: .25rem; }
+.co-login-wrap { min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.co-login-card { max-width: 400px; width: 100%; }
+.co-login-error { color: #b42318; font-size: .9rem; }
+.co-login-hint { font-size: .85rem; opacity: .75; }
+.co-ops-footer { padding: 2rem 0; font-size: .85rem; opacity: .7; }
+.portal-grid--4 { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.btn-sm { font-size: .85rem; padding: .35rem .65rem; }

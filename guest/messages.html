@@ -7,28 +7,30 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../css/guest-airbnb.css" />
+<link rel="stylesheet" href="../css/guest-airbnb.css?v=5" />
 <script src="../js/portal-guard.js"></script>
 </head>
-<body class="ga-body">
+<body class="ga-body" data-ga-page="messages">
 <div id="ga-header-mount"></div>
-<main class="ga-main"><div class="ga-wrap"><h1 class="ga-section-title">메시지</h1>
-<div id="ga-messages-list"></div>
-<h2 class="ga-h2">새 문의</h2>
-<form id="guest-message-form" class="ga-form">
-<label>제목<input name="subject" type="text" required /></label>
-<label>내용<textarea name="body" required></textarea></label>
-<button type="submit" class="ga-btn ga-btn--primary">보내기 (데모)</button>
-</form>
-<p id="portal-form-note" hidden style="font-size:0.85rem;color:var(--ga-muted)"></p>
-<div id="portal-local-messages"></div></div></main>
+<main class="ga-main">
+  <div class="ga-wrap">
+    <h1 class="ga-page-title">메시지</h1>
+    <p class="ga-page-lead">호스트·운영팀과 나눈 문의입니다.</p>
+    <div id="ga-messages-list" class="ga-messages" aria-live="polite"><p class="ga-empty">불러오는 중…</p></div>
+    <section class="ga-compose">
+      <h2 class="ga-h2">새 문의</h2>
+      <form id="guest-message-form" class="ga-form">
+        <label>제목<input name="subject" type="text" placeholder="예: 체크인 시간" required /></label>
+        <label>내용<textarea name="body" placeholder="문의 내용" required></textarea></label>
+        <button type="submit" class="ga-btn ga-btn--primary">보내기 (데모)</button>
+      </form>
+    </section>
+  </div>
+</main>
 <footer class="ga-footer"><div class="ga-wrap">© 행로 · Hangro — 게스트</div></footer>
-<script src="../js/portal-data.js"></script>
-<script src="../js/portal-ui.js"></script>
-<script src="../js/guest-app.js"></script>
-<script>
-GuestApp.mountHeader("messages");
-GuestApp.renderMessages();
-</script>
+<script src="../js/portal-data.js?v=5"></script>
+<script src="../js/portal-ui.js?v=4"></script>
+<script src="../js/guest-app.js?v=5"></script>
+<script>GuestApp.autoBoot();</script>
 </body>
 </html>

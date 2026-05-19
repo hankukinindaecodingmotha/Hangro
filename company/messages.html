@@ -2,83 +2,9 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>문의·이슈 — 회사 · 행로</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/styles.css" />
-    <link rel="stylesheet" href="../css/company-unified.css" />
-    <link rel="stylesheet" href="../css/portal.css" />
+    <meta http-equiv="refresh" content="0; url=ops/messages.html" />
+    <script>location.replace("ops/messages.html");</script>
+    <title>이동 중…</title>
   </head>
-  <body class="sub portal">
-        <header>
-      <div class="wrap nav company-nav">
-        <a href="index.html" class="logo">행로</a>
-        <nav class="nav-links" aria-label="행로 · 회사">
-          <a href="index.html">소개</a>
-          <a href="map-demo.html">지도</a>
-          <a href="archive.html">기록</a>
-          <a href="booking.html">예약</a>
-          <a href="team.html">팀</a>
-          <a href="dashboard.html">운영</a>
-          <a href="../guest/" target="_blank" rel="noopener noreferrer">게스트</a>
-          <a href="../host/" target="_blank" rel="noopener noreferrer">집주인</a>
-        </nav>
-        <a class="nav-cta" href="booking.html">상담 예약</a>
-      </div>
-    </header>
-    <div class="page-hero">
-      <div class="wrap">
-        <p class="badge">Company</p>
-        <h1>문의·이슈</h1>
-        <p>게스트·집주인 간 메시지와 미처리 항목입니다.</p>
-      </div>
-    </div>
-    <main class="page-fill">
-      <nav class="portal-subnav wrap">
-        <a href="dashboard.html">대시보드</a>
-        <a href="properties.html">숙소</a>
-        <a href="bookings.html">예약</a>
-        <a href="messages.html" aria-current="page">문의</a>
-        <a href="content.html">공지·콘텐츠</a>
-      </nav>
-      <div class="wrap">
-        <div id="company-messages-list" class="portal-card"></div>
-      </div>
-    </main>
-    <footer>
-      <div class="wrap footer-inner">
-        <span>© 행로 · Hangro Studio</span>
-        <span>회사</span>
-      </div>
-    </footer>
-    <script src="../js/portal-data.js"></script>
-    <script src="../js/portal-ui.js"></script>
-    <script>
-      (function () {
-        var D = window.PORTAL_DATA;
-        var U = window.PortalUI;
-        document.getElementById("company-messages-list").innerHTML =
-          '<ul class="portal-list">' +
-          D.messages
-            .map(function (m) {
-              var p = D.getProperty(m.propertyId);
-              return (
-                "<li><strong>" +
-                U.escapeHtml(m.subject) +
-                '</strong><span class="meta">' +
-                U.escapeHtml(p ? p.name : "") +
-                " · " +
-                U.escapeHtml(m.fromName) +
-                " · " +
-                U.statusBadge(m.status) +
-                "<br>" +
-                U.escapeHtml(m.body) +
-                "</span></li>"
-              );
-            })
-            .join("") +
-          "</ul>";
-      })();
-    </script>
-  </body>
+  <body><p><a href="ops/messages.html">운영 페이지로 이동</a></p></body>
 </html>

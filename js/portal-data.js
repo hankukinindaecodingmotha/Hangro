@@ -32,6 +32,12 @@
       hostBio: "마을 재생 숙소를 함께 운영합니다.",
       description:
         "오래 비어 있던 유후시설을 정리한 체류형 숙소입니다. 2~4인 가족·친구 여행에 적합합니다.",
+      highlights: [
+        "행로 첫 유후공간 재생 사례",
+        "마을 산책로·작은 정원",
+        "주방·세탁기 완비",
+      ],
+      nearbyTips: ["포항 시내 차량 15분", "해맞이 숲길·해안 산책"],
     },
     {
       id: "home-2",
@@ -443,6 +449,137 @@
     },
   ];
 
+  var PROPERTY_MOCK = {
+    "home-10": {
+      photos: ["https://picsum.photos/seed/hangro-home-10-1/800/600", "https://picsum.photos/seed/hangro-home-10-2/800/600", "https://picsum.photos/seed/hangro-home-10-3/800/600", "https://picsum.photos/seed/hangro-home-10-4/800/600", "https://picsum.photos/seed/hangro-home-10-5/800/600"],
+      highlights: ["가족 6인", "밤바다 뷰", "넓은 거실"],
+      nearbyTips: ["오동도", "여수 밤바다"],
+      descriptionExtra: "테라스에서 밤바다를 보며 쉬기 좋은 펜션입니다.",
+    },
+    "home-11": {
+      photos: ["https://picsum.photos/seed/hangro-home-11-1/800/600", "https://picsum.photos/seed/hangro-home-11-2/800/600", "https://picsum.photos/seed/hangro-home-11-3/800/600", "https://picsum.photos/seed/hangro-home-11-4/800/600", "https://picsum.photos/seed/hangro-home-11-5/800/600"],
+      highlights: ["호수 근처", "캠프파이어", "자전거"],
+      nearbyTips: ["남이섬", "소양강스카이워크"],
+      descriptionExtra: "닭갈비·막국수와 1박2일 코스에 좋습니다.",
+    },
+    "home-12": {
+      photos: ["https://picsum.photos/seed/hangro-home-12-1/800/600", "https://picsum.photos/seed/hangro-home-12-2/800/600", "https://picsum.photos/seed/hangro-home-12-3/800/600", "https://picsum.photos/seed/hangro-home-12-4/800/600", "https://picsum.photos/seed/hangro-home-12-5/800/600"],
+      highlights: ["하회마을 인근", "전통 체험", "정원"],
+      nearbyTips: ["하회마을", "월영교"],
+      descriptionExtra: "전통 마을과 안동 음식을 함께 즐기세요.",
+    },
+    "home-13": {
+      photos: ["https://picsum.photos/seed/hangro-home-13-1/800/600", "https://picsum.photos/seed/hangro-home-13-2/800/600", "https://picsum.photos/seed/hangro-home-13-3/800/600", "https://picsum.photos/seed/hangro-home-13-4/800/600", "https://picsum.photos/seed/hangro-home-13-5/800/600"],
+      highlights: ["중앙시장 도보", "해변 근처", "주방 완비"],
+      nearbyTips: ["속초중앙시장", "아바이마을"],
+      descriptionExtra: "가족이 시장·해변을 오가기 좋습니다.",
+    },
+    "home-14": {
+      photos: ["https://picsum.photos/seed/hangro-home-14-1/800/600", "https://picsum.photos/seed/hangro-home-14-2/800/600", "https://picsum.photos/seed/hangro-home-14-3/800/600", "https://picsum.photos/seed/hangro-home-14-4/800/600", "https://picsum.photos/seed/hangro-home-14-5/800/600"],
+      highlights: ["조용한 섬마을", "바다 전망", "드라이브 베이스"],
+      nearbyTips: ["독일마을", "다랭이마을"],
+      descriptionExtra: "남해안 드라이브 중간 거점으로 추천합니다.",
+    },
+    "home-15": {
+      photos: ["https://picsum.photos/seed/hangro-home-15-1/800/600", "https://picsum.photos/seed/hangro-home-15-2/800/600", "https://picsum.photos/seed/hangro-home-15-3/800/600", "https://picsum.photos/seed/hangro-home-15-4/800/600", "https://picsum.photos/seed/hangro-home-15-5/800/600"],
+      highlights: ["북한강 뷰", "글램핑", "서울 근교"],
+      nearbyTips: ["남이섬", "쁘띠프랑스"],
+      descriptionExtra: "캠핑 감성과 편의시설을 함께 누릴 수 있습니다.",
+    },
+    "home-16": {
+      photos: ["https://picsum.photos/seed/hangro-home-16-1/800/600", "https://picsum.photos/seed/hangro-home-16-2/800/600", "https://picsum.photos/seed/hangro-home-16-3/800/600", "https://picsum.photos/seed/hangro-home-16-4/800/600", "https://picsum.photos/seed/hangro-home-16-5/800/600"],
+      highlights: ["대천·보령 해안", "가족형", "축제 시즌"],
+      nearbyTips: ["대천해수욕장", "머드축제장"],
+      descriptionExtra: "여름 해수욕과 축제 시즌 예약이 많습니다.",
+    },
+    "home-17": {
+      photos: ["https://picsum.photos/seed/hangro-home-17-1/800/600", "https://picsum.photos/seed/hangro-home-17-2/800/600", "https://picsum.photos/seed/hangro-home-17-3/800/600", "https://picsum.photos/seed/hangro-home-17-4/800/600", "https://picsum.photos/seed/hangro-home-17-5/800/600"],
+      highlights: ["동피랑 언덕", "항구 야경", "카페 거리"],
+      nearbyTips: ["동피랑", "케이블카"],
+      descriptionExtra: "언덕 위에서 마을과 바다를 내려다봅니다.",
+    },
+    "home-18": {
+      photos: ["https://picsum.photos/seed/hangro-home-18-1/800/600", "https://picsum.photos/seed/hangro-home-18-2/800/600", "https://picsum.photos/seed/hangro-home-18-3/800/600", "https://picsum.photos/seed/hangro-home-18-4/800/600", "https://picsum.photos/seed/hangro-home-18-5/800/600"],
+      highlights: ["스키장 근처", "샬레", "시즌 준비"],
+      nearbyTips: ["무주 리조트", "덕유산"],
+      descriptionExtra: "겨울 시즌 오픈을 준비 중인 샬레입니다.",
+    },
+    "home-2": {
+      photos: ["https://picsum.photos/seed/hangro-home-2-1/800/600", "https://picsum.photos/seed/hangro-home-2-2/800/600", "https://picsum.photos/seed/hangro-home-2-3/800/600", "https://picsum.photos/seed/hangro-home-2-4/800/600", "https://picsum.photos/seed/hangro-home-2-5/800/600"],
+      highlights: ["논뷰 독채", "마을 끝 조용한 위치", "바베큐 테라스"],
+      nearbyTips: ["순천만 국가정원", "순천 시내 맛집"],
+      descriptionExtra: "1층 거실과 작은 주방이 있어 2인 체류에 최적입니다.",
+    },
+    "home-3": {
+      photos: ["https://picsum.photos/seed/hangro-home-3-1/800/600", "https://picsum.photos/seed/hangro-home-3-2/800/600", "https://picsum.photos/seed/hangro-home-3-3/800/600", "https://picsum.photos/seed/hangro-home-3-4/800/600", "https://picsum.photos/seed/hangro-home-3-5/800/600"],
+      highlights: ["학당 인근 한옥 감성", "리노베이션 예정", "담양 죽녹원 근접"],
+      nearbyTips: ["담양 죽녹원", "메타세쿼이아길"],
+      descriptionExtra: "옛 학당 뜰과 담장이 남아 있는 공간입니다.",
+    },
+    "home-4": {
+      photos: ["https://picsum.photos/seed/hangro-home-4-1/800/600", "https://picsum.photos/seed/hangro-home-4-2/800/600", "https://picsum.photos/seed/hangro-home-4-3/800/600", "https://picsum.photos/seed/hangro-home-4-4/800/600", "https://picsum.photos/seed/hangro-home-4-5/800/600"],
+      highlights: ["한옥마을 도보", "돌담 마당", "한복 체험 연계"],
+      nearbyTips: ["경기전", "비빔밥 거리"],
+      descriptionExtra: "대청마루와 마당이 있는 한옥으로 가족 여행에 인기입니다.",
+    },
+    "home-5": {
+      photos: ["https://picsum.photos/seed/hangro-home-5-1/800/600", "https://picsum.photos/seed/hangro-home-5-2/800/600", "https://picsum.photos/seed/hangro-home-5-3/800/600", "https://picsum.photos/seed/hangro-home-5-4/800/600", "https://picsum.photos/seed/hangro-home-5-5/800/600"],
+      highlights: ["돌담·감귤밭 뷰", "독채 전체", "렌트카 추천"],
+      nearbyTips: ["쇠소깍", "천지연폭포"],
+      descriptionExtra: "제주 감성의 돌담과 넓은 주방이 특징입니다.",
+    },
+    "home-6": {
+      photos: ["https://picsum.photos/seed/hangro-home-6-1/800/600", "https://picsum.photos/seed/hangro-home-6-2/800/600", "https://picsum.photos/seed/hangro-home-6-3/800/600", "https://picsum.photos/seed/hangro-home-6-4/800/600", "https://picsum.photos/seed/hangro-home-6-5/800/600"],
+      highlights: ["오션뷰 로프트", "해변 도보 5분", "커플 인기"],
+      nearbyTips: ["경포대", "안목 커피거리"],
+      descriptionExtra: "일출이 보이는 창과 오픈형 거실이 매력적입니다.",
+    },
+    "home-7": {
+      photos: ["https://picsum.photos/seed/hangro-home-7-1/800/600", "https://picsum.photos/seed/hangro-home-7-2/800/600", "https://picsum.photos/seed/hangro-home-7-3/800/600", "https://picsum.photos/seed/hangro-home-7-4/800/600", "https://picsum.photos/seed/hangro-home-7-5/800/600"],
+      highlights: ["A-frame 통나무", "벽난로", "숲 산책로"],
+      nearbyTips: ["대관령", "알펜시아"],
+      descriptionExtra: "겨울 눈꽃·여름 녹음 모두 인기 있는 숲속 숙소입니다.",
+    },
+    "home-8": {
+      photos: ["https://picsum.photos/seed/hangro-home-8-1/800/600", "https://picsum.photos/seed/hangro-home-8-2/800/600", "https://picsum.photos/seed/hangro-home-8-3/800/600", "https://picsum.photos/seed/hangro-home-8-4/800/600", "https://picsum.photos/seed/hangro-home-8-5/800/600"],
+      highlights: ["황리단길 3분", "가성비", "공용 라운지"],
+      nearbyTips: ["첨성대", "황리단길 야경"],
+      descriptionExtra: "배낭여행·혼행 게스트에게 사랑받는 공간입니다.",
+    },
+    "home-9": {
+      photos: ["https://picsum.photos/seed/hangro-home-9-1/800/600", "https://picsum.photos/seed/hangro-home-9-2/800/600", "https://picsum.photos/seed/hangro-home-9-3/800/600", "https://picsum.photos/seed/hangro-home-9-4/800/600", "https://picsum.photos/seed/hangro-home-9-5/800/600"],
+      highlights: ["광안대교 야경", "해변 도보", "커플 추천"],
+      nearbyTips: ["광안리 해수욕장", "민락수변공원"],
+      descriptionExtra: "창밖으로 대교 야경이 보이는 스튜디오입니다.",
+    },
+  };
+
+  function enrichProperty(base) {
+    if (!base) return null;
+    if (base.id === "home-1") {
+      return Object.assign({}, base, {
+        highlights: base.highlights || [
+          "행로 첫 유후공간 재생 사례",
+          "마을 산책로·작은 정원",
+          "주방·세탁기 완비",
+        ],
+        nearbyTips: base.nearbyTips || [
+          "포항 시내 차량 15분",
+          "해맞이 숲길·해안 산책",
+        ],
+      });
+    }
+    var mock = PROPERTY_MOCK[base.id];
+    if (!mock) return base;
+    var desc = base.description || "";
+    if (mock.descriptionExtra && desc.indexOf(mock.descriptionExtra) === -1) {
+      desc = (desc.trim() + " " + mock.descriptionExtra).trim();
+    }
+    var merged = Object.assign({}, base, mock, { description: desc });
+    delete merged.descriptionExtra;
+    return merged;
+  }
+
   var BOOKINGS = [
     {
       id: "b1",
@@ -483,6 +620,16 @@
       checkOut: "2026-04-03",
       status: "confirmed",
       note: "",
+    },
+    {
+      id: "b5",
+      propertyId: "home-1",
+      guestName: "이예약",
+      guestId: "guest-other",
+      checkIn: "2026-05-25",
+      checkOut: "2026-05-27",
+      status: "pending",
+      note: "주말 숙박 요청",
     },
   ];
 
@@ -530,28 +677,140 @@
       rules: "22시 이후 정숙, 실내 금연, 분리수거 준수",
       contact: "010-0000-0001 (민수)",
     },
-    "home-2": {
-      checkIn: "14:00 이후",
+    "home-10": {
+      checkIn: "15:00",
+      checkOut: "10:00",
+      wifi: "Yeosu_NightSea",
+      parking: "펜션 앞 2대",
+      rules: "테라스 바베큐 후 정리 · 23시 이후 정숙",
+      contact: "010-0000-0010 (지연)",
+    },
+    "home-11": {
+      checkIn: "15:00",
       checkOut: "11:00",
-      wifi: "SmallHouse_Guest",
-      parking: "마을 입구 공용 주차장",
-      rules: "마을 정숙 시간 22시, 야외 화기 주의",
+      wifi: "Chuncheon_Cabin",
+      parking: "캐빈 앞 1대",
+      rules: "캠프파이어 구역만 사용 · 야외 소음 주의",
+      contact: "010-0000-0011 (도윤)",
+    },
+    "home-12": {
+      checkIn: "15:00",
+      checkOut: "10:00",
+      wifi: "Hahoe_Hanok",
+      parking: "한옥 앞 1대",
+      rules: "한옥 내 화기 주의 · 전통 마을 규칙 준수",
+      contact: "010-0000-0012 (정호)",
+    },
+    "home-13": {
+      checkIn: "15:00",
+      checkOut: "11:00",
+      wifi: "Sokcho_Beach",
+      parking: "아파트 지하",
+      rules: "건물 관리규정 준수 · 22시 이후 정숙",
+      contact: "010-0000-0013 (수빈)",
+    },
+    "home-14": {
+      checkIn: "15:00",
+      checkOut: "11:00",
+      wifi: "Namhae_Village",
+      parking: "독채 앞 1대",
+      rules: "마을 정숙 시간 22시 · 바다 안전 유의",
+      contact: "010-0000-0014 (유진)",
+    },
+    "home-15": {
+      checkIn: "15:00",
+      checkOut: "11:00",
+      wifi: "Gapyeong_Glamp",
+      parking: "글램핑장 내",
+      rules: "텐트 화기 규정 준수 · 23시 이후 정숙",
+      contact: "010-0000-0015 (태희)",
+    },
+    "home-16": {
+      checkIn: "15:00",
+      checkOut: "11:00",
+      wifi: "Boryeong_Stay",
+      parking: "펜션 앞 2대",
+      rules: "해수욕장 쓰레기 반출 · 실내 금연",
+      contact: "010-0000-0016 (현우)",
+    },
+    "home-17": {
+      checkIn: "15:00",
+      checkOut: "11:00",
+      wifi: "Tongyeong_Hill",
+      parking: "언덕길 1대 (경사 주의)",
+      rules: "언덕 주차 브레이크 확인 · 22시 정숙",
+      contact: "010-0000-0017 (유진)",
+    },
+    "home-18": {
+      checkIn: "시즌 오픈 후 안내",
+      checkOut: "시즌 오픈 후 안내",
+      wifi: "준비 중",
+      parking: "샬레 앞 (오픈 후)",
+      rules: "현재 예약 불가",
+      contact: "010-0000-0018 (준혁)",
+    },
+    "home-2": {
+      checkIn: "15:00 이후",
+      checkOut: "11:00",
+      wifi: "SmallHouse_Guest / 현관 안내",
+      parking: "마을 입구 공용 주차장 1대",
+      rules: "22시 이후 정숙 · 야외 화기 주의",
       contact: "010-0000-0002 (지연)",
+    },
+    "home-3": {
+      checkIn: "오픈 후 안내",
+      checkOut: "오픈 후 안내",
+      wifi: "준비 중",
+      parking: "인근 공용 주차",
+      rules: "현재 예약 불가 · 오픈 전 출입 금지",
+      contact: "010-0000-0001 (민수)",
+    },
+    "home-4": {
+      checkIn: "15:00 이후",
+      checkOut: "10:00",
+      wifi: "HanokStay_24",
+      parking: "인근 공영주차 (호스트 안내)",
+      rules: "마당 금연 · 22시 이후 정숙",
+      contact: "010-0000-0004 (서연)",
     },
     "home-5": {
       checkIn: "16:00",
       checkOut: "10:00",
       wifi: "Jeju_Stone_Wall",
       parking: "돌담 앞 1대",
-      rules: "실내 금연, 감귤밭 출입 금지",
+      rules: "실내 금연 · 감귤밭 출입 금지",
       contact: "010-0000-0005 (하준)",
+    },
+    "home-6": {
+      checkIn: "15:00 이후",
+      checkOut: "11:00",
+      wifi: "Gangneung_Loft",
+      parking: "건물 지하 (호스트 안내)",
+      rules: "22시 이후 정숙 · 쓰레기 분리배출",
+      contact: "010-0000-0006 (수빈)",
+    },
+    "home-7": {
+      checkIn: "16:00",
+      checkOut: "11:00",
+      wifi: "Pyeongchang_Aframe",
+      parking: "통나무집 앞 2대",
+      rules: "벽난로 사용법 숙지 · 숲 화기 주의",
+      contact: "010-0000-0007 (도윤)",
+    },
+    "home-8": {
+      checkIn: "14:00 이후",
+      checkOut: "11:00",
+      wifi: "Gyeongju_GH / 프런트",
+      parking: "근처 유료 주차 (안내)",
+      rules: "도미토리 공용공간 정숙 · 개인실 금연",
+      contact: "010-0000-0008 (서연)",
     },
     "home-9": {
       checkIn: "15:00",
       checkOut: "11:00",
       wifi: "Gwangalli_View",
       parking: "건물 지하 (호스트 안내)",
-      rules: "22시 이후 정숙, 쓰레기 분리배출",
+      rules: "22시 이후 정숙 · 쓰레기 분리배출",
       contact: "010-0000-0009 (예린)",
     },
   };
@@ -571,6 +830,66 @@
     },
   ];
 
+  var PROPERTY_EDITS_KEY = "hangro_host_property_edits";
+
+  function loadPropertyEdits() {
+    try {
+      return JSON.parse(global.localStorage.getItem(PROPERTY_EDITS_KEY) || "{}");
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function mergeProperty(base) {
+    if (!base) return null;
+    var edit = loadPropertyEdits()[base.id];
+    if (!edit) return base;
+    var merged = Object.assign({}, base, edit);
+    if (edit.photos !== undefined) merged.photos = edit.photos;
+    if (edit.amenities !== undefined) merged.amenities = edit.amenities;
+    return merged;
+  }
+
+  var REVIEWS = {
+    "home-1": {"distribution": [0, 0, 0, 3, 24], "categories": [{"label": "청결도", "score": 4.95}, {"label": "정확성", "score": 4.9}, {"label": "체크인", "score": 4.88}, {"label": "의사소통", "score": 4.92}, {"label": "가성비", "score": 4.85}, {"label": "위치", "score": 4.8}], "items": [{"author": "이서연", "date": "2026-04", "rating": 5, "tripType": "커플", "text": "마을 산책하기 좋고 실내가 깔끔했어요. 사진보다 더 아늑했습니다."}, {"author": "박준호", "date": "2026-03", "rating": 5, "tripType": "친구", "text": "호스트님이 친절하고 체크인 안내가 명확했습니다."}, {"author": "김하늘", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "아이와 함께 묵기 좋아요. 주방이 잘 갖춰져 있었어요."}]},
+    "home-10": {"distribution": [0, 0, 1, 4, 28], "categories": [{"label": "청결도", "score": 4.74}, {"label": "위치", "score": 4.71}, {"label": "체크인", "score": 4.76}, {"label": "의사소통", "score": 4.75}, {"label": "가성비", "score": 4.68}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-11": {"distribution": [0, 0, 0, 3, 22], "categories": [{"label": "청결도", "score": 4.72}, {"label": "위치", "score": 4.69}, {"label": "체크인", "score": 4.74}, {"label": "의사소통", "score": 4.73}, {"label": "가성비", "score": 4.66}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-12": {"distribution": [0, 0, 1, 5, 37], "categories": [{"label": "청결도", "score": 4.89}, {"label": "위치", "score": 4.86}, {"label": "체크인", "score": 4.91}, {"label": "의사소통", "score": 4.9}, {"label": "가성비", "score": 4.83}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-13": {"distribution": [0, 0, 1, 6, 44], "categories": [{"label": "청결도", "score": 4.78}, {"label": "위치", "score": 4.75}, {"label": "체크인", "score": 4.8}, {"label": "의사소통", "score": 4.79}, {"label": "가성비", "score": 4.72}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-14": {"distribution": [0, 0, 0, 3, 26], "categories": [{"label": "청결도", "score": 4.84}, {"label": "위치", "score": 4.81}, {"label": "체크인", "score": 4.86}, {"label": "의사소통", "score": 4.85}, {"label": "가성비", "score": 4.78}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-15": {"distribution": [0, 0, 1, 7, 51], "categories": [{"label": "청결도", "score": 4.7}, {"label": "위치", "score": 4.67}, {"label": "체크인", "score": 4.72}, {"label": "의사소통", "score": 4.71}, {"label": "가성비", "score": 4.64}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-16": {"distribution": [0, 0, 0, 2, 17], "categories": [{"label": "청결도", "score": 4.67}, {"label": "위치", "score": 4.64}, {"label": "체크인", "score": 4.69}, {"label": "의사소통", "score": 4.68}, {"label": "가성비", "score": 4.61}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-17": {"distribution": [0, 0, 1, 4, 31], "categories": [{"label": "청결도", "score": 4.82}, {"label": "위치", "score": 4.79}, {"label": "체크인", "score": 4.84}, {"label": "의사소통", "score": 4.83}, {"label": "가성비", "score": 4.76}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-18": {"distribution": [0, 0, 0, 1, 12], "categories": [{"label": "청결도", "score": 4.88}, {"label": "위치", "score": 4.85}, {"label": "체크인", "score": 4.9}, {"label": "의사소통", "score": 4.89}, {"label": "가성비", "score": 4.82}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-2": {"distribution": [0, 0, 0, 2, 15], "categories": [{"label": "청결도", "score": 4.76}, {"label": "위치", "score": 4.73}, {"label": "체크인", "score": 4.78}, {"label": "의사소통", "score": 4.77}, {"label": "가성비", "score": 4.7}], "items": [{"author": "한지우", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "논뷰가 예쁘고 조용해서 힐링됐어요."}, {"author": "오세린", "date": "2026-01", "rating": 4, "tripType": "나홀로", "text": "주차·와이파이 모두 문제없었습니다."}]},
+    "home-3": {"distribution": [0, 0, 0, 1, 6], "categories": [{"label": "청결도", "score": 4.63}, {"label": "위치", "score": 4.6}, {"label": "체크인", "score": 4.65}, {"label": "의사소통", "score": 4.64}, {"label": "가성비", "score": 4.57}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-4": {"distribution": [0, 0, 1, 6, 43], "categories": [{"label": "청결도", "score": 4.87}, {"label": "위치", "score": 4.84}, {"label": "체크인", "score": 4.89}, {"label": "의사소통", "score": 4.88}, {"label": "가성비", "score": 4.81}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-5": {"distribution": [0, 0, 2, 10, 69], "categories": [{"label": "청결도", "score": 4.96}, {"label": "전망", "score": 4.98}, {"label": "체크인", "score": 4.9}, {"label": "의사소통", "score": 4.94}, {"label": "가성비", "score": 4.88}, {"label": "위치", "score": 4.92}], "items": [{"author": "최유나", "date": "2026-02", "rating": 5, "tripType": "커플", "text": "돌담과 감귤밭 뷰가 정말 제주스러웠어요."}, {"author": "정우진", "date": "2026-01", "rating": 5, "tripType": "나홀로", "text": "조용해서 힐링하기 좋았습니다."}, {"author": "강제주", "date": "2025-12", "rating": 5, "tripType": "가족", "text": "아이들이 마당을 좋아했어요."}]},
+    "home-6": {"distribution": [0, 0, 1, 7, 49], "categories": [{"label": "청결도", "score": 4.86}, {"label": "위치", "score": 4.83}, {"label": "체크인", "score": 4.88}, {"label": "의사소통", "score": 4.87}, {"label": "가성비", "score": 4.8}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-7": {"distribution": [0, 0, 1, 4, 32], "categories": [{"label": "청결도", "score": 4.95}, {"label": "위치", "score": 4.92}, {"label": "체크인", "score": 4.97}, {"label": "의사소통", "score": 4.96}, {"label": "가성비", "score": 4.89}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-8": {"distribution": [0, 0, 3, 13, 89], "categories": [{"label": "청결도", "score": 4.69}, {"label": "위치", "score": 4.66}, {"label": "체크인", "score": 4.71}, {"label": "의사소통", "score": 4.7}, {"label": "가성비", "score": 4.63}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
+    "home-9": {"distribution": [0, 0, 2, 8, 58], "categories": [{"label": "청결도", "score": 4.82}, {"label": "전망", "score": 4.95}, {"label": "체크인", "score": 4.8}, {"label": "의사소통", "score": 4.85}, {"label": "가성비", "score": 4.78}, {"label": "위치", "score": 4.9}], "items": [{"author": "정민지", "date": "2026-01", "rating": 5, "tripType": "커플", "text": "광안대교 야경이 창문으로 보여서 만족!"}, {"author": "송부산", "date": "2025-11", "rating": 4, "tripType": "친구", "text": "위치 최고, 주말엔 주변이 붐벼요."}]},
+  };
+
+  function defaultReviewBundle(property) {
+    var count = property.reviewCount || 0;
+    var r = property.rating || 4.8;
+    return {
+      distribution: [0, 0, Math.max(1, Math.round(count * 0.05)), Math.max(1, Math.round(count * 0.15)), Math.max(1, Math.round(count * 0.75))],
+      categories: [
+        { label: "청결도", score: r },
+        { label: "위치", score: Math.max(4, r - 0.05) },
+        { label: "체크인", score: r },
+        { label: "의사소통", score: r },
+        { label: "가성비", score: Math.max(4, r - 0.1) },
+      ],
+      items: [
+        { author: "방문객", date: "2026-03", rating: Math.round(r), tripType: "체류", text: "깔끔하고 호스트 응대가 빨랐어요." },
+        { author: "여행자", date: "2026-01", rating: Math.max(4, Math.round(r) - 1), tripType: "커플", text: "위치·가격 대비 만족스러운 숙소였습니다." },
+      ],
+    };
+  }
+
   var DEMO_GUEST_ID = "guest-demo";
   var DEMO_HOST_ID = "host-a";
 
@@ -583,13 +902,50 @@
     demoGuestId: DEMO_GUEST_ID,
     demoHostId: DEMO_HOST_ID,
     getProperty: function (id) {
-      return PROPERTIES.find(function (p) {
+      var base = PROPERTIES.find(function (p) {
         return p.id === id;
       });
+      return mergeProperty(enrichProperty(base));
+    },
+    getStayGuide: function (propertyId) {
+      var base = STAY_GUIDE[propertyId];
+      var edit = loadPropertyEdits()[propertyId];
+      if (edit && edit.stayGuide) {
+        return Object.assign({}, base || {}, edit.stayGuide);
+      }
+      return base;
+    },
+    savePropertyEdit: function (id, patch) {
+      var all = loadPropertyEdits();
+      var prev = all[id] || {};
+      var next = Object.assign({}, prev, patch);
+      if (patch.stayGuide) {
+        next.stayGuide = Object.assign({}, prev.stayGuide || {}, patch.stayGuide);
+      }
+      all[id] = next;
+      try {
+        global.localStorage.setItem(PROPERTY_EDITS_KEY, JSON.stringify(all));
+      } catch (e) {}
+    },
+    reviewsForProperty: function (id) {
+      var p = mergeProperty(
+        PROPERTIES.find(function (x) {
+          return x.id === id;
+        })
+      );
+      var custom = loadPropertyEdits()[id];
+      var base = REVIEWS[id] || defaultReviewBundle(p || { rating: 4.8, reviewCount: 0 });
+      var bundle = JSON.parse(JSON.stringify(base));
+      bundle.rating = p ? p.rating : 4.8;
+      bundle.count = p ? p.reviewCount : 0;
+      if (custom && custom.reviewItems && custom.reviewItems.length) {
+        bundle.items = custom.reviewItems.concat(bundle.items);
+      }
+      return bundle;
     },
     listBookable: function () {
-      return PROPERTIES.filter(function (p) {
-        return p.status === "active";
+      return PROPERTIES.map(function (p) { return mergeProperty(enrichProperty(p)); }).filter(function (p) {
+        return p && p.status === "active";
       });
     },
     formatPrice: function (n) {
@@ -619,6 +975,64 @@
       return MESSAGES.filter(function (m) {
         return propertyIds.indexOf(m.propertyId) !== -1;
       });
+    },
+    messagesForGuest: function (guestId) {
+      var trips = BOOKINGS.filter(function (b) {
+        return b.guestId === guestId;
+      });
+      var propIds = trips.map(function (b) {
+        return b.propertyId;
+      });
+      return MESSAGES.filter(function (m) {
+        return m.fromRole === "guest" || propIds.indexOf(m.propertyId) !== -1;
+      });
+    },
+
+    listHosts: function () {
+      var seen = {};
+      var out = [];
+      PROPERTIES.forEach(function (p) {
+        if (!p.hostId || seen[p.hostId]) return;
+        seen[p.hostId] = true;
+        var props = PROPERTIES.filter(function (x) { return x.hostId === p.hostId; });
+        var active = props.filter(function (x) { return x.status === "active"; }).length;
+        out.push({
+          id: p.hostId,
+          name: p.hostName || ("집주인 " + p.hostId.replace("host-", "").toUpperCase()),
+          propertyCount: props.length,
+          activeCount: active,
+          region: props[0] && props[0].locationLabel ? props[0].locationLabel.split("·")[0].trim() : "",
+        });
+      });
+      return out;
+    },
+    listGuests: function () {
+      var seen = {};
+      var out = [];
+      BOOKINGS.forEach(function (b) {
+        var gid = b.guestId || b.guestName;
+        if (!gid || seen[gid]) return;
+        seen[gid] = true;
+        var trips = BOOKINGS.filter(function (x) {
+          return (x.guestId && x.guestId === b.guestId) || x.guestName === b.guestName;
+        });
+        out.push({
+          id: b.guestId || gid,
+          name: b.guestName || "게스트",
+          tripCount: trips.length,
+          lastTrip: trips[trips.length - 1],
+        });
+      });
+      try {
+        var extra = JSON.parse(global.localStorage.getItem("hangro_guest_trips") || "[]");
+        extra.forEach(function (t) {
+          var gid = t.guestId || "guest-demo";
+          if (seen[gid]) return;
+          seen[gid] = true;
+          out.push({ id: gid, name: t.guestName || "게스트", tripCount: 1, lastTrip: t });
+        });
+      } catch (e) {}
+      return out;
     },
     openMessagesCount: function (propertyIds) {
       return MESSAGES.filter(function (m) {

@@ -19,6 +19,7 @@
   var STATUS_LABEL = {
     confirmed: { text: "확정", className: "portal-status--confirmed" },
     pending: { text: "대기", className: "portal-status--pending" },
+    rejected: { text: "거절", className: "portal-status--rejected" },
     done: { text: "완료", className: "portal-status--done" },
     open: { text: "미답", className: "portal-status--open" },
     replied: { text: "답변됨", className: "portal-status--done" },

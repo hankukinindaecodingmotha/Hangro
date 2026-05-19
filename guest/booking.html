@@ -7,19 +7,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../css/guest-airbnb.css" />
+<link rel="stylesheet" href="../css/guest-airbnb.css?v=5" />
 <script src="../js/portal-guard.js"></script>
 </head>
-<body class="ga-body">
+<body class="ga-body" data-ga-page="trip">
 <div id="ga-header-mount"></div>
-<main class="ga-main"><div class="ga-wrap"><div id="ga-trip-root"></div></div></main>
+<main class="ga-main">
+  <div class="ga-wrap">
+    <div id="ga-trip-root" aria-live="polite"><p class="ga-empty">불러오는 중…</p></div>
+  </div>
+</main>
 <footer class="ga-footer"><div class="ga-wrap">© 행로 · Hangro — 게스트</div></footer>
-<script src="../js/portal-data.js"></script>
-<script src="../js/portal-ui.js"></script>
-<script src="../js/guest-app.js"></script>
-<script>
-GuestApp.mountHeader("trips");
-GuestApp.renderTripDetail();
-</script>
+<script src="../js/portal-data.js?v=5"></script>
+<script src="../js/portal-ui.js?v=4"></script>
+<script src="../js/guest-app.js?v=5"></script>
+<script>GuestApp.autoBoot();</script>
 </body>
 </html>

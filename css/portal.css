@@ -115,6 +115,11 @@
   color: #c9a84a;
 }
 
+.portal-status--rejected {
+  background: rgba(200, 100, 100, 0.18);
+  color: #e8a0a0;
+}
+
 .portal-status--done {
   background: rgba(120, 120, 120, 0.2);
   color: var(--text-muted);

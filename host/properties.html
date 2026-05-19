@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="../css/styles.css" />
         <link rel="stylesheet" href="../css/portal.css" />
     <link rel="stylesheet" href="../css/portal-shell.css" />
-    <link rel="stylesheet" href="../css/portal-host.css" />
+    <link rel="stylesheet" href="../css/portal-host.css?v=1" />
       <script src="../js/portal-guard.js"></script>
   </head>
-  <body class="portal-host">
+  <body class="portal-host" data-ha-page="properties">
         <header class="portal-shell-header">
       <div class="wrap portal-shell-bar">
         <div class="portal-shell-brand">
@@ -42,31 +42,9 @@
         <footer class="portal-shell-footer wrap">
       <span>숙소 운영 · 행로</span>
     </footer>
-    <script src="../js/portal-data.js"></script>
-    <script src="../js/portal-ui.js"></script>
-    <script>
-      (function () {
-        var D = window.PORTAL_DATA;
-        var U = window.PortalUI;
-        var list = D.properties.filter(function (p) {
-          return p.hostId === D.demoHostId;
-        });
-        document.getElementById("host-properties-list").innerHTML = list
-          .map(function (p) {
-            return (
-              '<article class="portal-card"><h3>' +
-              U.escapeHtml(p.name) +
-              "</h3><p>" +
-              U.statusBadge(p.status) +
-              " " +
-              U.escapeHtml(p.summary) +
-              '</p><div class="portal-card-actions"><a class="btn btn-primary" href="property-edit.html?id=' +
-              encodeURIComponent(p.id) +
-              '">정보 수정</a></div></article>'
-            );
-          })
-          .join("");
-      })();
-    </script>
+    <script src="../js/portal-data.js?v=5"></script>
+    <script src="../js/portal-ui.js?v=1"></script>
+    <script src="../js/host-app.js?v=1"></script>
+    <script>HostApp.autoBoot();</script>
   </body>
 </html>

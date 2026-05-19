@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="../css/styles.css" />
         <link rel="stylesheet" href="../css/portal.css" />
     <link rel="stylesheet" href="../css/portal-shell.css" />
-    <link rel="stylesheet" href="../css/portal-host.css" />
+    <link rel="stylesheet" href="../css/portal-host.css?v=1" />
       <script src="../js/portal-guard.js"></script>
   </head>
-  <body class="portal-host">
+  <body class="portal-host" data-ha-page="messages">
         <header class="portal-shell-header">
       <div class="wrap portal-shell-bar">
         <div class="portal-shell-brand">
@@ -51,40 +51,9 @@
         <footer class="portal-shell-footer wrap">
       <span>숙소 운영 · 행로</span>
     </footer>
-    <script src="../js/portal-data.js"></script>
-    <script src="../js/portal-ui.js"></script>
-    <script>
-      (function () {
-        var D = window.PORTAL_DATA;
-        var U = window.PortalUI;
-        var ids = D.properties
-          .filter(function (p) {
-            return p.hostId === D.demoHostId;
-          })
-          .map(function (p) {
-            return p.id;
-          });
-        var list = D.messagesForPropertyIds(ids);
-        document.getElementById("host-messages-list").innerHTML =
-          '<ul class="portal-list">' +
-          list
-            .map(function (m) {
-              return (
-                "<li><strong>" +
-                U.escapeHtml(m.subject) +
-                '</strong><span class="meta">' +
-                U.escapeHtml(m.fromName) +
-                " · " +
-                U.statusBadge(m.status) +
-                "<br>" +
-                U.escapeHtml(m.body) +
-                "</span></li>"
-              );
-            })
-            .join("") +
-          "</ul>";
-        PortalUI.initMessageForm("host-message-form", "host");
-      })();
-    </script>
+    <script src="../js/portal-data.js?v=5"></script>
+    <script src="../js/portal-ui.js?v=1"></script>
+    <script src="../js/host-app.js?v=1"></script>
+    <script>HostApp.autoBoot();</script>
   </body>
 </html>

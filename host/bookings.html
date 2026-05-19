@@ -6,13 +6,13 @@
     <title>예약 관리 — 집주인 · 행로</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../css/styles.css" />
-        <link rel="stylesheet" href="../css/portal.css" />
+    <link rel="stylesheet" href="../css/portal.css" />
     <link rel="stylesheet" href="../css/portal-shell.css" />
-    <link rel="stylesheet" href="../css/portal-host.css" />
-      <script src="../js/portal-guard.js"></script>
+    <link rel="stylesheet" href="../css/portal-host.css?v=1" />
+    <script src="../js/portal-guard.js"></script>
   </head>
-  <body class="portal-host">
-        <header class="portal-shell-header">
+  <body class="portal-host" data-ha-page="bookings">
+    <header class="portal-shell-header">
       <div class="wrap portal-shell-bar">
         <div class="portal-shell-brand">
           <span class="portal-shell-mark" aria-hidden="true"></span>
@@ -25,7 +25,7 @@
       <div class="wrap">
         <p class="badge">Host</p>
         <h1>예약 관리</h1>
-        <p>내 숙소에 들어온 예약 요청·확정 일정입니다.</p>
+        <p>요청을 승인하거나 거절하고, 캘린더에서 일정을 확인합니다.</p>
       </div>
     </div>
     <main class="page-fill">
@@ -36,6 +36,8 @@
         <a href="messages.html">문의함</a>
       </nav>
       <div class="wrap">
+        <div id="ha-calendar-wrap"></div>
+        <h2 class="portal-section-title">전체 예약</h2>
         <div class="portal-table-wrap">
           <table class="portal-table">
             <thead>
@@ -44,40 +46,20 @@
                 <th>숙소</th>
                 <th>일정</th>
                 <th>상태</th>
+                <th>처리</th>
               </tr>
             </thead>
-            <tbody id="host-bookings-body"></tbody>
+            <tbody id="host-bookings-body">
+              <tr><td colspan="5" class="portal-empty">불러오는 중…</td></tr>
+            </tbody>
           </table>
         </div>
       </div>
     </main>
-        <footer class="portal-shell-footer wrap">
-      <span>숙소 운영 · 행로</span>
-    </footer>
-    <script src="../js/portal-data.js"></script>
-    <script src="../js/portal-ui.js"></script>
-    <script>
-      (function () {
-        var D = window.PORTAL_DATA;
-        var U = window.PortalUI;
-        var rows = D.bookingsForHost(D.demoHostId);
-        document.getElementById("host-bookings-body").innerHTML = rows
-          .map(function (b) {
-            var p = D.getProperty(b.propertyId);
-            return (
-              "<tr><td>" +
-              U.escapeHtml(b.guestName) +
-              "</td><td>" +
-              U.escapeHtml(p ? p.name : "") +
-              "</td><td>" +
-              U.formatDateRange(b.checkIn, b.checkOut) +
-              "</td><td>" +
-              U.statusBadge(b.status) +
-              "</td></tr>"
-            );
-          })
-          .join("");
-      })();
-    </script>
+    <footer class="portal-shell-footer wrap"><span>숙소 운영 · 행로</span></footer>
+    <script src="../js/portal-data.js?v=5"></script>
+    <script src="../js/portal-ui.js?v=1"></script>
+    <script src="../js/host-app.js?v=1"></script>
+    <script>HostApp.autoBoot();</script>
   </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>운영 로그인 — 행로</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="../../css/company-unified.css" />
+    <link rel="stylesheet" href="../../css/company-ops.css" />
+    <script src="../../js/company-ops-guard.js"></script>
+  </head>
+  <body class="sub co-ops-login">
+    <main class="co-login-wrap">
+      <article class="co-login-card portal-card">
+        <h1>행로 운영</h1>
+        <p>게스트·집주인 관리는 인증 후 이용할 수 있습니다.</p>
+        <form id="co-login-form" class="portal-form">
+          <label>아이디<input name="user" autocomplete="username" required /></label>
+          <label>비밀번호<input name="pass" type="password" autocomplete="current-password" required /></label>
+          <p id="co-login-error" class="co-login-error" hidden>아이디 또는 비밀번호가 올바르지 않습니다.</p>
+          <button type="submit" class="btn btn-primary">로그인</button>
+        </form>
+        <p class="co-login-hint">데모: <code>ops</code> / <code>hangro2026</code></p>
+        <p><a href="../index.html">← 공개 소개로</a></p>
+      </article>
+    </main>
+    <script>
+      (function () {
+        if (window.CompanyOpsGuard && CompanyOpsGuard.isAuthed()) {
+          location.replace("dashboard.html");
+          return;
+        }
+        var form = document.getElementById("co-login-form");
+        var err = document.getElementById("co-login-error");
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var fd = new FormData(form);
+          if (CompanyOpsGuard.login(fd.get("user"), fd.get("pass"))) {
+            var next = new URLSearchParams(location.search).get("next") || "dashboard.html";
+            location.href = next;
+          } else {
+            err.hidden = false;
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
