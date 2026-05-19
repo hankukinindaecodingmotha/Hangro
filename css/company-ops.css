@@ -1,18 +1,717 @@
+/* ============================================================
+   행로 운영 (Company Ops) — Admin/대시보드 UI
+   톤: 본 사이트 에디토리얼(베이지·잉크·명조체) + 운영자 dense 레이아웃
+   styles.css + portal.css 위에 얹는 오버라이드
+   ============================================================ */
 
-.co-ops-header { border-bottom: 1px solid rgba(0,0,0,.08); background: #1a1a1a; color: #fff; }
-.co-ops-bar { display: flex; align-items: center; justify-content: space-between; padding: .75rem 0; }
-.co-ops-bar .logo { color: #fff; text-decoration: none; font-weight: 700; }
-.co-ops-badge { font-size: .75rem; opacity: .85; }
-.co-ops-hero { background: #f5f3ef; }
-.co-ops-nav { flex-wrap: wrap; gap: .25rem; }
-.co-logout-link { margin-left: auto; opacity: .8; }
-.co-quick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-.co-quick-card { text-decoration: none; color: inherit; display: block; padding: 1rem; }
-.co-quick-card strong { display: block; margin-bottom: .25rem; }
-.co-login-wrap { min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
-.co-login-card { max-width: 400px; width: 100%; }
-.co-login-error { color: #b42318; font-size: .9rem; }
-.co-login-hint { font-size: .85rem; opacity: .75; }
-.co-ops-footer { padding: 2rem 0; font-size: .85rem; opacity: .7; }
-.portal-grid--4 { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-.btn-sm { font-size: .85rem; padding: .35rem .65rem; }
+:root {
+  --co-bg: #EFE9DC;
+  --co-paper: #F6F1E5;
+  --co-paper-warm: #FAF6EC;
+  --co-ink: #1A2419;
+  --co-ink-soft: #4A4F44;
+  --co-ink-mute: #87897D;
+  --co-rule: rgba(26, 36, 25, 0.08);
+  --co-rule-strong: rgba(26, 36, 25, 0.18);
+  --co-green: #3D6E2C;
+  --co-green-soft: #B7C9A4;
+  --co-amber: #C8742B;
+  --co-red: #9C4D3D;
+  --co-radius: 10px;
+  --co-radius-lg: 16px;
+  --co-radius-pill: 999px;
+  --co-shadow-sm: 0 2px 6px rgba(26, 36, 25, 0.05);
+  --co-shadow: 0 8px 22px rgba(26, 36, 25, 0.08);
+}
+
+/* ── 운영 다크 헤더 ─────────────────────────── */
+.co-ops .co-ops-header,
+.co-ops-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--co-ink);
+  color: var(--co-bg);
+  border-bottom: none;
+}
+
+.co-ops-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 0;
+  gap: 1rem;
+}
+
+.co-ops-bar .logo {
+  color: var(--co-bg) !important;
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.co-ops-bar .logo:hover {
+  color: var(--co-bg) !important;
+  opacity: 0.85;
+}
+
+.co-ops-badge {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(239, 233, 220, 0.75);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.co-ops-badge::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--co-amber);
+}
+
+/* ── 운영 페이지 hero ───────────────────────── */
+.co-ops .page-hero,
+.co-ops-hero {
+  background: var(--co-paper);
+  padding: clamp(1.75rem, 4vw, 2.75rem) 0 clamp(1.25rem, 3vw, 2rem) !important;
+  border-bottom: 1px solid var(--co-rule);
+}
+
+.co-ops-hero .badge {
+  background: var(--co-ink);
+  color: var(--co-bg);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--co-radius-pill);
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+  border-bottom: none;
+}
+
+.co-ops-hero h1 {
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.65rem;
+  line-height: 1.25;
+  max-width: 24ch;
+}
+
+.co-ops-hero p {
+  color: var(--co-ink-soft);
+  font-size: 0.96rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 50ch;
+}
+
+/* ── 운영 서브 nav (탭) ────────────────────── */
+.co-ops-nav.portal-subnav,
+.co-ops-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.25rem 0 0;
+  margin-bottom: 1.5rem;
+}
+
+.co-ops-nav a {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--co-ink-soft);
+  text-decoration: none;
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--co-radius-pill);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.co-ops-nav a:hover {
+  background: var(--co-paper);
+  color: var(--co-ink);
+}
+
+.co-ops-nav a[aria-current="page"] {
+  background: var(--co-ink);
+  color: var(--co-bg);
+}
+
+.co-logout-link {
+  margin-left: auto;
+  font-size: 0.78rem !important;
+  color: var(--co-ink-mute) !important;
+  cursor: pointer;
+}
+
+.co-logout-link:hover {
+  background: var(--co-paper) !important;
+  color: var(--co-red) !important;
+}
+
+/* ── 메인 영역 ───────────────────────────── */
+.co-ops-main {
+  padding-bottom: clamp(3rem, 6vw, 4.5rem);
+}
+
+/* ── KPI 카드 (대시보드) ──────────────────── */
+.co-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.co-kpi {
+  background: var(--co-paper);
+  border-radius: var(--co-radius-lg);
+  padding: 1.25rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.co-kpi:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--co-shadow-sm);
+}
+
+.co-kpi-label {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--co-ink-mute);
+}
+
+.co-kpi-value {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--co-ink);
+}
+
+.co-kpi-meta {
+  font-size: 0.78rem;
+  color: var(--co-ink-soft);
+}
+
+/* portal.css 의 portal-kpi 사용 시에도 동일 톤으로 */
+.co-ops .portal-kpi {
+  background: var(--co-paper);
+  border: none;
+  border-radius: var(--co-radius-lg);
+  padding: 1.25rem 1.35rem;
+}
+
+.co-ops .portal-kpi strong {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+  color: var(--co-ink);
+}
+
+.co-ops .portal-kpi span {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--co-ink-mute);
+}
+
+/* ── 빠른 작업 카드 ────────────────────────── */
+.co-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 2.25rem;
+}
+
+.co-quick-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 1.15rem 1.25rem;
+  background: var(--co-paper);
+  border-radius: var(--co-radius-lg);
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.co-quick-card:hover {
+  background: var(--co-paper-warm);
+  transform: translateY(-2px);
+  box-shadow: var(--co-shadow-sm);
+}
+
+.co-quick-card strong {
+  display: block;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--co-ink);
+  margin-bottom: 0.35rem;
+}
+
+.co-quick-card span,
+.co-quick-card .meta {
+  font-size: 0.86rem;
+  color: var(--co-ink-soft);
+  line-height: 1.55;
+}
+
+/* ── 섹션 제목 ───────────────────────────── */
+.co-ops .portal-section-title,
+.co-section-title {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--co-ink);
+  margin: 0 0 1rem;
+}
+
+/* ── 테이블 (portal-table 오버라이드) ──────── */
+.co-ops .portal-table-wrap {
+  background: var(--co-paper);
+  border-radius: var(--co-radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.co-ops .portal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.co-ops .portal-table thead th {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--co-ink-mute);
+  text-align: left;
+  padding: 0.95rem 1.15rem;
+  background: var(--co-paper-warm);
+  border-bottom: 1px solid var(--co-rule);
+  white-space: nowrap;
+}
+
+.co-ops .portal-table tbody td {
+  padding: 0.95rem 1.15rem;
+  border-bottom: 1px solid var(--co-rule);
+  color: var(--co-ink);
+  vertical-align: middle;
+}
+
+.co-ops .portal-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.co-ops .portal-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.co-ops .portal-table tbody tr:hover {
+  background: var(--co-paper-warm);
+}
+
+.co-ops .portal-table a {
+  color: var(--co-ink);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid var(--co-rule-strong);
+}
+
+.co-ops .portal-table a:hover { border-bottom-color: var(--co-ink); }
+
+/* ── Status 배지 ────────────────────────── */
+.co-status,
+.co-ops .status-badge {
+  display: inline-block;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--co-radius-pill);
+  background: var(--co-bg);
+  color: var(--co-ink-soft);
+  white-space: nowrap;
+}
+
+.co-status--active,
+.co-status--confirmed,
+.co-status--completed { background: var(--co-green-soft); color: var(--co-green); }
+
+.co-status--pending,
+.co-status--paused { background: rgba(200, 116, 43, 0.18); color: var(--co-amber); }
+
+.co-status--cancelled,
+.co-status--error { background: rgba(156, 77, 61, 0.15); color: var(--co-red); }
+
+/* ── 카드 그리드 (properties용) ─────────── */
+.co-ops .portal-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.co-ops .portal-grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.co-ops .portal-grid--3 {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.portal-grid--4 {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.co-ops .portal-card {
+  background: var(--co-paper);
+  border: none;
+  border-radius: var(--co-radius-lg);
+  padding: 1.15rem 1.25rem;
+}
+
+.co-ops .portal-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.co-ops .portal-list li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--co-rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.co-ops .portal-list li:last-child { border-bottom: none; }
+
+.co-ops .portal-list strong {
+  font-family: "Nanum Myeongjo", serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--co-ink);
+}
+
+.co-ops .portal-list .meta {
+  font-size: 0.82rem;
+  color: var(--co-ink-soft);
+}
+
+.co-ops .portal-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--co-ink-mute);
+  background: var(--co-paper);
+  border-radius: var(--co-radius-lg);
+  font-size: 0.92rem;
+}
+
+/* ── 폼 ─────────────────────────────────── */
+.co-ops .portal-form {
+  background: var(--co-paper);
+  border-radius: var(--co-radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.co-ops .portal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--co-ink);
+}
+
+.co-ops .portal-form input,
+.co-ops .portal-form textarea,
+.co-ops .portal-form select {
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--co-ink);
+  background: var(--co-bg);
+  border: 1px solid var(--co-rule-strong);
+  border-radius: var(--co-radius);
+  padding: 0.7rem 0.85rem;
+  width: 100%;
+  transition: border-color 0.18s ease;
+}
+
+.co-ops .portal-form input:focus,
+.co-ops .portal-form textarea:focus,
+.co-ops .portal-form select:focus {
+  outline: none;
+  border-color: var(--co-ink);
+}
+
+.co-ops .portal-form button.btn,
+.co-ops .portal-form button.btn-primary {
+  background: var(--co-ink);
+  color: var(--co-bg);
+  border: 1px solid var(--co-ink);
+  border-radius: var(--co-radius-pill);
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.co-ops .portal-form button.btn:hover,
+.co-ops .portal-form button.btn-primary:hover {
+  background: transparent;
+  color: var(--co-ink);
+}
+
+/* ── 작은 버튼 ─────────────────────────── */
+.btn-sm,
+.co-ops .btn-sm {
+  font-size: 0.78rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--co-radius-pill);
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ── 로그인 화면 ───────────────────────── */
+.co-ops-login {
+  background: var(--co-bg);
+  min-height: 100vh;
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+}
+
+.co-login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+}
+
+.co-login-card {
+  max-width: 420px;
+  width: 100%;
+  padding: 2.25rem 2rem 2rem;
+  background: var(--co-paper);
+  border: none;
+  border-radius: var(--co-radius-lg);
+  box-shadow: var(--co-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.co-login-card h1 {
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0;
+  color: var(--co-ink);
+}
+
+.co-login-card > p {
+  margin: 0;
+  color: var(--co-ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.co-login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.co-login-card form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--co-ink);
+}
+
+.co-login-card form input {
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+  font-size: 0.98rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid var(--co-rule-strong);
+  border-radius: var(--co-radius);
+  background: var(--co-bg);
+  color: var(--co-ink);
+  transition: border-color 0.18s ease;
+}
+
+.co-login-card form input:focus {
+  outline: none;
+  border-color: var(--co-ink);
+}
+
+.co-login-card button {
+  background: var(--co-ink);
+  color: var(--co-bg);
+  border: 1px solid var(--co-ink);
+  border-radius: var(--co-radius-pill);
+  padding: 0.85rem 1.5rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+  margin-top: 0.35rem;
+}
+
+.co-login-card button:hover {
+  background: transparent;
+  color: var(--co-ink);
+}
+
+.co-login-error {
+  margin: 0 !important;
+  font-size: 0.88rem !important;
+  color: var(--co-red) !important;
+  background: rgba(156, 77, 61, 0.08);
+  padding: 0.55rem 0.8rem;
+  border-radius: var(--co-radius);
+  font-weight: 500;
+}
+
+.co-login-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  color: var(--co-ink-mute);
+}
+
+.co-login-hint code {
+  background: var(--co-bg);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.85rem;
+  color: var(--co-ink);
+}
+
+.co-login-card > p:last-child {
+  margin: 0;
+  font-size: 0.86rem;
+  text-align: center;
+}
+
+.co-login-card > p:last-child a {
+  color: var(--co-ink-mute);
+  text-decoration: none;
+  border-bottom: 1px solid var(--co-rule);
+  padding-bottom: 1px;
+}
+
+.co-login-card > p:last-child a:hover {
+  color: var(--co-ink);
+  border-bottom-color: var(--co-ink);
+}
+
+/* ── 푸터 ─────────────────────────────── */
+.co-ops-footer {
+  padding: 2.25rem 1.5rem 2.5rem;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--co-ink-mute);
+  text-align: center;
+  border-top: 1px solid var(--co-rule);
+  margin-top: clamp(3rem, 5vw, 4rem);
+}
+
+.co-ops-footer a {
+  color: var(--co-ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid var(--co-rule);
+  padding-bottom: 1px;
+}
+
+.co-ops-footer a:hover {
+  color: var(--co-ink);
+  border-bottom-color: var(--co-ink);
+}
+
+/* ── 페이지 진입 fade-in ──────────────── */
+.co-ops {
+  animation: co-fade-in 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes co-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .co-ops { animation: none; }
+  * { transition: none !important; }
+}
+
+/* ── 반응형 ───────────────────────────── */
+@media (max-width: 760px) {
+  .co-ops-nav {
+    padding: 1rem 0 0;
+    gap: 0.2rem;
+  }
+  .co-ops-nav a {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.78rem;
+  }
+  .co-logout-link {
+    margin-left: 0;
+    width: 100%;
+    text-align: left;
+    border-top: 1px solid var(--co-rule);
+    padding-top: 0.85rem !important;
+    margin-top: 0.5rem !important;
+  }
+}
