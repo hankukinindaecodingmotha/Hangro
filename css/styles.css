@@ -15,6 +15,12 @@ h1, h2, h3, h4 {
   overflow-wrap: break-word;
 }
 
+body.home,
+body.sub,
+body.portal {
+  animation: hangro-fade-in 0.32s var(--hangro-ease);
+}
+
 body {
   margin: 0;
   word-break: keep-all;
@@ -200,45 +206,56 @@ main.page-fill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.25rem;
-  border-radius: 999px;
+  gap: 0.55rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--hangro-radius-pill);
   font-weight: 600;
-  font-size: 0.95rem;
-  border: none;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--hangro-ink);
+  background: var(--hangro-ink);
+  color: var(--hangro-bg);
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.15s ease, background 0.15s ease;
+  font-family: inherit;
+  transition: background 0.22s var(--hangro-ease), color 0.22s var(--hangro-ease);
 }
 
-.btn:disabled {
-  opacity: 0.72;
-  cursor: not-allowed;
-  transform: none;
+.btn:hover:not(:disabled) {
+  background: transparent;
+  color: var(--hangro-ink);
+  text-decoration: none;
 }
 
 .btn:active:not(:disabled) {
-  transform: scale(0.98);
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: var(--hangro-ink);
+  background: var(--hangro-ink);
+  color: var(--hangro-bg);
+  border-color: var(--hangro-ink);
 }
 
-.btn-primary:hover {
-  filter: brightness(1.06);
-  text-decoration: none;
+.btn-primary:hover:not(:disabled) {
+  background: transparent;
+  color: var(--hangro-ink);
 }
 
 .btn-ghost {
   background: transparent;
-  color: var(--text);
-  border: 1px solid var(--line);
+  color: var(--hangro-ink);
+  border: 1px solid var(--hangro-ink);
 }
 
-.btn-ghost:hover {
-  background: var(--bg-elevated);
-  text-decoration: none;
+.btn-ghost:hover:not(:disabled) {
+  background: var(--hangro-ink);
+  color: var(--hangro-bg);
 }
 
 .hero-card {

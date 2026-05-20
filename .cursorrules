@@ -1,0 +1,61 @@
+# 행로 (Hangro) — Cursor 작업 규칙
+
+> **디자인 단일 진실:** `DESIGN.md` + `css/hangro-tokens.css`
+> 새 컴포넌트·페이지·색·타이포·모션 결정은 반드시 `DESIGN.md` 를 먼저 읽고 따른다.
+
+## 디자인 시스템 (DESIGN.md 요약 — 반드시 준수)
+
+1. **색·폰트·여백·radius·shadow** → `css/hangro-tokens.css` 변수만. hex는 토큰 파일에만.
+2. **새 CSS 파일 금지.** 영역별 기존 CSS에만 추가 (아래 매트릭스).
+3. **모든 CSS** 맨 위 `@import url("hangro-tokens.css");` 1줄 유지.
+4. **타이포** — DESIGN.md §3 (Nanum Myeongjo 헤딩, Noto Sans KR 본문, Helvetica 캡스 라벨).
+5. **한국어 줄바꿈** — `word-break: keep-all; overflow-wrap: break-word;` on body + h1–h4.
+6. **금지** — 그라데이션, blur>20px shadow, 네온/무지개, hairline 남발, single-side border+radius.
+7. **버튼** — DESIGN.md §7.1 (`.btn` / `.ga-btn--primary` / ghost 알약형).
+
+## 영역별 CSS 매트릭스 (DESIGN.md §11)
+
+| 영역 | HTML | CSS (순서) |
+| --- | --- | --- |
+| 공개·게이트 | `index.html`, 루트 redirect, `demo/` | tokens → `styles.css` (+ 게이트만 `portal.css`) |
+| 게스트 | `guest/*` | tokens → `guest-airbnb.css` |
+| 집주인 | `host/*` | tokens → `styles.css` → `portal.css` |
+| 회사 공개 | `company/*` (ops·redirect 제외) | tokens → `styles-editorial.css` → `company-unified.css` |
+| 회사 운영 | `company/ops/*` | tokens → `styles.css` → `portal.css` → `company-ops.css` |
+
+`portal-shell.css`, `portal-host.css`, `portal-guest.css` 는 **deprecated** — 규칙은 `portal.css`에 병합됨. HTML에서 link 하지 말 것.
+
+## `<head>` link 순서
+
+preconnect → Google Fonts (Noto Sans KR + Nanum Myeongjo) → `hangro-tokens.css` → 영역 CSS. 임의 재배치 금지.
+
+## 브랜드
+
+- 에디토리얼 톤 (베이지 + 잉크 + 명조). 게스트·ops 동일 톤.
+- 카피: DESIGN.md §13 (데모/테스트 문구 사용자 노출 X).
+
+## 작업 규칙
+
+1. 디자인 톤 명시 후 임의 “개선” 금지.
+2. `<script src="../js/foo.js">` — `.js.js` 중복 확장자 금지.
+3. 변경 후 영향 범위 보고.
+4. 이 규칙·DESIGN.md 와 충돌 시 한 번 확인 질문.
+
+## 절대 건드리지 말 것 (DO NOT TOUCH)
+
+- `.git/`, `data/places.json` schema 키 이름, `Asset/` 파일명
+- `GuestApp.autoBoot()`, `GuestApp.mountHeader(active)`
+- `HAENG_RUNTIME.initMapPage()`, `initDetailPage()`, `initArchivePage()`
+- `CompanyOpsGuard.isAuthed()`, `CompanyOpsGuard.login(user, pass)`
+- `PortalUI.initMessageForm(formId, role)`, `PortalUI.escapeHtml()`
+- mount id: `#ga-header-mount`, `#ga-search-mount`, `#ga-listings`, `#co-dashboard-root`, `#archive-root`, `#detail-root`, `#detail-main`
+- `portal-guard.js` → `hangro_portal_lock`
+
+## 변경 보고 형식
+
+```
+✓ 변경 파일: <경로>
+✓ Before → After: <요약>
+✓ 영향 페이지: <목록 또는 없음>
+✓ DESIGN.md / 규칙 위반: 없음
+```

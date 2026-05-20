@@ -278,3 +278,321 @@
   color: var(--text-muted);
   font-size: 0.92rem;
 }
+
+/* ── portal-shell + portal-host (DESIGN.md §11) ── */
+@import url("hangro-tokens.css");
+
+/* 역할별 격리 헤더 (게스트·집주인 — 타 포털 링크 없음) */
+.portal-shell-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+.portal-shell-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 0;
+  min-height: 3.25rem;
+}
+
+.portal-shell-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.portal-shell-mark {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.portal-shell-footer {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  padding: 1.5rem 0 2rem;
+  border-top: 1px solid var(--line);
+  margin-top: 2rem;
+}
+
+@import url("hangro-tokens.css");
+
+/* 집주인 포털 — 게스트 숙소 상세와 동일한 에디토리얼 톤 */
+body.portal-host {
+  --bg: var(--hangro-bg, #efe9dc);
+  --bg-elevated: var(--hangro-paper, #f6f1e5);
+  --text: var(--hangro-ink, #1a2419);
+  --text-muted: var(--hangro-muted, #87897d);
+  --accent: var(--hangro-green, #3d6e2c);
+  --accent-soft: color-mix(in srgb, var(--hangro-green-soft, #b7c9a4) 35%, transparent);
+  --line: var(--hangro-rule, rgba(26, 36, 25, 0.1));
+  background: var(--bg);
+  color: var(--text);
+}
+
+body.portal-host .portal-shell-header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+body.portal-host .portal-shell-title {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+body.portal-host .portal-shell-role {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+body.portal-host .page-hero {
+  background: var(--hangro-paper-warm);
+  border-bottom: 1px solid var(--line);
+}
+
+body.portal-host .badge {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+body.portal-host .btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+body.portal-host .portal-card {
+  border-color: var(--line);
+}
+
+.btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.82rem;
+}
+
+.ha-kpis {
+  margin-bottom: 1.5rem;
+}
+
+.ha-calendar {
+  margin-bottom: 2rem;
+  padding: 1.25rem 1.35rem;
+}
+
+.ha-cal-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.ha-cal-head h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  flex: 1;
+  min-width: 8rem;
+}
+
+.ha-cal-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.ha-cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+}
+
+.ha-cal-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ha-cal-swatch {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 3px;
+}
+
+.ha-cal-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.ha-cal-table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0.35rem;
+  text-align: center;
+}
+
+.ha-cal-day {
+  vertical-align: top;
+  border: 1px solid var(--line);
+  min-height: 5.5rem;
+  padding: 0.35rem;
+  background: var(--hangro-paper-warm, #faf6ec);
+}
+
+.ha-cal-day--empty {
+  background: transparent;
+  border-color: transparent;
+}
+
+.ha-cal-day--today .ha-cal-num {
+  background: var(--accent);
+  color: var(--bg);
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.ha-cal-num {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.ha-cal-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 0.25rem;
+}
+
+.ha-cal-bar {
+  display: block;
+  font-size: 0.68rem;
+  line-height: 1.25;
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: var(--bg);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ha-cal-bar--pending {
+  opacity: 0.75;
+  border: 1px dashed rgba(0, 0, 0, 0.35);
+}
+
+.ha-cal-color--0 { background: var(--hangro-cal-0); }
+.ha-cal-color--1 { background: var(--hangro-cal-1); }
+.ha-cal-color--2 { background: var(--hangro-cal-2); }
+.ha-cal-color--3 { background: var(--hangro-cal-3); }
+.ha-cal-color--4 { background: var(--hangro-cal-4); }
+.ha-cal-color--5 { background: var(--hangro-cal-5); }
+
+.ha-actions {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.ha-actions-muted {
+  color: var(--text-muted);
+}
+
+.ha-pending-section {
+  margin-top: 2rem;
+}
+
+.ha-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ha-edit-section {
+  padding: 1.25rem 1.35rem;
+}
+
+.ha-edit-section h2 {
+  margin: 0 0 1rem;
+  font-size: 1.05rem;
+}
+
+.ha-edit-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+}
+
+.ha-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+
+.ha-photo-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.ha-photo-thumb {
+  width: 88px;
+  height: 88px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--line);
+}
+
+.ha-edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.ha-save-note {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 720px) {
+  .ha-cal-table {
+    font-size: 0.75rem;
+  }
+  .ha-cal-bar {
+    font-size: 0.6rem;
+  }
+}
+
+.ha-preview-frame {
+  width: 100%;
+  min-height: 420px;
+  border: 1px solid var(--line);
+  border-radius: var(--hangro-radius-lg, 16px);
+  background: var(--bg);
+}
+.ha-guest-preview { margin-top: 1rem; }
+.ha-photo-preview { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.ha-photo-thumb { width: 72px; height: 72px; border-radius: 8px; background-size: cover; background-position: center; }
+

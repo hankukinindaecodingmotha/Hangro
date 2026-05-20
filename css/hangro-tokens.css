@@ -1,6 +1,5 @@
 /* ============================================================
-   행로 공통 디자인 토큰 (게스트 숙소 상세 화면 팔레트)
-   모든 포털·소개·운영 페이지에서 동일 색상을 씁니다.
+   행로 공통 디자인 토큰 — DESIGN.md §2 단일 진실
    ============================================================ */
 
 :root {
@@ -14,6 +13,9 @@
   --hangro-ink: #1a2419;
   --hangro-ink-soft: #4a4f44;
   --hangro-muted: #87897d;
+  --hangro-danger: #9c4d3d;
+  --hangro-danger-bg: rgba(156, 77, 61, 0.15);
+  --hangro-warning-bg: rgba(200, 116, 43, 0.18);
   --hangro-rule: rgba(26, 36, 25, 0.1);
   --hangro-rule-strong: rgba(26, 36, 25, 0.18);
   --hangro-shadow: 0 6px 18px rgba(26, 36, 25, 0.08);
@@ -22,6 +24,10 @@
   --hangro-radius-lg: 16px;
   --hangro-radius-pill: 999px;
   --hangro-max: 1240px;
+  --hangro-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --gutter: clamp(1.25rem, 3vw, 2rem);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 
   --hangro-cal-0: var(--hangro-amber);
   --hangro-cal-1: var(--hangro-green-soft);
@@ -60,7 +66,7 @@
   --ga-paper: var(--hangro-paper);
   --ga-paper-warm: var(--hangro-paper-warm);
   --ga-rose: var(--hangro-ink);
-  --ga-rose-dark: #000;
+  --ga-rose-dark: var(--hangro-ink);
   --ga-radius-sm: 6px;
   --ga-radius: var(--hangro-radius);
   --ga-radius-lg: var(--hangro-radius-lg);
@@ -68,6 +74,7 @@
   --ga-shadow: var(--hangro-shadow);
   --ga-shadow-sm: var(--hangro-shadow-sm);
   --ga-max: var(--hangro-max);
+  --ga-gutter: var(--gutter);
 
   /* company-ops.css */
   --co-bg: var(--hangro-bg);
@@ -83,6 +90,64 @@
   --co-amber: var(--hangro-amber);
   --co-radius: var(--hangro-radius);
   --co-radius-lg: var(--hangro-radius-lg);
+  --co-radius-pill: var(--hangro-radius-pill);
   --co-shadow: var(--hangro-shadow);
   --co-shadow-sm: var(--hangro-shadow-sm);
+}
+
+/* ── DESIGN.md §9·§10 공통 기반 ─────────────────────────── */
+@keyframes hangro-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--hangro-ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* §7.3 status pill */
+.status-pill {
+  display: inline-block;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--hangro-radius-pill);
+  color: var(--hangro-muted);
+  background: var(--hangro-paper);
+}
+
+.status-pill--live {
+  background: var(--hangro-green-soft);
+  color: var(--hangro-green);
+}
+
+.status-pill--draft {
+  background: var(--hangro-warning-bg);
+  color: var(--hangro-amber);
+}
+
+.status-pill--error {
+  background: var(--hangro-danger-bg);
+  color: var(--hangro-danger);
 }

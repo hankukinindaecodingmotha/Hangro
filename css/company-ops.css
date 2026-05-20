@@ -18,7 +18,7 @@
   --co-green: var(--hangro-green);
   --co-green-soft: var(--hangro-green-soft);
   --co-amber: var(--hangro-amber);
-  --co-red: var(--hangro-amber);
+  --co-red: var(--hangro-danger);
   --co-radius: var(--hangro-radius);
   --co-radius-lg: var(--hangro-radius-lg);
   --co-radius-pill: var(--hangro-radius-pill);
@@ -27,6 +27,11 @@
 }
 
 /* ── 운영 다크 헤더 ─────────────────────────── */
+body.co-ops,
+.co-ops {
+  animation: hangro-fade-in 0.32s var(--hangro-ease);
+}
+
 .co-ops .co-ops-header,
 .co-ops-header {
   position: sticky;
