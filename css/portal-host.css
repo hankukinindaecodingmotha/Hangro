@@ -1,16 +1,18 @@
-/* 집주인 전용 앱 — 게스트·회사와 다른 다크·우드 톤 */
+/* 집주인 포털 — 게스트 숙소 상세와 동일한 에디토리얼 톤 */
 body.portal-host {
-  --bg: #14181c;
-  --bg-elevated: #1e242b;
-  --text: #e8ecef;
-  --text-muted: #8b959e;
-  --accent: #c4a35a;
-  --accent-soft: rgba(196, 163, 90, 0.16);
-  --line: rgba(232, 236, 239, 0.1);
+  --bg: var(--hangro-bg, #efe9dc);
+  --bg-elevated: var(--hangro-paper, #f6f1e5);
+  --text: var(--hangro-ink, #1a2419);
+  --text-muted: var(--hangro-muted, #87897d);
+  --accent: var(--hangro-green, #3d6e2c);
+  --accent-soft: color-mix(in srgb, var(--hangro-green-soft, #b7c9a4) 35%, transparent);
+  --line: var(--hangro-rule, rgba(26, 36, 25, 0.1));
+  background: var(--bg);
+  color: var(--text);
 }
 
 body.portal-host .portal-shell-header {
-  background: var(--bg-elevated);
+  background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
 
@@ -30,7 +32,8 @@ body.portal-host .portal-shell-role {
 }
 
 body.portal-host .page-hero {
-  background: linear-gradient(180deg, #1e242b 0%, var(--bg) 100%);
+  background: linear-gradient(180deg, var(--hangro-paper-warm, #faf6ec) 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--line);
 }
 
 body.portal-host .badge {
@@ -40,7 +43,7 @@ body.portal-host .badge {
 
 body.portal-host .btn-primary {
   background: var(--accent);
-  color: #14181c;
+  color: var(--bg);
 }
 
 body.portal-host .portal-card {
@@ -121,7 +124,7 @@ body.portal-host .portal-card {
   border: 1px solid var(--line);
   min-height: 5.5rem;
   padding: 0.35rem;
-  background: rgba(0, 0, 0, 0.15);
+  background: var(--hangro-paper-warm, #faf6ec);
 }
 
 .ha-cal-day--empty {
@@ -131,7 +134,7 @@ body.portal-host .portal-card {
 
 .ha-cal-day--today .ha-cal-num {
   background: var(--accent);
-  color: #14181c;
+  color: var(--bg);
   border-radius: 50%;
   width: 1.5rem;
   height: 1.5rem;
@@ -159,7 +162,7 @@ body.portal-host .portal-card {
   line-height: 1.25;
   padding: 2px 4px;
   border-radius: 3px;
-  color: #14181c;
+  color: var(--bg);
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
@@ -260,9 +263,9 @@ body.portal-host .portal-card {
 .ha-preview-frame {
   width: 100%;
   min-height: 420px;
-  border: 1px solid var(--portal-line, #e5e5e5);
-  border-radius: 12px;
-  background: #f7f7f7;
+  border: 1px solid var(--line);
+  border-radius: var(--hangro-radius-lg, 16px);
+  background: var(--bg);
 }
 .ha-guest-preview { margin-top: 1rem; }
 .ha-photo-preview { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }

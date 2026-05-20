@@ -1,3 +1,5 @@
+@import url("hangro-tokens.css");
+
 /* ============================================================
    게스트 플로우 — 행로 본 사이트 에디토리얼 톤
    (베이지 + 잉크 + Nanum Myeongjo, 본 styles.css 와 동일 시스템)
@@ -1046,4 +1048,316 @@
   .ga-nav-links {
     display: none;
   }
+}
+
+/* ── overflow / responsive fixes ── */
+.ga-wrap,
+.ga-main,
+.ga-listing-layout,
+.ga-listing-main,
+.ga-checkout-grid {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.ga-search { max-width: 100%; }
+
+.ga-card-top h2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+@media (max-width: 1024px) {
+  .ga-search { grid-template-columns: 1fr 1fr; border-radius: var(--ga-radius-lg); }
+  .ga-search-field { border-right: none; border-bottom: 1px solid var(--ga-line); }
+  .ga-search-btn { grid-column: 1 / -1; }
+  .ga-listing-layout { grid-template-columns: 1fr; }
+  .ga-widget { position: static; }
+}
+
+@media (max-width: 640px) {
+  .ga-nav-links { display: none; }
+  .ga-mosaic { grid-template-columns: 1fr; min-height: auto; }
+  .ga-mosaic-item--0 { grid-column: 1; min-height: 200px; }
+  .ga-trip-card { grid-template-columns: 1fr; }
+  .ga-trip-photo { width: 100%; height: 160px; }
+  .ga-reviews-hero { grid-template-columns: 1fr; }
+  .ga-checkout-grid { grid-template-columns: 1fr; }
+  .ga-listings { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   게스트 플로우 통합 — 숙소 상세(listing) 화면 색·타이포 전역 적용
+   ============================================================ */
+
+.ga-hero-compact h1,
+.ga-page-title,
+.ga-main .ga-wrap > h1,
+.ga-listing-main > h1,
+.ga-trip-detail > h1,
+.ga-checkout-grid > section > h1 {
+  font-family: "Nanum Myeongjo", "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ga-ink);
+}
+
+.ga-hero-compact h1 {
+  font-size: clamp(1.75rem, 3.5vw, 2.4rem);
+  line-height: 1.25;
+  max-width: 22ch;
+  margin: 0 0 0.5rem;
+}
+
+/* 상세와 동일한 종이 패널 (체크아웃·문의 작성 등) */
+.ga-panel {
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius-lg);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--ga-shadow);
+}
+
+
+.ga-checkout-grid > aside .ga-price-lines {
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius-lg);
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+  box-shadow: var(--ga-shadow-sm);
+}
+
+.ga-checkout-grid > section.ga-panel,
+.ga-compose.ga-panel {
+  min-width: 0;
+}
+
+.ga-checkout-grid > section > h1 {
+  font-size: clamp(1.65rem, 3.2vw, 2.1rem);
+  margin: 0 0 1.25rem;
+  line-height: 1.25;
+}
+
+.ga-trip-detail > h1 {
+  font-size: clamp(1.65rem, 3.2vw, 2.1rem);
+  margin: 0 0 0.6rem;
+}
+
+.ga-trip-detail > p {
+  color: var(--ga-ink-soft);
+}
+
+/* 상세 전용: 특징·주변 */
+.ga-highlights,
+.ga-nearby {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.ga-highlights li,
+.ga-nearby li {
+  padding: 0.85rem 1rem;
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius);
+  color: var(--ga-ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.ga-highlights li::before {
+  content: "· ";
+  color: var(--ga-green-deep);
+  font-weight: 700;
+}
+
+/* 후기 블록 (상세 화면) */
+.ga-reviews-section {
+  margin: 2.5rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--ga-line);
+}
+
+.ga-reviews-count {
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ga-muted);
+}
+
+.ga-reviews-hero {
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin: 1.25rem 0 2rem;
+  padding: 1.5rem;
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius-lg);
+}
+
+.ga-reviews-score-box {
+  text-align: center;
+}
+
+.ga-reviews-big {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--ga-ink);
+  line-height: 1;
+}
+
+.ga-reviews-max {
+  font-size: 1.1rem;
+  color: var(--ga-muted);
+}
+
+.ga-reviews-verified {
+  margin: 0.5rem 0 0;
+  font-size: 0.78rem;
+  color: var(--ga-muted);
+  line-height: 1.5;
+}
+
+.ga-rev-bars {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.ga-rev-bar-row {
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--ga-ink-soft);
+}
+
+.ga-rev-bar-track {
+  height: 6px;
+  background: var(--ga-bg);
+  border-radius: var(--ga-radius-pill);
+  overflow: hidden;
+}
+
+.ga-rev-bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--ga-green-deep);
+  border-radius: var(--ga-radius-pill);
+}
+
+.ga-reviews-yeogi {
+  margin-bottom: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--ga-paper-warm);
+  border-radius: var(--ga-radius-lg);
+}
+
+.ga-reviews-subtitle {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: var(--ga-ink);
+}
+
+.ga-rev-cats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.ga-rev-cat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.9rem;
+  color: var(--ga-ink-soft);
+}
+
+.ga-rev-cat-score {
+  font-weight: 700;
+  color: var(--ga-green-deep);
+}
+
+.ga-rev-cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.ga-rev-card {
+  padding: 1.15rem 1.25rem;
+  background: var(--ga-paper);
+  border-radius: var(--ga-radius-lg);
+}
+
+.ga-rev-card-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.ga-rev-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--ga-ink);
+  color: var(--ga-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Nanum Myeongjo", serif;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.ga-rev-avatar--1 { background: #3d6e2c; }
+.ga-rev-avatar--2 { background: #8b6914; }
+.ga-rev-avatar--3 { background: #1a5f7a; }
+.ga-rev-avatar--4 { background: #4a5568; }
+.ga-rev-avatar--5 { background: #c05621; }
+
+.ga-rev-card-stars {
+  margin: 0 0 0.35rem;
+  color: var(--ga-green-deep);
+  letter-spacing: 0.05em;
+}
+
+.ga-rev-card-text {
+  margin: 0;
+  color: var(--ga-ink-soft);
+  line-height: 1.65;
+  font-size: 0.94rem;
+}
+
+/* portal-ui 배지 — 게스트 톤에 맞춤 */
+.ga-body .portal-status {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--ga-radius-pill);
+  background: var(--ga-bg);
+  color: var(--ga-ink-soft);
+}
+
+.ga-body .portal-status--confirmed { background: var(--ga-green-deep); color: var(--ga-bg); }
+.ga-body .portal-status--pending { background: var(--ga-paper-warm); color: var(--ga-ink); }
+.ga-body .portal-status--done { background: var(--ga-line-strong); color: var(--ga-ink-soft); }
+
+/* 카드 호버 — 상세 위젯과 동일한 그림자 톤 */
+.ga-card:hover .ga-card-photo {
+  box-shadow: 0 14px 32px rgba(26, 36, 25, 0.14);
 }

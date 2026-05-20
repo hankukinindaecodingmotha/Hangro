@@ -456,7 +456,7 @@
     var pr = calcPrice(p, daysBetween(search.checkIn, search.checkOut));
     root.innerHTML = fixHtml(
       V.breadcrumb([{ href: "./", label: "숙소 찾기" }, { href: listingUrl(p, search), label: p.name }, { label: "예약" }]) +
-      '<div class="ga-checkout-grid"><section><h1>예약 확인</h1>' +
+      '<div class="ga-checkout-grid"><section class="ga-panel"><h1>예약 확인</h1>' +
       '<form id="ga-checkout-form" class="ga-form"><h2>연락처</h2>' +
       '<label>이름<input name="name" value="김여행" required /></label>' +
       '<label>휴대폰<input name="phone" value="010-0000-0000" required /></label>' +
@@ -526,6 +526,37 @@
     if (U && U.initMessageForm) U.initMessageForm("guest-message-form", "guest");
   }
 
+
+  var GUEST_THEME_KEY = "hangro_guest_theme";
+
+  function applyGuestFlowTheme() {
+    var doc = document.documentElement;
+    var palette = {
+      bg: "#EFE9DC",
+      paper: "#F6F1E5",
+      paperWarm: "#FAF6EC",
+      ink: "#1A2419",
+      inkSoft: "#4A4F44",
+      muted: "#87897D",
+      green: "#3D6E2C",
+    };
+    doc.style.setProperty("--ga-bg", palette.bg);
+    doc.style.setProperty("--ga-paper", palette.paper);
+    doc.style.setProperty("--ga-paper-warm", palette.paperWarm);
+    doc.style.setProperty("--ga-ink", palette.ink);
+    doc.style.setProperty("--ga-ink-soft", palette.inkSoft);
+    doc.style.setProperty("--ga-muted", palette.muted);
+    doc.style.setProperty("--ga-green-deep", palette.green);
+    doc.style.setProperty("--ga-rose", palette.ink);
+    doc.classList.add("ga-theme-ready");
+    if (document.body) document.body.classList.add("ga-theme-ready");
+
+    var id = qp("id") || qp("property");
+    if (id && P()) {
+      try { global.sessionStorage.setItem(GUEST_THEME_KEY, id); } catch (e) {}
+    }
+  }
+
   function bootPage(opts) {
     opts = opts || {};
     function boot() {
@@ -533,6 +564,7 @@
         showLoadError(opts.rootId, "데이터를 불러오지 못했습니다. 강력 새로고침(Cmd+Shift+R) 후 다시 시도해 주세요.");
         return;
       }
+      applyGuestFlowTheme();
       mountHeader(opts.nav || "explore");
       var fn = opts.render || PAGE_RENDERERS[opts.page];
       if (fn) fn();

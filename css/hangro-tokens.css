@@ -1,0 +1,81 @@
+/* ============================================================
+   행로 공통 디자인 토큰 (게스트 숙소 상세 화면 팔레트)
+   모든 포털·소개·운영 페이지에서 동일 색상을 씁니다.
+   ============================================================ */
+
+:root {
+  /* Core palette */
+  --hangro-green: #3d6e2c;
+  --hangro-green-soft: #b7c9a4;
+  --hangro-amber: #c8742b;
+  --hangro-bg: #efe9dc;
+  --hangro-paper: #f6f1e5;
+  --hangro-paper-warm: #faf6ec;
+  --hangro-ink: #1a2419;
+  --hangro-ink-soft: #4a4f44;
+  --hangro-muted: #87897d;
+  --hangro-rule: rgba(26, 36, 25, 0.1);
+  --hangro-rule-strong: rgba(26, 36, 25, 0.18);
+  --hangro-shadow: 0 6px 18px rgba(26, 36, 25, 0.08);
+  --hangro-shadow-sm: 0 2px 6px rgba(26, 36, 25, 0.05);
+  --hangro-radius: 10px;
+  --hangro-radius-lg: 16px;
+  --hangro-radius-pill: 999px;
+  --hangro-max: 1240px;
+
+  /* styles.css / styles-editorial.css */
+  --green-deep: var(--hangro-green);
+  --green-soft: var(--hangro-green-soft);
+  --bg: var(--hangro-bg);
+  --paper: var(--hangro-paper);
+  --ink: var(--hangro-ink);
+  --ink-soft: var(--hangro-ink-soft);
+  --ink-mute: var(--hangro-muted);
+  --rule: var(--hangro-rule-strong);
+  --rule-soft: var(--hangro-rule);
+  --bg-elevated: var(--hangro-paper);
+  --text: var(--hangro-ink);
+  --text-muted: var(--hangro-muted);
+  --accent: var(--hangro-ink);
+  --accent-soft: var(--hangro-rule);
+  --line: var(--hangro-rule);
+  --radius: var(--hangro-radius);
+  --max: var(--hangro-max);
+
+  /* guest-airbnb.css */
+  --ga-green-deep: var(--hangro-green);
+  --ga-ink: var(--hangro-ink);
+  --ga-ink-soft: var(--hangro-ink-soft);
+  --ga-muted: var(--hangro-muted);
+  --ga-line: var(--hangro-rule);
+  --ga-line-strong: var(--hangro-rule-strong);
+  --ga-bg: var(--hangro-bg);
+  --ga-paper: var(--hangro-paper);
+  --ga-paper-warm: var(--hangro-paper-warm);
+  --ga-rose: var(--hangro-ink);
+  --ga-rose-dark: #000;
+  --ga-radius-sm: 6px;
+  --ga-radius: var(--hangro-radius);
+  --ga-radius-lg: var(--hangro-radius-lg);
+  --ga-radius-pill: var(--hangro-radius-pill);
+  --ga-shadow: var(--hangro-shadow);
+  --ga-shadow-sm: var(--hangro-shadow-sm);
+  --ga-max: var(--hangro-max);
+
+  /* company-ops.css */
+  --co-bg: var(--hangro-bg);
+  --co-paper: var(--hangro-paper);
+  --co-paper-warm: var(--hangro-paper-warm);
+  --co-ink: var(--hangro-ink);
+  --co-ink-soft: var(--hangro-ink-soft);
+  --co-ink-mute: var(--hangro-muted);
+  --co-rule: var(--hangro-rule);
+  --co-rule-strong: var(--hangro-rule-strong);
+  --co-green: var(--hangro-green);
+  --co-green-soft: var(--hangro-green-soft);
+  --co-amber: var(--hangro-amber);
+  --co-radius: var(--hangro-radius);
+  --co-radius-lg: var(--hangro-radius-lg);
+  --co-shadow: var(--hangro-shadow);
+  --co-shadow-sm: var(--hangro-shadow-sm);
+}

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/hangro-tokens.css?v=7" />
+<link rel="stylesheet" href="../css/guest-airbnb.css?v=7" />
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>메시지 — 머무름 · 행로</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../css/guest-airbnb.css?v=5" />
 <script src="../js/portal-guard.js"></script>
 </head>
 <body class="ga-body" data-ga-page="messages">
@@ -17,7 +18,7 @@
     <h1 class="ga-page-title">메시지</h1>
     <p class="ga-page-lead">호스트·운영팀과 나눈 문의입니다.</p>
     <div id="ga-messages-list" class="ga-messages" aria-live="polite"><p class="ga-empty">불러오는 중…</p></div>
-    <section class="ga-compose">
+    <section class="ga-compose ga-panel">
       <h2 class="ga-h2">새 문의</h2>
       <form id="guest-message-form" class="ga-form">
         <label>제목<input name="subject" type="text" placeholder="예: 체크인 시간" required /></label>
@@ -28,9 +29,9 @@
   </div>
 </main>
 <footer class="ga-footer"><div class="ga-wrap">© 행로 · Hangro — 게스트</div></footer>
-<script src="../js/portal-data.js?v=5"></script>
-<script src="../js/portal-ui.js?v=4"></script>
-<script src="../js/guest-app.js?v=5"></script>
+<script src="../js/portal-data.js.js?v=6"></script>
+<script src="../js/portal-ui.js.js?v=6"></script>
+<script src="../js/guest-app.js.js?v=6"></script>
 <script>GuestApp.autoBoot();</script>
 </body>
 </html>

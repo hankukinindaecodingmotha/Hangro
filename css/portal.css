@@ -1,3 +1,5 @@
+@import url("hangro-tokens.css");
+
 /* 역할별 포털 (guest / host / company) */
 .portal-subnav {
   display: flex;
