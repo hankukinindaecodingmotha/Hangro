@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../css/hangro-tokens.css?v=7" />
-<link rel="stylesheet" href="../css/styles-editorial.css?v=7" />
+<link rel="stylesheet" href="../css/hangro-tokens.css?v=9" />
+<link rel="stylesheet" href="../css/styles-editorial.css?v=9" />
+<link rel="stylesheet" href="../css/company-unified.css?v=9" />
 <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
@@ -13,65 +14,12 @@
       content="행로 — 프로젝트 위치 지도"
     />
     <title>지도 — 행로</title>
-
 <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700&display=swap"
-      rel="stylesheet"
-    />
-<link rel="stylesheet" href="../css/company-unified.css?v=7" />
-    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css?v=7"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
-    <style>
-      .map-shell {
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-        margin-top: 1.5rem;
-        background: var(--paper);
-      }
-
-      #map {
-        height: min(420px, 55vh);
-        width: 100%;
-      }
-
-      .leaflet-container {
-        font-family: "Noto Sans KR", system-ui, sans-serif;
-        background: var(--bg-elevated);
-      }
-
-      .haeng-pin {
-        position: relative;
-        width: 36px;
-        height: 44px;
-        filter: drop-shadow(0 2px 4px rgba(26, 36, 25, 0.25));
-      }
-
-      .haeng-pin-svg {
-        display: block;
-        width: 36px;
-        height: 44px;
-      }
-
-      /* Leaflet divIcon anchors bottom center — padding-bottom matches pin tip */
-      .haeng-pin-wrap {
-        margin-bottom: -4px;
-      }
-
-      .map-legend {
-        margin-top: 1rem;
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        line-height: 1.55;
-      }
-
-      .map-legend strong {
-        color: var(--text);
-      }
-    </style>
   </head>
   <body class="sub">
             <header>

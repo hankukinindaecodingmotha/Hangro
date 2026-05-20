@@ -7,28 +7,24 @@
    ============================================================ */
 
 :root {
-  /* 행로 본 사이트 팔레트 */
-  --ga-green-deep: #3D6E2C;
-  --ga-ink: #1A2419;
-  --ga-ink-soft: #4A4F44;
-  --ga-muted: #87897D;
-  --ga-line: rgba(26, 36, 25, 0.10);
-  --ga-line-strong: rgba(26, 36, 25, 0.18);
-  --ga-bg: #EFE9DC;
-  --ga-paper: #F6F1E5;
-  --ga-paper-warm: #FAF6EC;
-
-  /* 호환 alias (옛 변수명 참조 코드 대비) */
-  --ga-rose: var(--ga-ink);
-  --ga-rose-dark: #000;
-
+  --ga-green-deep: var(--hangro-green);
+  --ga-ink: var(--hangro-ink);
+  --ga-ink-soft: var(--hangro-ink-soft);
+  --ga-muted: var(--hangro-muted);
+  --ga-line: var(--hangro-rule);
+  --ga-line-strong: var(--hangro-rule-strong);
+  --ga-bg: var(--hangro-bg);
+  --ga-paper: var(--hangro-paper);
+  --ga-paper-warm: var(--hangro-paper-warm);
+  --ga-rose: var(--hangro-ink);
+  --ga-rose-dark: var(--hangro-ink);
   --ga-radius-sm: 6px;
-  --ga-radius: 10px;
-  --ga-radius-lg: 16px;
-  --ga-radius-pill: 999px;
-  --ga-shadow: 0 6px 18px rgba(26, 36, 25, 0.08);
-  --ga-shadow-sm: 0 2px 6px rgba(26, 36, 25, 0.05);
-  --ga-max: 1240px;
+  --ga-radius: var(--hangro-radius);
+  --ga-radius-lg: var(--hangro-radius-lg);
+  --ga-radius-pill: var(--hangro-radius-pill);
+  --ga-shadow: var(--hangro-shadow);
+  --ga-shadow-sm: var(--hangro-shadow-sm);
+  --ga-max: var(--hangro-max);
   --ga-gutter: clamp(1rem, 3vw, 1.75rem);
 }
 
@@ -287,7 +283,7 @@
   color: var(--ga-bg);
 }
 
-.ga-search-btn:active { background: #000; }
+.ga-search-btn:active { background: var(--hangro-ink); }
 
 /* ── 숙소 카드 그리드 ─────────────────────────── */
 .ga-section-title {
@@ -1321,11 +1317,11 @@
   flex-shrink: 0;
 }
 
-.ga-rev-avatar--1 { background: #3d6e2c; }
-.ga-rev-avatar--2 { background: #8b6914; }
-.ga-rev-avatar--3 { background: #1a5f7a; }
-.ga-rev-avatar--4 { background: #4a5568; }
-.ga-rev-avatar--5 { background: #c05621; }
+.ga-rev-avatar--1 { background: var(--hangro-green); }
+.ga-rev-avatar--2 { background: var(--hangro-green); }
+.ga-rev-avatar--3 { background: var(--hangro-green); }
+.ga-rev-avatar--4 { background: var(--hangro-green); }
+.ga-rev-avatar--5 { background: var(--hangro-green); }
 
 .ga-rev-card-stars {
   margin: 0 0 0.35rem;
@@ -1361,3 +1357,13 @@
 .ga-card:hover .ga-card-photo {
   box-shadow: 0 14px 32px rgba(26, 36, 25, 0.14);
 }
+
+/* 사진 없을 때 플레이스홀더 (그라데이션 금지) */
+.ga-photo-theme--forest { background: var(--hangro-green); }
+.ga-photo-theme--hanok { background: var(--hangro-amber); }
+.ga-photo-theme--ocean { background: color-mix(in srgb, var(--hangro-ink) 70%, var(--hangro-paper)); }
+.ga-photo-theme--mountain { background: var(--hangro-muted); }
+.ga-photo-theme--sunset { background: var(--hangro-amber); }
+.ga-photo-theme--lavender { background: color-mix(in srgb, var(--hangro-ink) 50%, var(--hangro-paper)); }
+.ga-photo-theme--rural { background: var(--hangro-amber); }
+.ga-photo-theme--studio { background: var(--hangro-ink-soft); }

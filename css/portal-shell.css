@@ -1,3 +1,5 @@
+@import url("hangro-tokens.css");
+
 /* 역할별 격리 헤더 (게스트·집주인 — 타 포털 링크 없음) */
 .portal-shell-header {
   position: sticky;

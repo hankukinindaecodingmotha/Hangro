@@ -9,16 +9,7 @@
   var SEARCH_KEY = "hangro_guest_search";
   var CLEANING_FEE = 15000;
 
-  var PHOTO_THEMES = {
-    forest: "linear-gradient(135deg,#2d5a4a 0%,#7cb88a 100%)",
-    hanok: "linear-gradient(135deg,#8b6914 0%,#c4a35a 100%)",
-    ocean: "linear-gradient(135deg,#1a5f7a 0%,#57c5d4 100%)",
-    mountain: "linear-gradient(135deg,#4a5568 0%,#a0aec0 100%)",
-    sunset: "linear-gradient(135deg,#c05621 0%,#f6ad55 100%)",
-    lavender: "linear-gradient(135deg,#6b46c1 0%,#b794f4 100%)",
-    rural: "linear-gradient(135deg,#744210 0%,#d69e2e 100%)",
-    studio: "linear-gradient(135deg,#2d3748 0%,#718096 100%)",
-  };
+  var PHOTO_THEME_KEYS = ["forest", "hanok", "ocean", "mountain", "sunset", "lavender", "rural", "studio"];
 
   var PAGE_RENDERERS = {
     explore: function () { renderExplore(); },
@@ -114,11 +105,29 @@
     return { nights: nights, subtotal: sub, cleaning: CLEANING_FEE, service: svc, total: sub + CLEANING_FEE + svc };
   }
 
+  
+  function photoThemeClass(p) {
+    var key = (p && p.photoTheme) || "forest";
+    return "ga-photo-theme--" + (PHOTO_THEME_KEYS.indexOf(key) !== -1 ? key : "forest");
+  }
+
   function photoStyle(p) {
     if (p && p.photos && p.photos.length) {
       return "background-image:url('" + esc(p.photos[0]) + "');background-size:cover;background-position:center";
     }
-    return "background:" + (PHOTO_THEMES[(p && p.photoTheme) || ""] || PHOTO_THEMES.forest);
+    return "";
+  }
+
+  function photoBoxClass(p, extra) {
+    extra = extra || "";
+    var st = photoStyle(p);
+    var cls = (extra ? extra + " " : "") + photoThemeClass(p);
+    return { cls: cls.trim(), st: st };
+  }
+
+  function renderPhotoBox(p, extra) {
+    var box = photoBoxClass(p, extra);
+    return '<div class="' + box.cls + '"' + (box.st ? ' style="' + box.st + '"' : '') + '></div>';
   }
 
   function listingUrl(p, search) {
@@ -205,7 +214,7 @@
       var D = P();
       var pr = calcPrice(p, daysBetween(search.checkIn, search.checkOut));
       return '<a class="ga-card" href="' + listingUrl(p, search) + '">' +
-        '<div class="ga-card-photo" style="' + photoStyle(p) + '"></div>' +
+        renderPhotoBox(p, 'ga-card-photo') +
         '<div class="ga-card-body"><div class="ga-card-top"><h2>' + esc(p.name) + '</h2><span class="ga-rating">★ ' + esc(p.rating) + " (" + esc(p.reviewCount) + ")</span></div>" +
         '<p class="ga-card-loc">' + esc(p.locationLabel) + "</p>" +
         '<p class="ga-card-meta">' + esc(p.propertyType) + " · 최대 " + esc(p.guests) + "명</p>" +
@@ -216,8 +225,10 @@
       var photos = (p.photos && p.photos.length) ? p.photos.slice(0, 5) : [null];
       while (photos.length < 5) photos.push(photos[0]);
       return '<div class="ga-mosaic">' + photos.map(function (src, i) {
-        var st = src ? "background-image:url('" + esc(src) + "');background-size:cover;background-position:center" : photoStyle(p);
-        return '<div class="ga-mosaic-item ga-mosaic-item--' + i + '" style="' + st + '"></div>';
+        if (src) {
+          return '<div class="ga-mosaic-item ga-mosaic-item--' + i + '" style="background-image:url(\'' + esc(src) + '\');background-size:cover;background-position:center"></div>';
+        }
+        return renderPhotoBox(p, 'ga-mosaic-item ga-mosaic-item--' + i);
       }).join("") + "</div>";
     },
 
@@ -348,7 +359,7 @@
 
     tripCard: function (trip, prop) {
       return '<a class="ga-trip-card" href="booking.html?id=' + encodeURIComponent(trip.id) + '">' +
-        '<div class="ga-trip-photo" style="' + photoStyle(prop || {}) + '"></div>' +
+        renderPhotoBox(prop || {}, 'ga-trip-photo') +
         '<div class="ga-trip-body"><h2>' + esc(prop ? prop.name : trip.propertyId) + "</h2>" +
         "<p>" + esc(trip.checkIn) + " – " + esc(trip.checkOut) + "</p>" +
         statusBadge(trip.status) + "</div></a>";
@@ -357,7 +368,7 @@
     summaryCard: function (p, search, pr) {
       var D = P();
       return '<div class="ga-summary-card">' +
-        '<div class="ga-summary-photo" style="' + photoStyle(p) + '"></div>' +
+        renderPhotoBox(p, 'ga-summary-photo') +
         '<div class="ga-summary-body"><h2>' + esc(p.name) + "</h2>" +
         "<p>" + esc(search.checkIn) + " → " + esc(search.checkOut) + " · " + pr.nights + "박 · " + esc(search.guests) + "명</p>" +
         "<p class=\"ga-summary-price\"><strong>" + D.formatPrice(pr.total) + "</strong></p></div></div>";
@@ -501,7 +512,7 @@
     root.innerHTML = fixHtml(
       banner +
       V.breadcrumb([{ href: "bookings.html", label: "여행" }, { label: p ? p.name : "예약 상세" }]) +
-      '<div class="ga-trip-detail"><div class="ga-trip-hero" style="' + photoStyle(p || {}) + '"></div>' +
+      '<div class="ga-trip-detail">' + renderPhotoBox(p || {}, 'ga-trip-hero') +
       "<h1>" + esc(p ? p.name : trip.propertyId) + "</h1>" +
       "<p>" + esc(trip.checkIn) + " → " + esc(trip.checkOut) + " · " + statusBadge(trip.status) + "</p>" +
       (p ? '<p class="ga-muted">' + esc(p.locationLabel) + " · " + esc(p.address || "") + "</p>" : "") +
@@ -530,27 +541,8 @@
   var GUEST_THEME_KEY = "hangro_guest_theme";
 
   function applyGuestFlowTheme() {
-    var doc = document.documentElement;
-    var palette = {
-      bg: "#EFE9DC",
-      paper: "#F6F1E5",
-      paperWarm: "#FAF6EC",
-      ink: "#1A2419",
-      inkSoft: "#4A4F44",
-      muted: "#87897D",
-      green: "#3D6E2C",
-    };
-    doc.style.setProperty("--ga-bg", palette.bg);
-    doc.style.setProperty("--ga-paper", palette.paper);
-    doc.style.setProperty("--ga-paper-warm", palette.paperWarm);
-    doc.style.setProperty("--ga-ink", palette.ink);
-    doc.style.setProperty("--ga-ink-soft", palette.inkSoft);
-    doc.style.setProperty("--ga-muted", palette.muted);
-    doc.style.setProperty("--ga-green-deep", palette.green);
-    doc.style.setProperty("--ga-rose", palette.ink);
-    doc.classList.add("ga-theme-ready");
+    document.documentElement.classList.add("ga-theme-ready");
     if (document.body) document.body.classList.add("ga-theme-ready");
-
     var id = qp("id") || qp("property");
     if (id && P()) {
       try { global.sessionStorage.setItem(GUEST_THEME_KEY, id); } catch (e) {}

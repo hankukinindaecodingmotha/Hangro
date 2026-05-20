@@ -7,23 +7,23 @@
    ============================================================ */
 
 :root {
-  --co-bg: #EFE9DC;
-  --co-paper: #F6F1E5;
-  --co-paper-warm: #FAF6EC;
-  --co-ink: #1A2419;
-  --co-ink-soft: #4A4F44;
-  --co-ink-mute: #87897D;
-  --co-rule: rgba(26, 36, 25, 0.08);
-  --co-rule-strong: rgba(26, 36, 25, 0.18);
-  --co-green: #3D6E2C;
-  --co-green-soft: #B7C9A4;
-  --co-amber: #C8742B;
-  --co-red: #9C4D3D;
-  --co-radius: 10px;
-  --co-radius-lg: 16px;
-  --co-radius-pill: 999px;
-  --co-shadow-sm: 0 2px 6px rgba(26, 36, 25, 0.05);
-  --co-shadow: 0 8px 22px rgba(26, 36, 25, 0.08);
+  --co-bg: var(--hangro-bg);
+  --co-paper: var(--hangro-paper);
+  --co-paper-warm: var(--hangro-paper-warm);
+  --co-ink: var(--hangro-ink);
+  --co-ink-soft: var(--hangro-ink-soft);
+  --co-ink-mute: var(--hangro-muted);
+  --co-rule: var(--hangro-rule);
+  --co-rule-strong: var(--hangro-rule-strong);
+  --co-green: var(--hangro-green);
+  --co-green-soft: var(--hangro-green-soft);
+  --co-amber: var(--hangro-amber);
+  --co-red: var(--hangro-amber);
+  --co-radius: var(--hangro-radius);
+  --co-radius-lg: var(--hangro-radius-lg);
+  --co-radius-pill: var(--hangro-radius-pill);
+  --co-shadow-sm: var(--hangro-shadow-sm);
+  --co-shadow: var(--hangro-shadow);
 }
 
 /* ── 운영 다크 헤더 ─────────────────────────── */

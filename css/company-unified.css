@@ -1,3 +1,5 @@
+@import url("hangro-tokens.css");
+
 /* 회사·공개 소개 통합 사이트 (/company/) */
 .company-nav .nav-links {
   flex-wrap: wrap;

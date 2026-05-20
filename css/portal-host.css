@@ -1,3 +1,5 @@
+@import url("hangro-tokens.css");
+
 /* 집주인 포털 — 게스트 숙소 상세와 동일한 에디토리얼 톤 */
 body.portal-host {
   --bg: var(--hangro-bg, #efe9dc);
@@ -32,7 +34,7 @@ body.portal-host .portal-shell-role {
 }
 
 body.portal-host .page-hero {
-  background: linear-gradient(180deg, var(--hangro-paper-warm, #faf6ec) 0%, var(--bg) 100%);
+  background: var(--hangro-paper-warm);
   border-bottom: 1px solid var(--line);
 }
 
@@ -174,12 +176,12 @@ body.portal-host .portal-card {
   border: 1px dashed rgba(0, 0, 0, 0.35);
 }
 
-.ha-cal-color--0 { background: #c4a35a; }
-.ha-cal-color--1 { background: #7cb88a; }
-.ha-cal-color--2 { background: #57c5d4; }
-.ha-cal-color--3 { background: #b794f4; }
-.ha-cal-color--4 { background: #f6ad55; }
-.ha-cal-color--5 { background: #90cdf4; }
+.ha-cal-color--0 { background: var(--hangro-cal-0); }
+.ha-cal-color--1 { background: var(--hangro-cal-1); }
+.ha-cal-color--2 { background: var(--hangro-cal-2); }
+.ha-cal-color--3 { background: var(--hangro-cal-3); }
+.ha-cal-color--4 { background: var(--hangro-cal-4); }
+.ha-cal-color--5 { background: var(--hangro-cal-5); }
 
 .ha-actions {
   display: flex;

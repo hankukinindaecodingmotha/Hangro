@@ -23,6 +23,13 @@
   --hangro-radius-pill: 999px;
   --hangro-max: 1240px;
 
+  --hangro-cal-0: var(--hangro-amber);
+  --hangro-cal-1: var(--hangro-green-soft);
+  --hangro-cal-2: color-mix(in srgb, var(--hangro-green) 55%, var(--hangro-paper));
+  --hangro-cal-3: color-mix(in srgb, var(--hangro-ink) 35%, var(--hangro-paper));
+  --hangro-cal-4: var(--hangro-amber);
+  --hangro-cal-5: color-mix(in srgb, var(--hangro-muted) 50%, var(--hangro-paper));
+
   /* styles.css / styles-editorial.css */
   --green-deep: var(--hangro-green);
   --green-soft: var(--hangro-green-soft);

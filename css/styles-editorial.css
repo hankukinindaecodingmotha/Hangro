@@ -10,37 +10,27 @@
    ============================================================ */
 
 :root {
-  /* ── 팔레트 (절제된 톤) ───────────────────── */
-  --green-deep: #3D6E2C;
-  --green-soft: #B7C9A4;
-  --yellow:     #E9D896;
-  --orange:     #C8742B;
-
-  /* ── 시맨틱 ──────────────────────────────── */
-  --bg:          #EFE9DC;
-  --paper:       #F6F1E5;
-  --ink:         #1A2419;
-  --ink-soft:    #4A4F44;
-  --ink-mute:    #87897D;
-  --rule:        rgba(26, 36, 25, 0.14);
-  --rule-soft:   rgba(26, 36, 25, 0.08);
-  --shadow:      0 1px 0 rgba(26, 36, 25, 0.04);
-
-  /* 옛 토큰 호환 (인라인 스타일 보호용) */
-  --line:         var(--rule);
-  --bg-elevated:  var(--paper);
-  --text:         var(--ink);
-  --text-muted:   var(--ink-mute);
-  --accent:       var(--ink);
-  --accent-soft:  var(--rule-soft);
-
-  --radius:      4px;
-  --radius-lg:   8px;
-  --max:         1180px;
-  --gutter:      clamp(1.25rem, 3vw, 2rem);
-  --safe-top:    env(safe-area-inset-top, 0);
-  --safe-bottom: env(safe-area-inset-bottom, 0);
-  --danger:      #9C4D3D;
+  --green-deep: var(--hangro-green);
+  --green-soft: var(--hangro-green-soft);
+  --yellow: var(--hangro-paper-warm);
+  --orange: var(--hangro-amber);
+  --bg: var(--hangro-bg);
+  --paper: var(--hangro-paper);
+  --ink: var(--hangro-ink);
+  --ink-soft: var(--hangro-ink-soft);
+  --ink-mute: var(--hangro-muted);
+  --rule: var(--hangro-rule-strong);
+  --rule-soft: var(--hangro-rule);
+  --shadow: var(--hangro-shadow-sm);
+  --line: var(--hangro-rule);
+  --bg-elevated: var(--hangro-paper);
+  --text: var(--hangro-ink);
+  --text-muted: var(--hangro-muted);
+  --accent: var(--hangro-ink);
+  --accent-soft: var(--hangro-rule);
+  --radius: var(--hangro-radius);
+  --max: var(--hangro-max);
+  --danger: var(--hangro-amber);
 }
 
 *,
@@ -49,8 +39,16 @@
 
 html { scroll-behavior: smooth; }
 
+
+h1, h2, h3, h4 {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 body {
   margin: 0;
+  word-break: keep-all;
+  overflow-wrap: break-word;
   font-family: "Noto Sans KR", "Helvetica Neue", system-ui, sans-serif;
   font-weight: 400;
   background: var(--bg);
@@ -873,3 +871,865 @@ footer a:hover { color: var(--ink); border-bottom-color: var(--ink); }
     align-items: center;
   }
 }
+
+
+/* Archive page (archive.html) */
+#archive-root {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(2.75rem, 5.5vw, 3.75rem);
+        margin-top: clamp(1.75rem, 3.5vw, 2.25rem);
+      }
+
+      .archive-card {
+        scroll-margin-top: 5rem;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.25rem, 2.75vw, 1.6rem);
+      }
+
+      .archive-head {
+        max-width: 56rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.95rem;
+        align-items: flex-start;
+      }
+
+      .status-pill {
+        display: inline-block;
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+        padding: 0.2rem 0.65rem;
+        border-radius: 999px;
+        background: var(--paper, var(--bg-elevated, #f6f1e5));
+        margin: 0;
+      }
+
+      .archive-head h2 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: clamp(1.45rem, 3.4vw, 2.1rem);
+        margin: 0;
+        letter-spacing: -0.025em;
+        line-height: 1.25;
+      }
+
+      .archive-head .lead {
+        margin: 0 0 0.85rem;
+        color: var(--ink-soft, var(--text-muted, #4a4f44));
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .archive-head .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .archive-head .tags li {
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+      }
+
+      .archive-head .tags li + li::before {
+        content: "·";
+        margin-right: 0.4rem;
+        color: var(--rule, rgba(0, 0, 0, 0.2));
+      }
+
+      .archive-bullets {
+        padding: clamp(1.1rem, 3vw, 1.5rem);
+        background: var(--paper, var(--bg-elevated, #f6f1e5));
+        border-radius: var(--radius-lg, var(--radius, 12px));
+        max-width: 56rem;
+      }
+
+      .archive-bullets h3 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: 1.05rem;
+        margin: 0 0 0.65rem;
+        letter-spacing: -0.01em;
+      }
+
+      .archive-bullets ul {
+        margin: 0;
+        padding-left: 1.15rem;
+        color: var(--ink-soft, var(--text-muted, #4a4f44));
+        font-size: 0.94rem;
+        line-height: 1.7;
+      }
+
+      .archive-actions {
+        margin: 0;
+        font-size: 0.88rem;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+      }
+
+      .archive-actions a {
+        color: var(--ink, currentColor);
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+        padding-bottom: 1px;
+      }
+
+      .archive-actions a:hover {
+        opacity: 0.7;
+      }
+
+      .archive-story-block {
+        max-width: 56rem;
+        padding: clamp(1.1rem, 2.8vw, 1.5rem) 0 clamp(0.15rem, 0.8vw, 0.35rem);
+      }
+
+      .archive-story-eyebrow {
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+        margin: 0 0 0.55rem;
+      }
+
+      .archive-story-title {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: clamp(1.2rem, 2.8vw, 1.55rem);
+        margin: 0 0 0.95rem;
+        letter-spacing: -0.025em;
+        line-height: 1.28;
+        color: var(--ink, currentColor);
+      }
+
+      .archive-story-p {
+        margin: 0 0 0.95rem;
+        font-size: 0.98rem;
+        line-height: 1.78;
+        color: var(--ink-soft, var(--text-muted, #4a4f44));
+      }
+
+      .archive-story-shifts {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        margin: 0 0 1.35rem;
+      }
+
+      .archive-story-shift {
+        display: grid;
+        grid-template-columns: 4.25rem 1fr;
+        gap: 0.5rem 1rem;
+        align-items: center;
+        padding: 0.95rem 1.05rem;
+        background: var(--paper, var(--bg-elevated, #f6f1e5));
+        border-radius: var(--radius-lg, var(--radius, 12px));
+        border: 1px solid var(--rule-soft, rgba(0, 0, 0, 0.06));
+      }
+
+      @media (max-width: 520px) {
+        .archive-story-shift {
+          grid-template-columns: 1fr;
+        }
+
+        .archive-story-space {
+          padding-top: 0;
+        }
+      }
+
+      .archive-story-space {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: var(--ink, currentColor);
+        padding-top: 0.12rem;
+      }
+
+      .archive-story-shift-body {
+        min-width: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.45rem 0.75rem;
+      }
+
+      .archive-story-lbl {
+        display: inline-block;
+        min-width: 2.35rem;
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+        margin-right: 0.3rem;
+      }
+
+      .archive-story-before,
+      .archive-story-after {
+        margin: 0;
+        flex: 1 1 9rem;
+        min-width: 0;
+        font-size: 0.9rem;
+        line-height: 1.55;
+        color: var(--ink-soft, var(--text-muted, #4a4f44));
+      }
+
+      .archive-story-arrow {
+        margin: 0;
+        flex: 0 0 auto;
+        line-height: 1;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--green-deep, #3d6e2c);
+      }
+
+      .archive-story-after .archive-story-lbl {
+        color: var(--green-deep, #3d6e2c);
+      }
+
+      .archive-story-concept {
+        padding: 1.05rem 1.15rem 1.15rem;
+        background: color-mix(
+          in srgb,
+          var(--green-soft, #b7c9a4) 24%,
+          var(--paper, #f6f1e5)
+        );
+        border-radius: var(--radius-lg, var(--radius, 12px));
+        border: 1px solid var(--rule-soft, rgba(0, 0, 0, 0.06));
+      }
+
+      .archive-story-concept h3 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: 1rem;
+        margin: 0 0 0.55rem;
+        letter-spacing: -0.02em;
+        color: var(--ink, currentColor);
+      }
+
+      .archive-story-concept ul {
+        margin: 0;
+        padding-left: 1.1rem;
+        font-size: 0.91rem;
+        line-height: 1.68;
+        color: var(--ink-soft, var(--text-muted, #4a4f44));
+      }
+
+      .archive-pair-section {
+        max-width: 56rem;
+      }
+
+      .archive-pair-section h2 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+        margin: 0 0 0.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      .archive-pair-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 1rem;
+        margin: 0 0 1rem;
+        font-size: 0.82rem;
+        color: var(--ink-soft, var(--text-muted, #4a4f44));
+      }
+
+      .archive-pair-toolbar label {
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+      }
+
+      .archive-pair-select {
+        font-family: inherit;
+        font-size: 0.88rem;
+        padding: 0.35rem 0.75rem;
+        border: 1px solid var(--rule, rgba(0, 0, 0, 0.12));
+        border-radius: var(--radius, 8px);
+        background: var(--paper, var(--bg-elevated, #f6f1e5));
+        color: var(--ink, currentColor);
+      }
+
+      .archive-pair-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(0.75rem, 2vw, 1.25rem);
+      }
+
+      @media (max-width: 640px) {
+        .archive-pair-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .archive-pair-grid figure {
+        margin: 0;
+        background: var(--paper, var(--bg-elevated, #f6f1e5));
+        border-radius: var(--radius-lg, var(--radius, 12px));
+        overflow: hidden;
+      }
+
+      .archive-pair-cap {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+        border-bottom: 1px solid var(--rule-soft, rgba(0, 0, 0, 0.06));
+      }
+
+      .archive-pair-img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: rgba(0, 0, 0, 0.04);
+      }
+
+      .archive-pair-status {
+        margin: 0.65rem 0 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        color: var(--ink-mute, var(--text-muted, #87897d));
+      }
+
+
+/* Place detail (place-detail.html) */
+.detail-back {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        margin-bottom: 1rem;
+      }
+
+      .detail-back:hover {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      .detail-intro {
+        max-width: 56rem;
+      }
+
+      .detail-intro h1 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: clamp(1.6rem, 4vw, 2.25rem);
+        margin: 0 0 0.5rem;
+        letter-spacing: -0.03em;
+      }
+
+      .detail-intro .lead {
+        margin: 0 0 0.75rem;
+        color: var(--text-muted);
+        font-size: 1.05rem;
+      }
+
+      .detail-intro .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .detail-intro .tags li {
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        padding: 0;
+      }
+
+      .detail-intro .tags li + li::before {
+        content: "·";
+        margin: 0 0.85rem 0 0.15rem;
+        color: var(--ink-mute);
+      }
+
+      .ba-section {
+        margin-top: clamp(2rem, 5vw, 3rem);
+      }
+
+      .ba-section h2 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: clamp(1.25rem, 2.8vw, 1.65rem);
+        margin: 0 0 0.75rem;
+      }
+
+      .ba-section > .hint {
+        margin: 0 0 1.25rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      /* 상세: 변경 전·후를 2열 그리드, 각 열 안 사진도 2열 */
+      .detail-compare-grid {
+        display: grid;
+        gap: clamp(1.5rem, 3.5vw, 2.75rem);
+        margin-top: 0.35rem;
+      }
+
+      @media (min-width: 800px) {
+        .detail-compare-grid {
+          grid-template-columns: 1fr 1fr;
+          align-items: start;
+        }
+
+        .detail-compare-grid > .ba-photos-section--grid:only-child {
+          grid-column: 1 / -1;
+        }
+      }
+
+      .ba-photos-section--grid > h2 {
+        margin-bottom: 0.85rem;
+      }
+
+      .ba-photos-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem 0.75rem;
+      }
+
+      .ba-photos-section--grid .ba-photo {
+        margin: 0;
+      }
+
+      .ba-photos-section--grid .ba-photo img {
+        aspect-ratio: 4 / 3;
+        border-radius: var(--radius-lg);
+      }
+
+      .ba-grid {
+        display: grid;
+        gap: 1.25rem;
+      }
+
+      @media (min-width: 720px) {
+        .ba-grid {
+          grid-template-columns: 1fr 1fr;
+          align-items: start;
+        }
+      }
+
+      .ba-card {
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--paper);
+      }
+
+      .ba-card figcaption {
+        padding: 0.95rem 1.1rem 0.5rem;
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        background: transparent;
+      }
+
+      .ba-card p {
+        margin: 0;
+        padding: 0.85rem 1rem 1rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.55;
+      }
+
+      .facade {
+        aspect-ratio: 4 / 3;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .facade::before,
+      .facade::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+      }
+
+      /* 창문 패턴 */
+      .facade-windows {
+        position: absolute;
+        inset: 12% 10% 18%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 10%;
+        opacity: 0.88;
+      }
+
+      .win {
+        border-radius: 1px;
+      }
+
+      /* 변경 전 — 차분한 베이지·회갈 단색 */
+      .facade--before {
+        background: #C6BBA3;
+      }
+
+      .facade--before .win {
+        background: #6F6450;
+        opacity: 0.55;
+      }
+
+      /* 변경 후 — 차분한 세이지 그린 단색 */
+      .facade--after {
+        background: #B7C9A4;
+      }
+
+      .facade--after .win {
+        background: var(--bg);
+        border: 1px solid rgba(26, 36, 25, 0.35);
+      }
+
+      .detail-story {
+        margin-top: clamp(2rem, 5vw, 3rem);
+        padding: clamp(1.5rem, 3vw, 2rem);
+        border-radius: var(--radius-lg);
+        background: var(--paper);
+        max-width: 56rem;
+      }
+
+      .detail-story h2 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: 1.2rem;
+        margin: 0 0 0.75rem;
+      }
+
+      .detail-story ul {
+        margin: 0;
+        padding-left: 1.15rem;
+        color: var(--text-muted);
+        font-size: 0.92rem;
+        line-height: 1.65;
+      }
+
+      .unknown-box {
+        background: var(--paper);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        text-align: center;
+        color: var(--ink-mute);
+        margin-top: 2rem;
+      }
+
+      .unknown-box a {
+        font-weight: 600;
+      }
+
+      .floor-svg-shell {
+        border-radius: var(--radius-lg);
+        background: var(--paper);
+        padding: 0.85rem;
+        overflow: auto;
+        max-width: 100%;
+      }
+
+      .floor-svg {
+        display: block;
+        width: min(100%, 520px);
+        height: auto;
+        margin: 0 auto;
+      }
+
+      .floor-hit {
+        cursor: pointer;
+        outline: none;
+      }
+
+      .floor-hit:hover rect,
+      .floor-hit:hover ellipse {
+        filter: brightness(1.15);
+      }
+
+      .floor-hit:focus-visible rect,
+      .floor-hit:focus-visible ellipse {
+        stroke: var(--accent);
+        stroke-width: 2.2;
+      }
+
+      .floor-label {
+        text-shadow: 0 1px 2px rgba(26, 36, 25, 0.45);
+      }
+
+      .floor-dialog {
+        max-width: 22rem;
+        width: calc(100% - 2rem);
+        border: none;
+        border-radius: var(--radius-lg);
+        padding: 0;
+        background: var(--paper);
+        color: var(--ink);
+        box-shadow: 0 12px 36px rgba(26, 36, 25, 0.18);
+      }
+
+      .floor-dialog::backdrop {
+        background: rgba(26, 36, 25, 0.35);
+      }
+
+      .floor-dialog-form {
+        padding: 1.25rem 1.35rem 1.35rem;
+        margin: 0;
+      }
+
+      .floor-dialog h3 {
+        margin: 0 0 0.65rem;
+        font-size: 1.1rem;
+        font-family: "Nanum Myeongjo", serif;
+      }
+
+      .floor-dialog-body {
+        margin: 0 0 1.25rem;
+        font-size: 0.92rem;
+        color: var(--text-muted);
+        line-height: 1.55;
+      }
+
+      .floor-dialog-close {
+        width: 100%;
+      }
+
+      .ba-photos {
+        margin-top: 1.75rem;
+        max-width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+
+      .ba-photos-frame {
+        position: relative;
+      }
+
+      .ba-photos-track {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        border-radius: var(--radius-lg);
+        background: var(--bg-elevated);
+      }
+
+      .ba-photos-track::-webkit-scrollbar {
+        display: none;
+      }
+
+      .ba-photos-track:focus {
+        outline: 2px solid var(--accent, currentColor);
+        outline-offset: 3px;
+      }
+
+      .ba-photo {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        margin: 0;
+      }
+
+      .ba-photo img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .ba-photos-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 2.5rem;
+        height: 2.5rem;
+        background: var(--ink);
+        color: var(--bg);
+        border: 1px solid var(--ink);
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 0;
+        line-height: 1;
+        padding: 0;
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.18s ease, transform 0.18s ease;
+      }
+
+      .ba-photos-btn::before {
+        content: "";
+        display: block;
+        width: 0.7rem;
+        height: 0.7rem;
+        border-top: 1.5px solid var(--bg);
+        border-right: 1.5px solid var(--bg);
+      }
+
+      .ba-photos-prev::before {
+        transform: rotate(-135deg);
+        margin-left: 4px;
+      }
+
+      .ba-photos-next::before {
+        transform: rotate(45deg);
+        margin-right: 4px;
+      }
+
+      .ba-photos-btn:hover:not(:disabled) {
+        background: var(--paper);
+        color: var(--ink);
+      }
+
+      .ba-photos-btn:hover:not(:disabled)::before {
+        border-top-color: var(--ink);
+        border-right-color: var(--ink);
+      }
+
+      .ba-photos-btn:active:not(:disabled) {
+        transform: translateY(-50%) scale(0.96);
+      }
+
+      .ba-photos-btn:disabled {
+        opacity: 0.2;
+        cursor: not-allowed;
+      }
+
+      .ba-photos-prev {
+        left: 0.85rem;
+      }
+
+      .ba-photos-next {
+        right: 0.85rem;
+      }
+
+      .ba-photos-status {
+        margin: 0.7rem 0 0;
+        text-align: center;
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--ink-mute);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .status-line {
+        margin: 0 0 0.6rem;
+      }
+
+      .status-pill {
+        display: inline-block;
+        font-family: "Helvetica Neue", system-ui, sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        padding: 0.2rem 0.55rem;
+        border: 1px solid var(--rule);
+        border-radius: 999px;
+        background: var(--paper);
+      }
+
+      .detail-after-pending {
+        margin-top: clamp(2rem, 5vw, 3rem);
+        padding: clamp(1.5rem, 4vw, 2.25rem);
+        background: var(--paper);
+        border-radius: var(--radius-lg, var(--radius));
+        max-width: 56rem;
+      }
+
+      .detail-after-pending h2 {
+        font-family: "Nanum Myeongjo", serif;
+        font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+        margin: 0 0 0.75rem;
+        letter-spacing: -0.02em;
+      }
+
+      .detail-after-pending p {
+        margin: 0;
+        color: var(--ink-soft);
+        line-height: 1.7;
+      }
+
+      .detail-actions {
+        margin-top: 2rem;
+        font-size: 0.88rem;
+        color: var(--ink-mute);
+      }
+
+      .detail-actions a {
+        color: var(--ink);
+      }
+
+
+/* Map demo (map-demo.html) */
+.map-shell {
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        margin-top: 1.5rem;
+        background: var(--paper);
+      }
+
+      #map {
+        height: min(420px, 55vh);
+        width: 100%;
+      }
+
+      .leaflet-container {
+        font-family: "Noto Sans KR", system-ui, sans-serif;
+        background: var(--bg-elevated);
+      }
+
+      .haeng-pin {
+        position: relative;
+        width: 36px;
+        height: 44px;
+        filter: drop-shadow(0 2px 4px rgba(26, 36, 25, 0.25));
+      }
+
+      .haeng-pin-svg {
+        display: block;
+        width: 36px;
+        height: 44px;
+      }
+
+      /* Leaflet divIcon anchors bottom center — padding-bottom matches pin tip */
+      .haeng-pin-wrap {
+        margin-bottom: -4px;
+      }
+
+      .map-legend {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.55;
+      }
+
+      .map-legend strong {
+        color: var(--text);
+      }
