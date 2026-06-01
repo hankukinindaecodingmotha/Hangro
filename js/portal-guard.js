@@ -5,15 +5,15 @@
 (function () {
   "use strict";
 
-  var STORAGE_KEY = "hangro_portal_lock";
+  var STORAGE_KEY = "hangro_portal_lock";  // "guest" | "host" — 동시 체험 방지
   var path = window.location.pathname || "";
 
   var isGuest = /\/guest(\/|$)/.test(path);
   var isHost = /\/host(\/|$)/.test(path);
-  var isCompany = /\/company(\/|$)/.test(path);
+  var isCompany = /\/company(\/|$)/.test(path);  // 회사·공개 페이지는 잠금 무시
 
   if (isCompany || (!isGuest && !isHost)) {
-    return;
+    return;  // 게이트·아카이브 등
   }
 
   var lock = null;

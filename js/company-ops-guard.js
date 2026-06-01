@@ -5,8 +5,8 @@
 (function (global) {
   "use strict";
 
-  var KEY = "hangro_company_ops";
-  var DEMO_USER = "ops";
+  var KEY = "hangro_company_ops";   // sessionStorage "1" 이면 로그인됨
+  var DEMO_USER = "ops";            // 데모 계정 (운영자)
   var DEMO_PASS = "hangro2026";
 
   function isAuthed() {

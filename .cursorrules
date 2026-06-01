@@ -13,6 +13,27 @@
 6. **금지** — 그라데이션, blur>20px shadow, 네온/무지개, hairline 남발, single-side border+radius.
 7. **버튼** — DESIGN.md §7.1 (`.btn` / `.ga-btn--primary` / ghost 알약형).
 
+## 여백 규칙 (DESIGN.md §4)
+
+- 컴포넌트 간 간격: flex/grid 는 `gap`, 그 외 `margin-bottom` (한 방향만).
+- `margin-top` + `margin-bottom` 동시 사용 금지 (margin collapse 혼란).
+- 마지막 자식 `margin-bottom: 0`. 음수 margin 금지.
+- 반응형 여백은 `clamp(min, vw, max)`.
+- 컨테이너 padding 과 자식 margin 중복 금지.
+
+## 레이아웃 무결성 — 요소가 영역 침범하지 않게 (DESIGN.md §4)
+
+1. **`box-sizing: border-box` 전역.** padding·border 가 width 안에 포함.
+2. **`body { overflow-x: hidden; max-width: 100vw; }`** — 가로 스크롤 차단.
+3. **flex/grid 자식 `min-width: 0`** 또는 grid `minmax(0, 1fr)` — 긴 콘텐츠가 트랙 밀어내는 것 방지.
+4. **버튼은 부모 padding 안쪽에.** 가로 꽉 채울 땐 `width: 100%` + border-box (margin 으로 늘리지 말 것).
+   flex 행의 버튼: `flex-shrink: 0` 또는 부모 `flex-wrap: wrap`.
+5. **`white-space: nowrap` 버튼**은 좁은 화면 대비 부모에 `flex-wrap: wrap` 동반.
+6. **`position: absolute` 요소**는 부모에 `position: relative`.
+7. **이미지·미디어** `max-width: 100%; display: block;`.
+8. **고정 `height` 보다 `min-height`** — 콘텐츠 길어질 때 잘림·침범 방지.
+9. 변경 후 셀프 체크: 모바일(360)·태블릿(768)·데스크톱(1280) 가로 스크롤 없음, 버튼·카드가 부모 안, 긴 텍스트에도 안 깨짐.
+
 ## 영역별 CSS 매트릭스 (DESIGN.md §11)
 
 | 영역 | HTML | CSS (순서) |

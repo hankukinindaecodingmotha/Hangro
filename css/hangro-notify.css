@@ -1,0 +1,65 @@
+/* 행로 토스트 알림 — hangro-notify.js */
+.hangro-notify-root {
+  position: fixed;
+  z-index: 10000;
+  top: calc(var(--safe-top, 0px) + 1rem);
+  right: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  pointer-events: none;
+  max-width: 22rem;
+  margin-left: auto;
+}
+
+.hangro-notify {
+  pointer-events: auto;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: var(--hangro-radius-lg, 16px);
+  background: var(--hangro-paper, #f6f1e5);
+  color: var(--hangro-ink, #1a2419);
+  box-shadow: var(--hangro-shadow, 0 6px 18px rgba(26, 36, 25, 0.12));
+  border: 1px solid var(--hangro-rule-strong, rgba(26, 36, 25, 0.18));
+  font-size: 0.9rem;
+  line-height: 1.5;
+  animation: hangro-notify-in 0.28s var(--hangro-ease, ease) forwards;
+}
+
+.hangro-notify--success {
+  border-color: color-mix(in srgb, var(--hangro-green, #3d6e2c) 40%, transparent);
+}
+
+.hangro-notify--error {
+  border-color: color-mix(in srgb, var(--hangro-danger, #9c4d3d) 45%, transparent);
+}
+
+.hangro-notify strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.hangro-notify--out {
+  animation: hangro-notify-out 0.22s ease forwards;
+}
+
+@keyframes hangro-notify-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hangro-notify-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}

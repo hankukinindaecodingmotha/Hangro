@@ -3,7 +3,7 @@
    ============================================================ */
 
 :root {
-  /* Core palette */
+  /* ── 코어 팔레트 (DESIGN.md §2) — hex는 여기만 정의 ── */
   --hangro-green: #3d6e2c;
   --hangro-green-soft: #b7c9a4;
   --hangro-amber: #c8742b;
@@ -36,7 +36,7 @@
   --hangro-cal-4: var(--hangro-amber);
   --hangro-cal-5: color-mix(in srgb, var(--hangro-muted) 50%, var(--hangro-paper));
 
-  /* styles.css / styles-editorial.css */
+  /* ── styles.css · styles-editorial.css 별칭 ── */
   --green-deep: var(--hangro-green);
   --green-soft: var(--hangro-green-soft);
   --bg: var(--hangro-bg);
@@ -55,7 +55,7 @@
   --radius: var(--hangro-radius);
   --max: var(--hangro-max);
 
-  /* guest-airbnb.css */
+  /* ── guest-airbnb.css (게스트 포털 --ga-*) ── */
   --ga-green-deep: var(--hangro-green);
   --ga-ink: var(--hangro-ink);
   --ga-ink-soft: var(--hangro-ink-soft);
@@ -76,7 +76,7 @@
   --ga-max: var(--hangro-max);
   --ga-gutter: var(--gutter);
 
-  /* company-ops.css */
+  /* ── company-ops.css (운영 포털 --co-*) ── */
   --co-bg: var(--hangro-bg);
   --co-paper: var(--hangro-paper);
   --co-paper-warm: var(--hangro-paper-warm);

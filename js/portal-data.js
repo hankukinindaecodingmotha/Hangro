@@ -1,9 +1,13 @@
 /**
- * 포털 목업 데이터 (데모·정적 UI용). 추후 API 응답으로 교체.
+ * 포털 목업 데이터 (PORTAL_DATA)
+ * ─────────────────────────────────────────────────────────────
+ * 게스트·집주인·회사 ops UI가 공유하는 숙소·예약·메시지·후기 데이터.
+ * 실서비스 연동 시 이 파일의 global.PORTAL_DATA 를 fetch 래퍼로 교체.
  */
 (function (global) {
   "use strict";
 
+  /* 숙소 목록 (home-1 … home-18) — photos, amenities, hostId 등 */
   var PROPERTIES = [
     {
       id: "home-1",
@@ -580,6 +584,7 @@
     return merged;
   }
 
+  /* 예약 목록 — guestId, propertyId, status(pending|confirmed|…) */
   var BOOKINGS = [
     {
       id: "b1",
@@ -633,6 +638,7 @@
     },
   ];
 
+  /* 문의함 — fromRole guest|host, propertyId, status open|replied */
   var MESSAGES = [
     {
       id: "m1",
@@ -668,11 +674,12 @@
     },
   ];
 
+  /* 체크인 안내 — propertyId별 Wi-Fi·주차 등 */
   var STAY_GUIDE = {
     "home-1": {
       checkIn: "15:00 이후 (사전 협의 시 유연)",
       checkOut: "11:00",
-      wifi: "Hangro_Guest / 안내 카드 참고",
+      wifi: "행로_Guest / 안내 카드 참고",
       parking: "마당 1대 (추가 차량은 사전 문의)",
       rules: "22시 이후 정숙, 실내 금연, 분리수거 준수",
       contact: "010-0000-0001 (민수)",
@@ -850,6 +857,7 @@
     return merged;
   }
 
+  /* 후기 분포·항목별 점수·카드 (게스트 listing 후기 블록) */
   var REVIEWS = {
     "home-1": {"distribution": [0, 0, 0, 3, 24], "categories": [{"label": "청결도", "score": 4.95}, {"label": "정확성", "score": 4.9}, {"label": "체크인", "score": 4.88}, {"label": "의사소통", "score": 4.92}, {"label": "가성비", "score": 4.85}, {"label": "위치", "score": 4.8}], "items": [{"author": "이서연", "date": "2026-04", "rating": 5, "tripType": "커플", "text": "마을 산책하기 좋고 실내가 깔끔했어요. 사진보다 더 아늑했습니다."}, {"author": "박준호", "date": "2026-03", "rating": 5, "tripType": "친구", "text": "호스트님이 친절하고 체크인 안내가 명확했습니다."}, {"author": "김하늘", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "아이와 함께 묵기 좋아요. 주방이 잘 갖춰져 있었어요."}]},
     "home-10": {"distribution": [0, 0, 1, 4, 28], "categories": [{"label": "청결도", "score": 4.74}, {"label": "위치", "score": 4.71}, {"label": "체크인", "score": 4.76}, {"label": "의사소통", "score": 4.75}, {"label": "가성비", "score": 4.68}], "items": [{"author": "이여행", "date": "2026-03", "rating": 5, "tripType": "커플", "text": "사진과 같고 체크인이 편했습니다."}, {"author": "최휴식", "date": "2026-02", "rating": 4, "tripType": "가족", "text": "가격 대비 만족스러웠어요."}]},
@@ -890,9 +898,10 @@
     };
   }
 
-  var DEMO_GUEST_ID = "guest-demo";
-  var DEMO_HOST_ID = "host-a";
+  var DEMO_GUEST_ID = "guest-demo";  // 게스트 데모 계정
+  var DEMO_HOST_ID = "host-a";       // 집주인 데모 계정 (host-app)
 
+  /* 게스트/집주인/ops 앱이 호출하는 조회·필터 API */
   global.PORTAL_DATA = {
     properties: PROPERTIES,
     bookings: BOOKINGS,

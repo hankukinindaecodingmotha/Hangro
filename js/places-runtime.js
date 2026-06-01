@@ -1,11 +1,37 @@
 /**
- * 장소 데이터(JSON) 로드, 지도/상세 페이지 공통 로직
- * 의존: 지도 페이지는 Leaflet(L) 로드 후 initMapPage 호출
+ * 공개 사이트 장소 런타임 (HAENG_RUNTIME)
+ * ─────────────────────────────────────────────────────────────
+ * data/places.json 로드 → 지도(Leaflet)·장소 상세·기록 아카이브
+ * company/map-demo.html 등 하위 경로에서도 JSON URL 자동 해석
+ * 공개 API: loadPlaces, initMapPage, initDetailPage, initArchivePage
  */
 (function (global) {
   "use strict";
 
-  var DATA_URL = "data/places.json";
+  /** 항상 사이트 루트의 /data/places.json (company/ 아래 페이지에서 404 방지) */
+  function resolvePlacesDataUrl() {
+    var nodes = document.querySelectorAll('script[src*="places-runtime"]');
+    var script = nodes.length ? nodes[nodes.length - 1] : document.currentScript;
+    if (script && script.src) {
+      try {
+        return new URL("../data/places.json", script.src).href;
+      } catch (e) {}
+    }
+    if (global.location && global.location.origin && /^https?:/.test(global.location.protocol)) {
+      var path = global.location.pathname || "";
+      var siteRoot = "";
+      if (path.indexOf("/company/") !== -1) {
+        siteRoot = path.substring(0, path.indexOf("/company"));
+      } else if (path.indexOf("/guest/") !== -1) {
+        siteRoot = path.substring(0, path.indexOf("/guest"));
+      } else if (path.indexOf("/host/") !== -1) {
+        siteRoot = path.substring(0, path.indexOf("/host"));
+      }
+      return global.location.origin + siteRoot + "/data/places.json";
+    }
+    return "/data/places.json";
+  }
+
   var CACHE = null;
 
   var PIN_HEX = "#1A2419";
@@ -118,7 +144,8 @@
       return Promise.resolve(CACHE);
     }
 
-    return fetch(DATA_URL, { cache: "default" })
+    var dataUrl = resolvePlacesDataUrl();
+    return fetch(dataUrl, { cache: "default" })
       .then(function (res) {
         if (!res.ok) {
           throw new Error(
@@ -152,7 +179,8 @@
       '<p class="map-legend" role="alert">' + escapeHtml(message) + "</p>";
   }
 
-  function initMapPage(options) {
+  /* ── 지도 페이지 (map-demo.html) ── */
+  function initMapPage(options) {  // Leaflet 지도 + 핀 + 팝업
     var mapEl = document.getElementById((options && options.mapElId) || "map");
     if (!mapEl) return;
 
@@ -735,7 +763,8 @@
     }
   }
 
-  function renderPlaceDetail(root, main, place) {
+  /* ── 장소 상세 (place-detail.html) ── */
+  function renderPlaceDetail(root, main, place) {  // Before/After·갤러리·도면 섹션 조립
     document.title = place.title + " — 행로";
 
     var tagsHtml = place.tags
@@ -813,7 +842,7 @@
     }
   }
 
-  function initDetailPage() {
+  function initDetailPage() {  // URL ?id= → loadPlaces → renderPlaceDetail
     var root = document.getElementById("detail-root");
     var main = document.getElementById("detail-main");
     if (!root || !main) return;
@@ -994,7 +1023,8 @@
     );
   }
 
-  function renderArchive(root, places) {
+  /* ── 기록 아카이브 (archive.html) ── */
+  function renderArchive(root, places) {  // 카드 그리드 + 상세 패널
     document.title = "기록 — 행로";
 
     if (!places || !places.length) {
@@ -1037,7 +1067,7 @@
     return null;
   }
 
-  function initArchivePage() {
+  function initArchivePage() {  // 카드 클릭 시 인라인 스토리 펼침
     var root = document.getElementById("archive-root");
     if (!root) return;
 
@@ -1057,6 +1087,7 @@
       });
   }
 
+  /* 외부(HTML 인라인 스크립트)에서 호출하는 공개 API */
   global.HAENG_RUNTIME = {
     loadPlaces: loadPlaces,
     initMapPage: initMapPage,

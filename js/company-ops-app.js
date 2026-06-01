@@ -1,5 +1,6 @@
 /**
- * 회사 운영 포털
+ * 회사 운영 포털 (CompanyOpsApp)
+ * PortalAPI 로 예약·상담 실데이터(또는 localStorage) 표시
  */
 (function (global) {
   "use strict";
@@ -14,6 +15,7 @@
   };
 
   function D() { return global.PORTAL_DATA; }
+  function API() { return global.PortalAPI; }
 
   function esc(s) {
     return String(s)
@@ -26,7 +28,7 @@
   function badge(status) {
     var map = {
       active: "운영 중", paused: "일시 중단", pending: "대기",
-      confirmed: "확정", rejected: "거절", open: "미답", closed: "완료",
+      confirmed: "확정", rejected: "거절", open: "미답", closed: "완료", new: "신규",
     };
     return '<span class="portal-badge portal-badge--' + esc(status) + '">' + esc(map[status] || status) + "</span>";
   }
@@ -41,43 +43,91 @@
     return rows;
   }
 
-  function allBookings() {
-    if (!D() || !D().getBooking) return [];
-    return ["b1", "b2", "b3", "b4", "b5"].map(function (id) {
-      return D().getBooking(id);
-    }).filter(Boolean);
+  function allBookingsFromData() {
+    if (!D()) return [];
+    var seen = {};
+    var out = [];
+    function add(b) {
+      if (!b || !b.id || seen[b.id]) return;
+      seen[b.id] = true;
+      out.push(b);
+    }
+    if (API() && API().listBookingsLocal) {
+      API().listBookingsLocal().forEach(add);
+    }
+    ["b1", "b2", "b3", "b4", "b5"].forEach(function (id) {
+      var b = D().getBooking(id);
+      if (b) add(b);
+    });
+    return out;
+  }
+
+  function loadBookings() {
+    if (API() && API().listBookings) {
+      return API().listBookings().then(function (list) {
+        if (D() && D().bookings) {
+          list.forEach(function (b) {
+            var i = D().bookings.findIndex(function (x) { return x.id === b.id; });
+            if (i >= 0) D().bookings[i] = Object.assign({}, D().bookings[i], b);
+            else D().bookings.push(b);
+          });
+        }
+        return allBookingsFromData();
+      });
+    }
+    return Promise.resolve(allBookingsFromData());
+  }
+
+  function loadInquiries() {
+    if (API() && API().listInquiries) return API().listInquiries();
+    if (API() && API().listInquiriesLocal) return Promise.resolve(API().listInquiriesLocal());
+    return Promise.resolve([]);
   }
 
   function renderDashboard() {
     var root = document.getElementById("co-dashboard-root");
     if (!root || !D()) return;
-    var props = allProperties();
-    var bookings = allBookings();
-    var guests = D().listGuests ? D().listGuests() : [];
-    var openMsg = D().openMessagesCount
-      ? D().openMessagesCount(props.map(function (p) { return p.id; }))
-      : 0;
+    root.innerHTML = '<p class="portal-empty">불러오는 중…</p>';
 
-    root.innerHTML =
-      '<div class="portal-grid portal-grid--4 co-kpis">' +
-      '<article class="portal-card portal-kpi"><strong>' + props.length + '</strong><span>등록 숙소</span></article>' +
-      '<article class="portal-card portal-kpi"><strong>' + bookings.length + '</strong><span>예약</span></article>' +
-      '<article class="portal-card portal-kpi"><strong>' + guests.length + '</strong><span>게스트</span></article>' +
-      '<article class="portal-card portal-kpi"><strong>' + openMsg + '</strong><span>미답 문의</span></article>' +
-      '</div>' +
-      '<section class="co-quick"><h2 class="portal-section-title">바로가기</h2><div class="co-quick-grid">' +
-      '<a class="portal-card co-quick-card" href="guests.html"><strong>게스트 관리</strong><span>예약·프로필</span></a>' +
-      '<a class="portal-card co-quick-card" href="hosts.html"><strong>집주인 관리</strong><span>숙소·운영</span></a>' +
-      '<a class="portal-card co-quick-card" href="properties.html"><strong>숙소</strong><span>전체 목록</span></a>' +
-      '<a class="portal-card co-quick-card" href="bookings.html"><strong>예약</strong><span>일정·상태</span></a>' +
-      '</div></section>' +
-      '<h2 class="portal-section-title">최근 예약</h2><div class="portal-table-wrap"><table class="portal-table"><thead><tr><th>게스트</th><th>숙소</th><th>일정</th><th>상태</th></tr></thead><tbody>' +
-      bookings.slice(0, 8).map(function (b) {
-        var p = D().getProperty(b.propertyId);
-        return '<tr><td>' + esc(b.guestName) + '</td><td>' + esc(p ? p.name : b.propertyId) +
-          '</td><td>' + esc(b.checkIn) + ' – ' + esc(b.checkOut) + '</td><td>' + badge(b.status) + '</td></tr>';
-      }).join('') + '</tbody></table></div>';
-    root.innerHTML = root.innerHTML.replace('</div>', '</div>');
+    Promise.all([loadBookings(), loadInquiries()]).then(function (res) {
+      var bookings = res[0];
+      var inquiries = res[1];
+      var props = allProperties();
+      var guests = D().listGuests ? D().listGuests() : [];
+      var openMsg = D().openMessagesCount
+        ? D().openMessagesCount(props.map(function (p) { return p.id; }))
+        : 0;
+      var newInq = inquiries.filter(function (x) { return x.status === "new"; }).length;
+
+      root.innerHTML =
+        '<div class="portal-grid portal-grid--4 co-kpis">' +
+        '<article class="portal-card portal-kpi"><strong>' + props.length + '</strong><span>등록 숙소</span></article>' +
+        '<article class="portal-card portal-kpi"><strong>' + bookings.length + '</strong><span>예약</span></article>' +
+        '<article class="portal-card portal-kpi"><strong>' + guests.length + '</strong><span>게스트</span></article>' +
+        '<article class="portal-card portal-kpi"><strong>' + newInq + '</strong><span>신규 상담</span></article>' +
+        "</div>" +
+        '<section class="co-quick"><h2 class="portal-section-title">바로가기</h2><div class="co-quick-grid">' +
+        '<a class="portal-card co-quick-card" href="guests.html"><strong>게스트 관리</strong><span>예약·프로필</span></a>' +
+        '<a class="portal-card co-quick-card" href="hosts.html"><strong>집주인 관리</strong><span>숙소·운영</span></a>' +
+        '<a class="portal-card co-quick-card" href="properties.html"><strong>숙소</strong><span>전체 목록</span></a>' +
+        '<a class="portal-card co-quick-card" href="bookings.html"><strong>예약</strong><span>일정·상태</span></a>' +
+        "</div></section>" +
+        '<h2 class="portal-section-title">최근 상담 신청</h2><div class="portal-table-wrap"><table class="portal-table"><thead><tr><th>이름</th><th>유형</th><th>연락처</th><th>일시</th></tr></thead><tbody>' +
+        (inquiries.length
+          ? inquiries.slice(0, 5).map(function (q) {
+              return "<tr><td>" + esc(q.name) + "</td><td>" + esc(q.type || "—") + "</td><td>" + esc(q.phone || "—") +
+                "</td><td>" + esc((q.createdAt || "").slice(0, 10)) + "</td></tr>";
+            }).join("")
+          : '<tr><td colspan="4" class="portal-empty">상담 없음</td></tr>') +
+        "</tbody></table></div>" +
+        '<h2 class="portal-section-title">최근 예약</h2><div class="portal-table-wrap"><table class="portal-table"><thead><tr><th>게스트</th><th>숙소</th><th>일정</th><th>상태</th></tr></thead><tbody>' +
+        bookings.slice(0, 8).map(function (b) {
+          var p = D().getProperty(b.propertyId);
+          return "<tr><td>" + esc(b.guestName) + "</td><td>" + esc(p ? p.name : b.propertyId) +
+            "</td><td>" + esc(b.checkIn) + " – " + esc(b.checkOut) + "</td><td>" + badge(b.status) + "</td></tr>";
+        }).join("") +
+        "</tbody></table></div>";
+    });
   }
 
   function renderGuests() {
@@ -89,10 +139,9 @@
       guests.map(function (g) {
         var last = g.lastTrip;
         var prop = last && D().getProperty(last.propertyId);
-        return '<tr><td><strong>' + esc(g.name) + '</strong></td><td><code>' + esc(g.id) + '</code></td><td>' + g.tripCount +
-          '</td><td>' + esc(prop ? prop.name : '—') + '</td><td><a class="btn btn-ghost btn-sm" href="../../guest/trips.html" target="_blank" rel="noopener">포털</a></td></tr>';
-      }).join('') + '</tbody></table></div>';
-    root.innerHTML = root.innerHTML.replace('<div', '<div').replace('</div>', '</div>').replace('<div class="portal-table-wrap">', '<div class="portal-table-wrap">');
+        return "<tr><td><strong>" + esc(g.name) + "</strong></td><td><code>" + esc(g.id) + "</code></td><td>" + g.tripCount +
+          "</td><td>" + esc(prop ? prop.name : "—") + '</td><td><a class="btn btn-ghost btn-sm" href="../../guest/bookings.html" target="_blank" rel="noopener">포털</a></td></tr>";
+      }).join("") + "</tbody></table></div>";
   }
 
   function renderHosts() {
@@ -101,50 +150,68 @@
     var hosts = D().listHosts();
     root.innerHTML = '<div class="portal-table-wrap"><table class="portal-table"><thead><tr><th>집주인</th><th>ID</th><th>숙소</th><th>운영 중</th><th>지역</th><th></th></tr></thead><tbody>' +
       hosts.map(function (h) {
-        return '<tr><td><strong>' + esc(h.name) + '</strong></td><td><code>' + esc(h.id) + '</code></td><td>' + h.propertyCount +
-          '</td><td>' + h.activeCount + '</td><td>' + esc(h.region || '—') +
+        return "<tr><td><strong>" + esc(h.name) + "</strong></td><td><code>" + esc(h.id) + "</code></td><td>" + h.propertyCount +
+          "</td><td>" + h.activeCount + "</td><td>" + esc(h.region || "—") +
           '</td><td><a class="btn btn-ghost btn-sm" href="../../host/properties.html" target="_blank" rel="noopener">포털</a></td></tr>';
-      }).join('') + '</tbody></table></div>';
+      }).join("") + "</tbody></table></div>";
   }
 
   function renderProperties() {
     var root = document.getElementById("co-properties-root");
     if (!root || !D()) return;
     root.innerHTML = '<div class="portal-grid portal-grid--2">' + allProperties().map(function (p) {
-      return '<article class="portal-card"><h3>' + esc(p.name) + '</h3><p>' + badge(p.status) + ' · ' + esc(p.locationLabel || '') +
+      return '<article class="portal-card"><h3>' + esc(p.name) + "</h3><p>" + badge(p.status) + " · " + esc(p.locationLabel || "") +
         '</p><div class="portal-card-actions"><a class="btn btn-ghost" href="../../guest/listing.html?id=' + encodeURIComponent(p.id) +
         '" target="_blank" rel="noopener">게스트</a><a class="btn btn-primary" href="../../host/property-edit.html?id=' + encodeURIComponent(p.id) +
         '" target="_blank" rel="noopener">집주인 수정</a></div></article>';
-    }).join('') + '</div>';
+    }).join("") + "</div>";
   }
 
   function renderBookings() {
     var root = document.getElementById("co-bookings-root");
     if (!root || !D()) return;
-    root.innerHTML = '<div class="portal-table-wrap"><table class="portal-table"><thead><tr><th>ID</th><th>게스트</th><th>숙소</th><th>일정</th><th>상태</th></tr></thead><tbody>' +
-      allBookings().map(function (b) {
-        var p = D().getProperty(b.propertyId);
-        return '<tr><td>' + esc(b.id) + '</td><td>' + esc(b.guestName) + '</td><td>' + esc(p ? p.name : '') +
-          '</td><td>' + esc(b.checkIn) + ' – ' + esc(b.checkOut) + '</td><td>' + badge(b.status) + '</td></tr>';
-      }).join('') + '</tbody></table></div>';
-    root.innerHTML = root.innerHTML.replace('</div>', '</div>');
+    root.innerHTML = '<p class="portal-empty">불러오는 중…</p>';
+    loadBookings().then(function (bookings) {
+      root.innerHTML = '<div class="portal-table-wrap"><table class="portal-table"><thead><tr><th>ID</th><th>게스트</th><th>숙소</th><th>일정</th><th>상태</th></tr></thead><tbody>' +
+        (bookings.length
+          ? bookings.map(function (b) {
+              var p = D().getProperty(b.propertyId);
+              return "<tr><td>" + esc(b.id) + "</td><td>" + esc(b.guestName) + "</td><td>" + esc(p ? p.name : "") +
+                "</td><td>" + esc(b.checkIn) + " – " + esc(b.checkOut) + "</td><td>" + badge(b.status) + "</td></tr>";
+            }).join("")
+          : '<tr><td colspan="5" class="portal-empty">예약 없음</td></tr>') +
+        "</tbody></table></div>";
+    });
   }
 
   function renderMessages() {
     var root = document.getElementById("co-messages-root");
     if (!root || !D()) return;
     var list = D().messagesForPropertyIds(allProperties().map(function (p) { return p.id; }));
-    root.innerHTML = list.length
-      ? '<ul class="portal-list portal-card">' + list.map(function (m) {
-          return '<li><strong>' + esc(m.subject) + '</strong><span class="meta">' + esc(m.fromName) + ' · ' + badge(m.status) + '<br>' + esc(m.body) + '</span></li>';
-        }).join('') + '</ul>'
-      : '<p class="portal-empty">문의가 없습니다.</p>';
+    loadInquiries().then(function (inquiries) {
+      var inqHtml = inquiries.length
+        ? '<h2 class="portal-section-title">상담 신청 (API)</h2><ul class="portal-list portal-card">' + inquiries.map(function (q) {
+            return "<li><strong>" + esc(q.name) + " · " + esc(q.type || "") + "</strong><span class=\"meta\">" +
+              esc(q.phone) + " · " + badge(q.status || "new") + "<br>" + esc(q.message || "") + "</span></li>";
+          }).join("") + "</ul>"
+        : "";
+      root.innerHTML = inqHtml + (list.length
+        ? '<h2 class="portal-section-title">숙소 문의</h2><ul class="portal-list portal-card">' + list.map(function (m) {
+            return "<li><strong>" + esc(m.subject) + "</strong><span class=\"meta\">" + esc(m.fromName) + " · " + badge(m.status) + "<br>" + esc(m.body) + "</span></li>";
+          }).join("") + "</ul>"
+        : '<p class="portal-empty">문의가 없습니다.</p>');
+    });
   }
 
   function boot() {
-    var page = (document.body && document.body.getAttribute("data-co-page")) || "dashboard";
-    var fn = PAGES[page];
-    if (fn) fn();
+    var hydrate = API() && API().hydratePortalData
+      ? API().hydratePortalData().catch(function () {})
+      : Promise.resolve();
+    hydrate.then(function () {
+      var page = (document.body && document.body.getAttribute("data-co-page")) || "dashboard";
+      var fn = PAGES[page];
+      if (fn) fn();
+    });
     var logoutBtn = document.getElementById("co-logout");
     if (logoutBtn && global.CompanyOpsGuard) {
       logoutBtn.addEventListener("click", function (e) {

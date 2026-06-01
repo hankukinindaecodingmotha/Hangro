@@ -121,6 +121,26 @@ body.portal-host .portal-card {
   text-align: center;
 }
 
+.ha-cal-day-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--hangro-radius, 10px);
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink, var(--hangro-ink));
+  cursor: pointer;
+}
+
+.ha-cal-day-btn:hover {
+  background: var(--paper, var(--hangro-paper));
+}
+
 .ha-cal-day {
   vertical-align: top;
   border: 1px solid var(--line);

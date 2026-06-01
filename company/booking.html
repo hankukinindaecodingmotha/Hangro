@@ -5,8 +5,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../css/hangro-tokens.css?v=10" />
-<link rel="stylesheet" href="../css/styles-editorial.css?v=10" />
+<link rel="stylesheet" href="../css/styles-editorial.css?v=14" />
 <link rel="stylesheet" href="../css/company-unified.css?v=10" />
+<link rel="stylesheet" href="../css/hangro-notify.css?v=1" />
 <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
@@ -146,7 +147,7 @@
       <div class="wrap">
         <div class="footer-rich">
           <div>
-            <p class="footer-brand">행로 · Hangro</p>
+            <p class="footer-brand">행로</p>
             <p class="footer-tag">
               빈 공간에 지역의 색과 이야기를 입혀, 머물고 싶은 한 권의
               마을로 다시 설계합니다.
@@ -159,7 +160,7 @@
               <li><a href="index.html">소개</a></li>
               <li><a href="map-demo.html">지도</a></li>
               <li><a href="archive.html">기록</a></li>
-              <li></li>
+              <li><a href="booking.html">상담 예약</a></li>
               <li><a href="team.html">팀</a></li>
             </ul>
           </div>
@@ -172,13 +173,15 @@
           </div>
         </div>
         <div class="footer-meta footer-inner">
-          <span>© 2026 행로 · Hangro Studio</span>
+          <span>© 2026 행로</span>
           <span>빈 공간 · 지역성 · 관광 콘텐츠</span>
         </div>
       </div>
       <p class="co-ops-footer-link wrap" style="padding:0 0 2rem;font-size:.85rem;opacity:.7"><a href="ops/">운영자 로그인</a> (별도 보안 구역)</p>
     </footer>
 
+    <script src="../js/hangro-notify.js?v=1"></script>
+    <script src="../js/portal-api.js?v=1"></script>
     <script>
       (function () {
         var form = document.getElementById("booking-form");
@@ -206,23 +209,42 @@
           busy = true;
           if (btn) btn.disabled = true;
 
-          try {
-            var data = new FormData(form);
-            var name = (data.get("name") || "").toString().trim();
+          var data = new FormData(form);
+          var name = (data.get("name") || "").toString().trim();
+          var payload = {
+            name: name,
+            phone: (data.get("phone") || "").toString().trim(),
+            email: (data.get("email") || "").toString().trim(),
+            date: (data.get("date") || "").toString().trim(),
+            time: (data.get("time") || "").toString().trim(),
+            type: (data.get("type") || "").toString().trim(),
+            message: (data.get("message") || "").toString().trim(),
+          };
 
+          function onOk() {
             msg.classList.add("ok");
             msg.textContent =
               (name ? name + "님, " : "") +
               "상담 신청이 접수되었습니다. 영업일 기준 2일 이내 회신 드릴게요.";
-
+            if (window.HangroNotify) {
+              HangroNotify.success("상담 신청이 접수되었습니다. 운영팀에서 확인합니다.", "접수 완료");
+            }
             form.reset();
-          } catch (err) {
-            console.error("[행로 예약 폼]", err);
-            msg.classList.add("err");
-            msg.textContent = "처리 중 문제가 발생했습니다. 다시 시도해 주세요.";
-          } finally {
             busy = false;
             if (btn) btn.disabled = false;
+          }
+
+          function onErr() {
+            msg.classList.add("err");
+            msg.textContent = "처리 중 문제가 발생했습니다. 다시 시도해 주세요.";
+            busy = false;
+            if (btn) btn.disabled = false;
+          }
+
+          if (window.PortalAPI && PortalAPI.createInquiry) {
+            PortalAPI.createInquiry(payload).then(onOk).catch(onErr);
+          } else {
+            onOk();
           }
         });
       })();

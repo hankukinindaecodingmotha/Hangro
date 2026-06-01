@@ -141,6 +141,80 @@ padding: 0 var(--gutter);
 /* --gutter: clamp(1.25rem, 3vw, 2rem); */
 ```
 
+### 여백 적용 규칙 (margin / padding / gap)
+
+1. **컴포넌트 사이 간격은 `gap` 우선, `margin` 차선.**
+   flex·grid 컨테이너는 `gap` 으로, 그 외에는 `margin`.
+
+2. **`margin` 은 한 방향으로만.**
+   요소에 `margin-top` 과 `margin-bottom` 을 동시에 쓰지 말 것 (margin collapse 혼란).
+   행로 표준: **`margin-bottom` 으로 아래 간격만** 준다. (헤딩·단락·카드 모두)
+
+3. **마지막 자식은 `margin-bottom: 0`.**
+   ```css
+   .card > *:last-child { margin-bottom: 0; }
+   p:last-child { margin-bottom: 0; }
+   ```
+   컨테이너 하단에 의도치 않은 빈 공간 방지.
+
+4. **음수 margin 금지.** 레이아웃을 음수 margin 으로 끌어당기지 말 것.
+   겹침이 필요하면 `position` + `transform` 사용. (히어로 위 떠있는 검색 위젯 등 명시 케이스만 예외)
+
+5. **반응형 여백은 `clamp()`.** 고정 px 보다 `clamp(min, vw, max)` 권장.
+
+6. **컨테이너 내부 padding 과 자식 margin 을 중복하지 말 것.**
+   카드에 `padding: 1.25rem` 줬으면 카드 첫 자식에 `margin-top` 추가 X.
+
+### 레이아웃 무결성 (요소가 영역을 침범하지 않게)
+
+> "버튼이 영역을 침범한다", "카드가 컨테이너를 뚫고 나간다" 같은 버그를 막는 규칙.
+
+1. **`box-sizing: border-box` 전역 적용.** (`*, *::before, *::after`)
+   padding·border 가 width 안에 포함되어야 `width: 100%` 가 컨테이너를 넘지 않음.
+
+2. **`body { overflow-x: hidden; max-width: 100vw; }`**
+   의도치 않은 가로 스크롤 차단. (단, 원인을 숨기기만 하는 임시방편이므로 진짜 overflow 원인도 함께 수정)
+
+3. **flex / grid 자식에 `min-width: 0`.**
+   flex·grid 아이템의 기본 `min-width: auto` 때문에 긴 콘텐츠가 트랙을 밀어냄.
+   ```css
+   .flex-child, .grid-child { min-width: 0; }
+   ```
+   grid 는 `grid-template-columns: minmax(0, 1fr)` 로도 해결.
+
+4. **버튼은 컨테이너 padding 을 존중한다.**
+   - 카드·패널 안의 버튼은 카드 padding 안쪽에 있어야 함. 버튼에 `width` 고정값 + 부모보다 큰 값 주지 말 것.
+   - 가로로 꽉 채울 땐 `width: 100%` + `box-sizing: border-box` (margin 으로 늘리지 말 것).
+   - flex 행에 버튼이 여러 개면 각 버튼에 `flex-shrink: 0` (찌그러짐 방지) 또는 부모에 `flex-wrap: wrap` (줄바꿈 허용).
+
+5. **버튼 텍스트 처리.**
+   - 짧은 라벨: `white-space: nowrap` OK.
+   - 긴 라벨 가능성: `white-space: nowrap` 쓰면 좁은 화면에서 영역 침범 → `flex-wrap: wrap` 을 부모에 같이 줄 것.
+
+6. **`position: absolute` 요소는 부모에 `position: relative`.**
+   기준 컨테이너 없으면 절대 위치 요소가 페이지 전체로 튀어나감.
+
+7. **이미지·미디어는 `max-width: 100%; display: block;`.**
+   원본 크기로 컨테이너를 뚫지 않게.
+
+8. **`overflow` 가 필요한 컨테이너 (가로 테이블·캐러셀)는 명시적으로.**
+   ```css
+   .table-wrap { overflow-x: auto; }
+   ```
+   부모에서 `overflow: hidden` 으로 잘리지 않게 스크롤 컨테이너를 따로 둠.
+
+9. **고정 높이(`height`) 보다 `min-height`.**
+   콘텐츠가 길어지면 고정 높이는 침범·잘림을 유발. 높이는 콘텐츠가 결정하게.
+
+10. **sticky / fixed 요소는 `z-index` 와 배경색을 명시.**
+    배경 투명한 sticky 헤더는 스크롤 시 콘텐츠가 비쳐 영역이 침범된 것처럼 보임.
+
+### 셀프 체크 (레이아웃 변경 후)
+- [ ] 모바일(360px)·태블릿(768px)·데스크톱(1280px) 에서 가로 스크롤 없는가
+- [ ] 버튼·카드가 부모 padding 안에 있는가 (튀어나오지 않는가)
+- [ ] 긴 텍스트(예: 긴 숙소명)를 넣어도 레이아웃이 안 깨지는가
+- [ ] 카드 마지막 요소 아래 빈 공간이 없는가
+
 ---
 
 ## 5. Radius (모서리)

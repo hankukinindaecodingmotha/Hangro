@@ -1,16 +1,23 @@
 /**
- * 게스트 앱 — 공통 뷰 컴포넌트 + 페이지 렌더 (portal-data)
- * HTML: data-ga-page="explore|listing|checkout|trips|trip|messages"
+ * 게스트 포털 앱 (GuestApp)
+ * ─────────────────────────────────────────────────────────────
+ * 의존: portal-data.js (PORTAL_DATA), portal-ui.js (PortalUI)
+ * HTML: <body data-ga-page="explore|listing|checkout|trips|trip|messages">
+ *       마운트: #ga-header-mount, #ga-page-root, 페이지별 #ga-listings 등
+ * 진입: GuestApp.autoBoot() — body의 data-ga-page로 PAGE_RENDERERS 라우팅
  */
 (function (global) {
   "use strict";
 
-  var TRIPS_KEY = "hangro_guest_trips";
-  var SEARCH_KEY = "hangro_guest_search";
-  var CLEANING_FEE = 15000;
+  /* localStorage / sessionStorage 키 */
+  var TRIPS_KEY = "hangro_guest_trips";       // 사용자가 새로 예약한 trip 목록
+  var SEARCH_KEY = "hangro_guest_search";     // 검색 조건(지역·날짜·인원) 세션 저장
+  var CLEANING_FEE = 15000;                   // 요금 계산용 청소비 (원)
 
+  /* 사진 없을 때 CSS 테마 클래스 접미사 */
   var PHOTO_THEME_KEYS = ["forest", "hanok", "ocean", "mountain", "sunset", "lavender", "rural", "studio"];
 
+  /* data-ga-page 값 → 렌더 함수 매핑 */
   var PAGE_RENDERERS = {
     explore: function () { renderExplore(); },
     listing: function () { renderListing(); },
@@ -20,10 +27,10 @@
     messages: function () { renderMessages(); },
   };
 
-  function P() { return global.PORTAL_DATA; }
-  function UI() { return global.PortalUI; }
+  function P() { return global.PORTAL_DATA; }  // 목업 데이터 API
+  function UI() { return global.PortalUI; }    // 공통 UI 헬퍼
 
-  function esc(s) {
+  function esc(s) {  // HTML 이스케이프 (XSS 방지)
     return String(s)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
@@ -31,14 +38,27 @@
       .replace(/"/g, "&quot;");
   }
 
-  function qp(name) { return new URLSearchParams(global.location.search).get(name); }
+  function qp(name) { return new URLSearchParams(global.location.search).get(name); }  // ?id= 등
 
-  function daysBetween(a, b) {
+  function daysBetween(a, b) {  // 체크인~체크아웃 박 수
     var d1 = new Date(a + "T12:00:00"), d2 = new Date(b + "T12:00:00");
     return Math.max(1, Math.round((d2 - d1) / 86400000));
   }
 
   function todayISO() { return new Date().toISOString().slice(0, 10); }
+
+  /** 체크인/체크아웃 유효성 — 오류 메시지 배열 */
+  function validateDates(checkIn, checkOut) {
+    var errs = [];
+    if (!checkIn || !checkOut) {
+      errs.push("체크인·체크아웃 날짜를 선택해 주세요.");
+      return errs;
+    }
+    var today = todayISO();
+    if (checkIn < today) errs.push("체크인은 오늘 이후로 선택해 주세요.");
+    if (checkOut <= checkIn) errs.push("체크아웃은 체크인 다음 날 이후여야 합니다.");
+    return errs;
+  }
 
   function defaultCheckOut(ci) {
     var d = new Date(ci + "T12:00:00");
@@ -46,7 +66,7 @@
     return d.toISOString().slice(0, 10);
   }
 
-  function getSearch() {
+  function getSearch() {  // sessionStorage 또는 오늘+2박 기본값
     try {
       var raw = global.sessionStorage.getItem(SEARCH_KEY);
       if (raw) return JSON.parse(raw);
@@ -87,19 +107,46 @@
     var D = P();
     if (!D) return getExtraTrips();
     var base = D.bookingsForGuest(D.demoGuestId).map(function (b) {
-      return { id: b.id, propertyId: b.propertyId, checkIn: b.checkIn, checkOut: b.checkOut, status: b.status, guests: 2, note: b.note || "" };
+      return { id: b.id, propertyId: b.propertyId, checkIn: b.checkIn, checkOut: b.checkOut, status: b.status, guests: b.guests || 2, note: b.note || "" };
     });
-    return getExtraTrips().concat(base);
+    var api = [];
+    if (global.PortalAPI && global.PortalAPI.listBookingsLocal) {
+      api = global.PortalAPI.listBookingsLocal().filter(function (b) {
+        return b.guestId === D.demoGuestId || String(b.id).indexOf("trip-") === 0;
+      }).map(function (b) {
+        return { id: b.id, propertyId: b.propertyId, checkIn: b.checkIn, checkOut: b.checkOut, status: b.status, guests: b.guests || 2, note: b.note || "" };
+      });
+    }
+    var extra = getExtraTrips();
+    var seen = {};
+    return api.concat(extra).concat(base).filter(function (t) {
+      if (seen[t.id]) return false;
+      seen[t.id] = true;
+      return true;
+    });
   }
 
   function resolveTrip(id) {
     var D = P();
     var b = D && D.getBooking(id);
-    if (b) return { id: b.id, propertyId: b.propertyId, checkIn: b.checkIn, checkOut: b.checkOut, status: b.status, note: b.note || "", guests: 2 };
-    return getExtraTrips().find(function (t) { return t.id === id; }) || null;
+    if (b) {
+      try {
+        var o = JSON.parse(global.localStorage.getItem("hangro_host_booking_status") || "{}");
+        if (o[id]) b = Object.assign({}, b, { status: o[id] });
+      } catch (e) {}
+      return { id: b.id, propertyId: b.propertyId, checkIn: b.checkIn, checkOut: b.checkOut, status: b.status, note: b.note || "", guests: b.guests || 2 };
+    }
+    var t = getExtraTrips().find(function (x) { return x.id === id; });
+    if (t) {
+      try {
+        var ov = JSON.parse(global.localStorage.getItem("hangro_host_booking_status") || "{}");
+        if (ov[id]) t = Object.assign({}, t, { status: ov[id] });
+      } catch (e) {}
+    }
+    return t || null;
   }
 
-  function calcPrice(property, nights) {
+  function calcPrice(property, nights) {  // 숙박·청소·서비스 수수료(8%) 합계
     var sub = property.pricePerNight * nights;
     var svc = Math.round(sub * 0.08);
     return { nights: nights, subtotal: sub, cleaning: CLEANING_FEE, service: svc, total: sub + CLEANING_FEE + svc };
@@ -172,9 +219,9 @@
     });
   }
 
-  /* ── 재사용 뷰 ── */
+  /* ── 재사용 HTML 조각 (뷰 레이어) ── */
   var V = {
-    header: function (active) {
+    header: function (active) {  // 상단 네비 + 로고
       var items = [
         { id: "explore", href: "./", label: "숙소 찾기" },
         { id: "trips", href: "bookings.html", label: "여행" },
@@ -184,7 +231,7 @@
         return '<a href="' + it.href + '"' + (it.id === active ? ' aria-current="page"' : "") + ">" + esc(it.label) + "</a>";
       }).join("");
       return '<header class="ga-header"><div class="ga-wrap ga-nav">' +
-        '<a href="./" class="ga-logo"><span class="ga-logo-mark" aria-hidden="true"></span>머무름</a>' +
+        '<a href="./" class="ga-logo"><span class="ga-logo-mark" aria-hidden="true"></span>행로</a>' +
         '<nav class="ga-nav-links" aria-label="게스트">' + nav + '</nav>' +
         '<a href="bookings.html" class="ga-avatar" title="내 여행">게</a></div></header>';
     },
@@ -341,7 +388,7 @@
         '<div class="ga-reviews-score-box">' +
         '<span class="ga-reviews-big">' + esc(rating) + '</span>' +
         '<span class="ga-reviews-max">/ 5</span>' +
-        '<p class="ga-reviews-verified">실제 이용 후기 · 에어비앤비형</p></div>' +
+        '<p class="ga-reviews-verified">실제 이용 후기</p></div>' +
         '<ul class="ga-rev-bars">' + bars + '</ul></div>' +
         '<div class="ga-reviews-yeogi">' +
         '<h3 class="ga-reviews-subtitle">항목별 만족도</h3>' +
@@ -380,11 +427,11 @@
     },
   };
 
-  function fixHtml(s) {
+  function fixHtml(s) {  // 외부 도구가 넣은 <motion> 태그를 div로 치환
     return s.replace(/<motion/g, "<div").replace(/<\/motion>/g, "</div>");
   }
 
-  function mountHeader(active) {
+  function mountHeader(active) {  // #ga-header-mount 에 헤더 삽입
     var el = document.getElementById("ga-header-mount");
     if (el) el.innerHTML = fixHtml(V.header(active));
   }
@@ -394,12 +441,17 @@
     if (el) el.innerHTML = '<p class="ga-empty">' + esc(msg) + "</p>";
   }
 
-  function bindWidgetForm(p) {
+  function bindWidgetForm(p) {  // 상세 페이지 예약 위젯 — 날짜 변경 시 요금·링크 갱신
     var form = document.getElementById("ga-widget-form");
     if (!form) return;
     form.addEventListener("change", function () {
-      var D = P();
       var ci = form.checkIn.value, co = form.checkOut.value;
+      var errs = validateDates(ci, co);
+      if (errs.length && global.HangroNotify) {
+        global.HangroNotify.error(errs[0]);
+        return;
+      }
+      var D = P();
       var g = parseInt(form.guests.value, 10) || 2;
       var nights = daysBetween(ci, co);
       var pr = calcPrice(p, nights);
@@ -411,12 +463,28 @@
     });
   }
 
-  function renderExplore() {
+  /* ── 페이지 렌더러 ── */
+  function renderExplore() {  // 숙소 목록 + 검색바
     var D = P();
     bindSearchFromQuery();
     var search = getSearch();
     var mount = document.getElementById("ga-search-mount");
-    if (mount) mount.innerHTML = V.searchBar("index.html");
+    if (mount) {
+      mount.innerHTML = V.searchBar("index.html");
+      var sform = mount.querySelector(".ga-search");
+      if (sform) {
+        sform.addEventListener("submit", function (e) {
+          var fd = new FormData(sform);
+          var ci = String(fd.get("checkIn") || "");
+          var co = String(fd.get("checkOut") || "");
+          var errs = validateDates(ci, co);
+          if (errs.length) {
+            e.preventDefault();
+            if (global.HangroNotify) global.HangroNotify.error(errs[0]);
+          }
+        });
+      }
+    }
     var grid = document.getElementById("ga-listings");
     if (!grid) return;
     var list = filterProperties(D.listBookable(), search);
@@ -425,7 +493,7 @@
       : '<p class="ga-empty">조건에 맞는 숙소가 없습니다.</p>';
   }
 
-  function renderListing() {
+  function renderListing() {  // 숙소 상세 + 예약 위젯
     var D = P();
     var id = qp("id") || "home-1";
     var p = D.getProperty(id);
@@ -452,7 +520,7 @@
     bindWidgetForm(p);
   }
 
-  function renderCheckout() {
+  function renderCheckout() {  // 예약 확인 — 결제(알림만) 후 API/local 예약 생성
     var D = P();
     var id = qp("property") || "home-1";
     var p = D.getProperty(id);
@@ -464,6 +532,11 @@
       checkOut: qp("checkOut") || getSearch().checkOut,
       guests: parseInt(qp("guests") || "2", 10) || 2,
     };
+    var dateErrs = validateDates(search.checkIn, search.checkOut);
+    if (dateErrs.length) {
+      root.innerHTML = '<p class="ga-empty">' + esc(dateErrs[0]) + ' <a href="' + listingUrl(p, search) + '">날짜 다시 선택</a></p>';
+      return;
+    }
     var pr = calcPrice(p, daysBetween(search.checkIn, search.checkOut));
     root.innerHTML = fixHtml(
       V.breadcrumb([{ href: "./", label: "숙소 찾기" }, { href: listingUrl(p, search), label: p.name }, { label: "예약" }]) +
@@ -472,19 +545,79 @@
       '<label>이름<input name="name" value="김여행" required /></label>' +
       '<label>휴대폰<input name="phone" value="010-0000-0000" required /></label>' +
       '<h2>요청 사항</h2><label><textarea name="note" placeholder="선택 사항"></textarea></label>' +
-      '<button type="submit" class="ga-btn ga-btn--primary ga-btn--block">예약 요청</button></form></section>' +
+      '<h2 class="ga-h2">결제</h2>' +
+      '<p class="ga-muted">데모: 실제 결제 없이 「결제하기」를 누르면 완료 알림만 표시됩니다.</p>' +
+      '<button type="button" id="ga-pay-btn" class="ga-btn ga-btn--primary ga-btn--block">결제하기 · ' + D.formatPrice(pr.total) + '</button>' +
+      '<p id="ga-pay-status" class="ga-muted" hidden>결제 완료 — 예약 요청을 진행할 수 있습니다.</p>' +
+      '<button type="submit" id="ga-reserve-submit" class="ga-btn ga-btn--ghost ga-btn--block" disabled>예약 요청 보내기</button></form></section>' +
       "<aside>" + V.summaryCard(p, search, pr) + V.priceLines(p, pr) + "</aside></div>"
     );
+    var paid = false;
+    var payBtn = document.getElementById("ga-pay-btn");
+    var submitBtn = document.getElementById("ga-reserve-submit");
+    var payStatus = document.getElementById("ga-pay-status");
+    if (payBtn) {
+      payBtn.addEventListener("click", function () {
+        paid = true;
+        if (global.HangroNotify) {
+          global.HangroNotify.success(
+            "결제가 완료되었습니다. (데모 · 실제 청구 없음) 예약 요청을 보내 주세요.",
+            "결제 완료"
+          );
+        }
+        if (payStatus) payStatus.hidden = false;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("ga-btn--ghost");
+          submitBtn.classList.add("ga-btn--primary");
+        }
+      });
+    }
     var form = document.getElementById("ga-checkout-form");
     if (form) form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var tripId = "trip-" + Date.now();
-      addTrip({ id: tripId, propertyId: p.id, checkIn: search.checkIn, checkOut: search.checkOut, guests: search.guests, status: "pending" });
-      global.location.href = "booking.html?id=" + encodeURIComponent(tripId) + "&new=1";
+      if (!paid) {
+        if (global.HangroNotify) global.HangroNotify.info("먼저 「결제하기」를 눌러 주세요.", "결제 필요");
+        return;
+      }
+      var fd = new FormData(form);
+      var payload = {
+        propertyId: p.id,
+        guestId: D.demoGuestId,
+        guestName: String(fd.get("name") || "게스트"),
+        phone: String(fd.get("phone") || ""),
+        checkIn: search.checkIn,
+        checkOut: search.checkOut,
+        guests: search.guests,
+        note: String(fd.get("note") || ""),
+      };
+      function done(booking) {
+        var tripId = booking.id;
+        addTrip({
+          id: tripId,
+          propertyId: p.id,
+          checkIn: search.checkIn,
+          checkOut: search.checkOut,
+          guests: search.guests,
+          status: booking.status || "pending",
+          note: payload.note,
+        });
+        if (global.HangroNotify) {
+          global.HangroNotify.success("예약 요청이 접수되었습니다. 집주인 승인을 기다려 주세요.", "예약 접수");
+        }
+        global.location.href = "booking.html?id=" + encodeURIComponent(tripId) + "&new=1";
+      }
+      if (global.PortalAPI && global.PortalAPI.createBooking) {
+        global.PortalAPI.createBooking(payload).then(done).catch(function () {
+          done({ id: "trip-" + Date.now(), status: "pending" });
+        });
+      } else {
+        done({ id: "trip-" + Date.now(), status: "pending" });
+      }
     });
   }
 
-  function renderTrips() {
+  function renderTrips() {  // 내 여행 목록
     var D = P();
     var el = document.getElementById("ga-trips-list") || document.getElementById("ga-page-root");
     if (!el) return;
@@ -499,7 +632,7 @@
     }).join("") + "</div>");
   }
 
-  function renderTripDetail() {
+  function renderTripDetail() {  // 여행 상세 + 숙소 안내
     var D = P();
     var id = qp("id") || "b1";
     var trip = resolveTrip(id);
@@ -525,7 +658,7 @@
     );
   }
 
-  function renderMessages() {
+  function renderMessages() {  // 호스트 문의 목록
     var D = P();
     var el = document.getElementById("ga-messages-list") || document.getElementById("ga-page-root");
     if (!el) return;
@@ -540,7 +673,7 @@
 
   var GUEST_THEME_KEY = "hangro_guest_theme";
 
-  function applyGuestFlowTheme() {
+  function applyGuestFlowTheme() {  // body에 ga-theme-ready, 숙소 id 세션 저장
     document.documentElement.classList.add("ga-theme-ready");
     if (document.body) document.body.classList.add("ga-theme-ready");
     var id = qp("id") || qp("property");
@@ -549,7 +682,7 @@
     }
   }
 
-  function bootPage(opts) {
+  function bootPage(opts) {  // DOMContentLoaded 후 데이터 확인 → 헤더+페이지 렌더
     opts = opts || {};
     function boot() {
       if (!P() || !global.GuestApp) {
@@ -562,11 +695,17 @@
       if (fn) fn();
       else showLoadError(opts.rootId, "페이지를 표시할 수 없습니다.");
     }
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-    else boot();
+    function start() {
+      var ready = global.PortalAPI && global.PortalAPI.hydratePortalData
+        ? global.PortalAPI.hydratePortalData().catch(function () {})
+        : Promise.resolve();
+      ready.then(boot);
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+    else start();
   }
 
-  function autoBoot() {
+  function autoBoot() {  // 각 guest/*.html 하단에서 호출 — 수정 금지 패턴
     var page = (document.body && document.body.getAttribute("data-ga-page")) || "explore";
     var nav = page === "listing" || page === "checkout" ? "explore" : page === "trip" ? "trips" : page;
     bootPage({ page: page, nav: nav });

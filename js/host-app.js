@@ -1,14 +1,19 @@
 /**
- * 집주인 앱 — 예약 승인/거절, 캘린더 (portal-data + localStorage)
+ * 집주인 포털 앱 (HostApp)
+ * ─────────────────────────────────────────────────────────────
+ * 의존: portal-data.js, portal-ui.js
+ * HTML: data-host-page="dashboard|bookings|properties|messages|property-edit"
+ * localStorage: hangro_host_booking_status (승인/거절), hangro_guest_trips 와 동기화
+ * 진입: HostApp.autoBoot()
  */
 (function (global) {
   "use strict";
 
-  var STATUS_KEY = "hangro_host_booking_status";
-  var GUEST_TRIPS_KEY = "hangro_guest_trips";
-  var CAL_MONTH_KEY = "hangro_host_cal_month";
+  var STATUS_KEY = "hangro_host_booking_status";  // 예약 id → confirmed|rejected 등
+  var GUEST_TRIPS_KEY = "hangro_guest_trips";     // 게스트가 만든 trip-* 상태 동기화
+  var CAL_MONTH_KEY = "hangro_host_cal_month";    // 캘린더 UI 현재 연·월
 
-  var PAGE_RENDERERS = {
+  var PAGE_RENDERERS = {  // data-host-page → 렌더 함수
     dashboard: renderDashboard,
     bookings: renderBookings,
     properties: renderProperties,
@@ -29,12 +34,12 @@
 
   function qp(name) { return new URLSearchParams(global.location.search).get(name); }
 
-  function hostId() {
+  function hostId() {  // 데모 집주인 id (portal-data.demoHostId)
     var data = D();
     return (data && data.demoHostId) || "host-a";
   }
 
-  function hostProperties() {
+  function hostProperties() {  // 현재 집주인 소유 숙소만
     return D().properties.filter(function (p) { return p.hostId === hostId(); });
   }
 
@@ -47,11 +52,14 @@
     catch (e) { return {}; }
   }
 
-  function setBookingStatus(bookingId, status) {
+  function setBookingStatus(bookingId, status) {  // 승인/거절 저장 + 게스트 trip 동기화 + API
     var o = statusOverrides();
     o[bookingId] = status;
     global.localStorage.setItem(STATUS_KEY, JSON.stringify(o));
     syncGuestTripStatus(bookingId, status);
+    if (global.PortalAPI && global.PortalAPI.patchBooking) {
+      global.PortalAPI.patchBooking(bookingId, { status: status });
+    }
   }
 
   function syncGuestTripStatus(tripId, status) {
@@ -227,8 +235,8 @@
             var st = b.status === "pending" ? " ha-cal-bar--pending" : "";
             return '<a href="bookings.html" class="ha-cal-bar ' + meta.color + st + '" title="' + label + '">' + esc(b.guestName) + "</a>";
           }).join("");
-          rows += '<td class="ha-cal-day' + (today ? " ha-cal-day--today" : "") + '">' +
-            '<span class="ha-cal-num">' + dayNum + "</span>" +
+          rows += '<td class="ha-cal-day' + (today ? " ha-cal-day--today" : "") + '" data-day="' + iso + '">' +
+            '<button type="button" class="ha-cal-day-btn" data-day="' + iso + '">' + dayNum + "</button>" +
             '<div class="ha-cal-bars">' + bars + "</div></td>";
         }
         if (i % 7 === 6) rows += "</tr>";
@@ -338,7 +346,7 @@
       var fd = new FormData(form);
       var photoLines = String(fd.get("photos") || "").split(/\n/).map(function (s) { return s.trim(); }).filter(Boolean);
       var amenityList = String(fd.get("amenities") || "").split(/,/).map(function (s) { return s.trim(); }).filter(Boolean);
-      data.savePropertyEdit(id, {
+      var patch = {
         name: String(fd.get("name")),
         summary: String(fd.get("summary")),
         description: String(fd.get("description")),
@@ -361,14 +369,23 @@
           rules: String(fd.get("guide_rules")),
           contact: String(fd.get("guide_contact")),
         },
-      });
-      var note = document.getElementById("ha-save-note");
-      note.textContent = "저장되었습니다. 게스트 페이지에서 확인해 보세요.";
-      note.hidden = false;
+      };
+      data.savePropertyEdit(id, patch);
+      var saveDone = function () {
+        var note = document.getElementById("ha-save-note");
+        note.textContent = "저장되었습니다. 게스트 페이지에서 확인해 보세요.";
+        note.hidden = false;
+        if (global.HangroNotify) global.HangroNotify.success("숙소 정보가 저장되었습니다.", "저장 완료");
+      };
+      if (global.PortalAPI && global.PortalAPI.patchProperty) {
+        global.PortalAPI.patchProperty(id, patch).then(saveDone).catch(saveDone);
+      } else {
+        saveDone();
+      }
       var frame = root.querySelector(".ha-preview-frame");
       if (frame) frame.src = "../guest/listing.html?id=" + encodeURIComponent(id) + "&_=" + Date.now();
     });
-    document.title = (p.name || "숙소") + " 수정 — 집터";
+    document.title = (p.name || "숙소") + " 수정 — 행로";
   }
 
   function updatePhotoPreview(text) {
@@ -389,7 +406,12 @@
     if (!root) return;
     root.querySelectorAll(".ha-approve").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        setBookingStatus(btn.getAttribute("data-id"), "confirmed");
+        var id = btn.getAttribute("data-id");
+        if (!global.confirm("이 예약을 승인하시겠습니까?")) return;
+        setBookingStatus(id, "confirmed");
+        if (global.HangroNotify) {
+          global.HangroNotify.success("예약이 승인되었습니다. 게스트에게 알림이 전달됩니다. (데모)", "승인 완료");
+        }
         refreshCurrentPage();
       });
     });
@@ -397,6 +419,7 @@
       btn.addEventListener("click", function () {
         if (!global.confirm("이 예약 요청을 거절하시겠습니까?")) return;
         setBookingStatus(btn.getAttribute("data-id"), "rejected");
+        if (global.HangroNotify) global.HangroNotify.info("예약이 거절되었습니다. (데모)", "거절");
         refreshCurrentPage();
       });
     });
@@ -404,6 +427,15 @@
 
   function bindCalendar(root) {
     if (!root) return;
+    root.querySelectorAll(".ha-cal-day-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var day = btn.getAttribute("data-day");
+        try {
+          global.sessionStorage.setItem("hangro_host_filter_day", day);
+        } catch (e) {}
+        global.location.href = "bookings.html?day=" + encodeURIComponent(day);
+      });
+    });
     root.querySelectorAll(".ha-cal-prev, .ha-cal-next").forEach(function (btn) {
       btn.addEventListener("click", function () {
         saveCalMonth(parseInt(btn.getAttribute("data-y"), 10), parseInt(btn.getAttribute("data-m"), 10));
@@ -420,7 +452,7 @@
     }
   }
 
-  var _currentPage = "dashboard";
+  var _currentPage = "dashboard";  // 캘린더 이동 후 같은 페이지 다시 그리기
 
   function refreshCurrentPage() {
     var fn = PAGE_RENDERERS[_currentPage];
@@ -469,7 +501,20 @@
     _currentPage = "bookings";
     var tbody = document.getElementById("host-bookings-body");
     var calMount = document.getElementById("ha-calendar-wrap");
+    var filterDay = qp("day");
+    if (!filterDay) {
+      try {
+        filterDay = global.sessionStorage.getItem("hangro_host_filter_day");
+      } catch (e) {}
+    }
     var bookings = allHostBookings();
+    if (filterDay) {
+      bookings = bookings.filter(function (b) {
+        if (b.status === "rejected") return false;
+        var d = parseDate(filterDay);
+        return d >= parseDate(b.checkIn) && d < parseDate(b.checkOut);
+      });
+    }
 
     if (calMount) {
       var cal = getCalMonth();
@@ -478,6 +523,18 @@
     }
 
     if (!tbody) return;
+    var wrap = tbody.closest(".wrap") || tbody.closest("main");
+    if (filterDay && wrap) {
+      var hint = document.getElementById("ha-bookings-filter-hint");
+      if (!hint) {
+        hint = document.createElement("p");
+        hint.id = "ha-bookings-filter-hint";
+        hint.className = "ha-cal-hint";
+        var tableWrap = wrap.querySelector(".portal-table-wrap");
+        wrap.insertBefore(hint, tableWrap || tbody);
+      }
+      hint.innerHTML = esc(filterDay) + ' 일정 · <a href="bookings.html">전체 보기</a>';
+    }
     if (!bookings.length) {
       tbody.innerHTML = '<tr><td colspan="5" class="portal-empty">예약이 없습니다.</td></tr>';
       return;
@@ -531,11 +588,17 @@
       var fn = opts.render || PAGE_RENDERERS[_currentPage];
       if (fn) fn();
     }
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-    else boot();
+    function start() {
+      var ready = global.PortalAPI && global.PortalAPI.hydratePortalData
+        ? global.PortalAPI.hydratePortalData().catch(function () {})
+        : Promise.resolve();
+      ready.then(boot);
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+    else start();
   }
 
-  function autoBoot() {
+  function autoBoot() {  // host/*.html 하단에서 호출
     var page = (document.body && document.body.getAttribute("data-ha-page")) || "dashboard";
     bootPage({ page: page });
   }

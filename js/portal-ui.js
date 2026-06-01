@@ -1,10 +1,14 @@
 /**
- * 포털 공통 UI (상태 뱃지, URL 파라미터, 폼 데모 저장)
+ * 포털 공통 UI (PortalUI)
+ * ─────────────────────────────────────────────────────────────
+ * guest-app / host-app / company 에서 공유하는 작은 UI 헬퍼.
+ * - statusBadge: 예약·문의·숙소 상태 pill
+ * - initMessageForm: 문의 작성 → localStorage 데모 저장
  */
 (function (global) {
   "use strict";
 
-  function escapeHtml(s) {
+  function escapeHtml(s) {  // HTML 이스케이프
     return String(s)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
@@ -16,7 +20,7 @@
     return new URLSearchParams(global.location.search).get(name);
   }
 
-  var STATUS_LABEL = {
+  var STATUS_LABEL = {  // status 코드 → 한글 라벨 + CSS modifier
     confirmed: { text: "확정", className: "portal-status--confirmed" },
     pending: { text: "대기", className: "portal-status--pending" },
     rejected: { text: "거절", className: "portal-status--rejected" },
@@ -42,7 +46,7 @@
     return escapeHtml(checkIn) + " → " + escapeHtml(checkOut);
   }
 
-  function initMessageForm(formId, role) {
+  function initMessageForm(formId, role) {  // role: "guest"|"host" — 데모 메시지 append
     var form = document.getElementById(formId);
     if (!form || !global.PORTAL_DATA) return;
 
