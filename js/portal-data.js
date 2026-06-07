@@ -11,7 +11,7 @@
   var PROPERTIES = [
     {
       id: "home-1",
-      name: "죽천길 85 · 첫 번째 유후공간",
+      name: "죽천길 85 · 첫 번째 유휴공간",
       address: "경상북도 포항시 북구 흥해읍 죽천길 85",
       lat: 36.0898783667699,
       lng: 129.418860149057,
@@ -55,7 +55,7 @@
       placeId: "jookcheon-75",
       hostId: "host-a",
       status: "active",
-      summary: "죽천길 일대 유후 공간 재생 후보",
+      summary: "죽천길 일대 유휴 공간 재생 후보",
       region: "경북",
       locationLabel: "경북 포항 흥해",
       pricePerNight: 72000,
