@@ -1,10 +1,11 @@
 {
-  "version": 1,
+  "version": 2,
   "places": [
     {
       "id": "sakjeon-hanok",
-      "lat": 36.0859258945224,
-      "lng": 129.416663964891,
+      "address": "경상북도 포항시 북구 흥해읍 죽천길 85",
+      "lat": 36.0898783667699,
+      "lng": 129.418860149057,
       "status": "진행 중",
       "afterReady": true,
       "afterSummary": "같은 장면 번호 기준으로 정리한 변경 후 현장 사진입니다. 전체 변천 기록은 기록 페이지에서 확인할 수 있습니다.",
@@ -13,15 +14,15 @@
         "9": "침실",
         "12": "부엌"
       },
-      "tooltip": "첫 번째 유후공간 — 클릭하여 위치 확인",
-      "title": "첫 번째 유후공간 프로젝트",
-      "lead": "행로가 지도에 표시하는 첫 유후 공간 위치입니다. 소개 문구·사진은 현장 협의에 따라 갱신됩니다.",
+      "tooltip": "죽천길 85 — 클릭하여 위치 확인",
+      "title": "죽천길 85 · 첫 번째 유후공간",
+      "lead": "행로가 지도에 표시하는 첫 유휴 공간 위치입니다. 소개 문구·사진은 현장 협의에 따라 갱신됩니다.",
       "tags": [
-        "유후공간",
+        "유휴공간",
         "첫 프로젝트",
         "경상북도"
       ],
-      "beforeCaption": "변경 전 · 유후 상태",
+      "beforeCaption": "변경 전 · 유휴 상태",
       "afterCaption": "변경 후 · 콘셉트 검토 중",
       "beforeText": "장기간 사용되지 않아 도입·운영 방안 검토가 필요한 상태로 확인된 공간입니다.",
       "afterText": "지역 브랜드·체류 수요에 맞춘 숙박·체험 콘셉트를 검토 중입니다. 구체 시나리오는 현장 협의 이후 공개됩니다.",
@@ -31,7 +32,7 @@
       "beforePhotos": {
         "title": "현장 사진 — 변경 전",
         "hint": "← / → 버튼이나 손가락 스와이프로 좌우로 넘겨 볼 수 있습니다.",
-        "alt": "첫 번째 유후공간 변경 전 사진",
+        "alt": "첫 번째 유휴공간 변경 전 사진",
         "basePath": "Asset/Home_1/before/",
         "items": [
           "Home_1_before_01.jpeg",
@@ -53,7 +54,7 @@
       },
       "afterPhotos": {
         "title": "프로젝트 진행 후",
-        "alt": "첫 번째 유후공간 변경 후 사진",
+        "alt": "첫 번째 유휴공간 변경 후 사진",
         "basePath": "Asset/Home_1/after/",
         "items": [
           "Home_1_after_08.jpeg",
@@ -223,6 +224,118 @@
             "Comfortable — 동선·조도·촉각까지 ‘편안함’을 기준으로"
           ]
         }
+      }
+    },
+    {
+      "id": "jookcheon-75",
+      "address": "경상북도 포항시 북구 흥해읍 죽천길 75",
+      "lat": 36.0890144516567,
+      "lng": 129.418185069177,
+      "status": "진행 중",
+      "tooltip": "죽천길 75 — 클릭하여 위치 확인",
+      "title": "죽천길 75",
+      "lead": "포항 흥해읍 죽천길 75번지 — 유후 공간 재생 후보",
+      "tags": ["경북", "포항", "흥해", "죽천길"],
+      "beforeCaption": "변경 전 · 유휴 상태",
+      "afterCaption": "변경 후 · 검토 중",
+      "beforeText": "죽천길 거리 인근에서 사용되지 않던 공간입니다.",
+      "afterText": "죽천길 85·87과 함께 거리 단위 재생을 검토 중입니다.",
+      "bullets": ["경상북도 포항시 북구 흥해읍 죽천길 75", "실측 좌표"],
+      "beforePhotos": {
+        "title": "현장 사진 — 변경 전",
+        "alt": "죽천길 75 변경 전",
+        "basePath": "Asset/Home_1/before/",
+        "items": ["Home_1_before_01.jpeg", "Home_1_before_02.jpeg"]
+      },
+      "afterPhotos": {
+        "title": "프로젝트 진행 후",
+        "alt": "죽천길 75 변경 후",
+        "basePath": "Asset/Home_1/after/",
+        "items": ["Home_1_after_08.jpeg"]
+      }
+    },
+    {
+      "id": "jookcheon-87",
+      "address": "경상북도 포항시 북구 흥해읍 죽천길 87",
+      "lat": 36.0897339289562,
+      "lng": 129.419119468369,
+      "status": "진행 중",
+      "tooltip": "죽천길 87 — 클릭하여 위치 확인",
+      "title": "죽천길 87",
+      "lead": "포항 흥해읍 죽천길 87번지 — 죽천길 일대 재생",
+      "tags": ["경북", "포항", "흥해", "죽천길"],
+      "beforeCaption": "변경 전 · 유휴 상태",
+      "afterCaption": "변경 후 · 검토 중",
+      "beforeText": "75·85·87번지와 연계된 죽천길 거리 재생 대상입니다.",
+      "afterText": "실측 좌표를 지도에 반영했습니다.",
+      "bullets": ["경상북도 포항시 북구 흥해읍 죽천길 87", "실측 좌표"],
+      "beforePhotos": {
+        "title": "현장 사진 — 변경 전",
+        "alt": "죽천길 87 변경 전",
+        "basePath": "Asset/Home_1/before/",
+        "items": ["Home_1_before_03.jpeg", "Home_1_before_04.jpeg"]
+      },
+      "afterPhotos": {
+        "title": "프로젝트 진행 후",
+        "alt": "죽천길 87 변경 후",
+        "basePath": "Asset/Home_1/after/",
+        "items": ["Home_1_after_09.jpeg"]
+      }
+    },
+    {
+      "id": "jookcheon185-14",
+      "address": "경상북도 포항시 북구 흥해읍 죽천길185번길 14",
+      "lat": 36.0966221421479,
+      "lng": 129.42649379309,
+      "status": "진행 중",
+      "tooltip": "죽천길185번길 14 — 클릭하여 위치 확인",
+      "title": "죽천길185번길 14",
+      "lead": "포항 흥해읍 죽천길185번길 — 골목 재생 후보",
+      "tags": ["경북", "포항", "흥해", "골목"],
+      "beforeCaption": "변경 전 · 유휴 상태",
+      "afterCaption": "변경 후 · 검토 중",
+      "beforeText": "185번길 골목 안쪽 유후 공간입니다.",
+      "afterText": "11번지와 함께 골목 단위 재생을 검토합니다.",
+      "bullets": ["경상북도 포항시 북구 흥해읍 죽천길185번길 14", "실측 좌표"],
+      "beforePhotos": {
+        "title": "현장 사진 — 변경 전",
+        "alt": "죽천길185번길 14 변경 전",
+        "basePath": "Asset/Home_1/before/",
+        "items": ["Home_1_before_05.jpeg"]
+      },
+      "afterPhotos": {
+        "title": "프로젝트 진행 후",
+        "alt": "죽천길185번길 14 변경 후",
+        "basePath": "Asset/Home_1/after/",
+        "items": ["Home_1_after_12.jpeg"]
+      }
+    },
+    {
+      "id": "jookcheon185-11",
+      "address": "경상북도 포항시 북구 흥해읍 죽천길185번길 11",
+      "lat": 36.0962712455684,
+      "lng": 129.426465569796,
+      "status": "진행 중",
+      "tooltip": "죽천길185번길 11 — 클릭하여 위치 확인",
+      "title": "죽천길185번길 11",
+      "lead": "포항 흥해읍 죽천길185번길 — 14번지 인접 재생",
+      "tags": ["경북", "포항", "흥해", "골목"],
+      "beforeCaption": "변경 전 · 유휴 상태",
+      "afterCaption": "변경 후 · 검토 중",
+      "beforeText": "185번길 14번지와 인접한 유후 공간입니다.",
+      "afterText": "실측 좌표를 지도·기록에 반영했습니다.",
+      "bullets": ["경상북도 포항시 북구 흥해읍 죽천길185번길 11", "실측 좌표"],
+      "beforePhotos": {
+        "title": "현장 사진 — 변경 전",
+        "alt": "죽천길185번길 11 변경 전",
+        "basePath": "Asset/Home_1/before/",
+        "items": ["Home_1_before_06.jpeg"]
+      },
+      "afterPhotos": {
+        "title": "프로젝트 진행 후",
+        "alt": "죽천길185번길 11 변경 후",
+        "basePath": "Asset/Home_1/after/",
+        "items": ["Home_1_after_08.jpeg"]
       }
     }
   ]

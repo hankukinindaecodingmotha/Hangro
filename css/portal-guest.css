@@ -1,3 +1,6 @@
+/* ⚠️ DEPRECATED — 게스트는 guest-airbnb.css 사용.
+   호환 보존용 파일. HTML 에서 <link> 하지 말 것. */
+
 /* 게스트 전용 앱 — 다른 포털과 분리된 톤 */
 body.portal-guest {
   --bg: #faf6ef;

@@ -233,7 +233,7 @@
             '<div class="haeng-popup" style="min-width:200px;max-width:240px;font-family:inherit;line-height:1.5">' +
             '<p style="margin:0 0 0.35rem;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;color:#6b7570">위치 정보</p>' +
             '<h3 style="margin:0 0 0.45rem;font-family:\'Nanum Myeongjo\',serif;font-size:1rem;font-weight:700;color:#1A2419;letter-spacing:-0.02em">' +
-            escapeHtml(s.title || s.tooltip || "유후공간") +
+            escapeHtml(s.title || s.tooltip || "유휴공간") +
             "</h3>" +
             '<p style="margin:0 0 0.85rem;font-size:0.86rem;color:#4A4F44;line-height:1.55">' +
             address +

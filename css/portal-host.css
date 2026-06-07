@@ -1,5 +1,9 @@
 @import url("hangro-tokens.css");
 
+/* ⚠️ DEPRECATED — 규칙은 portal.css 의 body.portal-host 블록으로 병합됨.
+   호환 보존용 파일. HTML 에서 <link> 하지 말 것.
+   삭제 안전성 확인 후 제거 예정 (css/README.md 참고). */
+
 /* 집주인 포털 — 게스트 숙소 상세와 동일한 에디토리얼 톤 */
 body.portal-host {
   --bg: var(--hangro-bg, #efe9dc);

@@ -1,5 +1,8 @@
 @import url("hangro-tokens.css");
 
+/* ⚠️ DEPRECATED — 규칙은 portal.css 로 병합됨.
+   호환 보존용 파일. HTML 에서 <link> 하지 말 것. */
+
 /* 역할별 격리 헤더 (게스트·집주인 — 타 포털 링크 없음) */
 .portal-shell-header {
   position: sticky;

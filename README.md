@@ -1,6 +1,6 @@
 # 행로 — Hangro
 
-빈집·유후시설 재생 프로젝트의 **정적 웹 데모**입니다. 빌드 없이 GitHub Pages 또는 로컬 HTTP 서버로 실행합니다.
+빈집·유휴시설 재생 프로젝트의 **정적 웹 데모**입니다. 빌드 없이 GitHub Pages 또는 로컬 HTTP 서버로 실행합니다.
 
 상세 구조·모듈 역할은 **[docs/CODEBASE.md](docs/CODEBASE.md)** 를 참고하세요.  
 디자인 규칙은 **[DESIGN.md](DESIGN.md)** · **[css/hangro-tokens.css](css/hangro-tokens.css)** 입니다.

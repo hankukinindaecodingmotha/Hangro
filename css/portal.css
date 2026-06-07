@@ -280,7 +280,6 @@
 }
 
 /* ── portal-shell + portal-host (DESIGN.md §11) ── */
-@import url("hangro-tokens.css");
 
 /* 역할별 격리 헤더 (게스트·집주인 — 타 포털 링크 없음) */
 .portal-shell-header {
@@ -320,8 +319,6 @@
   border-top: 1px solid var(--line);
   margin-top: 2rem;
 }
-
-@import url("hangro-tokens.css");
 
 /* 집주인 포털 — 게스트 숙소 상세와 동일한 에디토리얼 톤 */
 body.portal-host {

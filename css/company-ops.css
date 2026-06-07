@@ -3,35 +3,13 @@
 /* ============================================================
    행로 운영 (Company Ops) — Admin/대시보드 UI
    톤: 본 사이트 에디토리얼(베이지·잉크·명조체) + 운영자 dense 레이아웃
-   styles.css + portal.css 위에 얹는 오버라이드
+   styles.css → portal.css → 본 파일 (DESIGN.md §11)
+
+   변수(--co-*)는 hangro-tokens.css :root 에서 정의 — 여기서 재정의 금지.
+   페이지 fade-in 은 파일 끝 .co-ops { animation: co-fade-in } 1곳에서만.
    ============================================================ */
 
-:root {
-  --co-bg: var(--hangro-bg);
-  --co-paper: var(--hangro-paper);
-  --co-paper-warm: var(--hangro-paper-warm);
-  --co-ink: var(--hangro-ink);
-  --co-ink-soft: var(--hangro-ink-soft);
-  --co-ink-mute: var(--hangro-muted);
-  --co-rule: var(--hangro-rule);
-  --co-rule-strong: var(--hangro-rule-strong);
-  --co-green: var(--hangro-green);
-  --co-green-soft: var(--hangro-green-soft);
-  --co-amber: var(--hangro-amber);
-  --co-red: var(--hangro-danger);
-  --co-radius: var(--hangro-radius);
-  --co-radius-lg: var(--hangro-radius-lg);
-  --co-radius-pill: var(--hangro-radius-pill);
-  --co-shadow-sm: var(--hangro-shadow-sm);
-  --co-shadow: var(--hangro-shadow);
-}
-
-/* ── 운영 다크 헤더 ─────────────────────────── */
-body.co-ops,
-.co-ops {
-  animation: hangro-fade-in 0.32s var(--hangro-ease);
-}
-
+/* ── 운영 헤더 ─────────────────────────── */
 .co-ops .co-ops-header,
 .co-ops-header {
   position: sticky;
@@ -698,10 +676,7 @@ body.co-ops,
   to { opacity: 1; transform: translateY(0); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .co-ops { animation: none; }
-  * { transition: none !important; }
-}
+/* prefers-reduced-motion 은 hangro-tokens.css 글로벌 미디어 쿼리에서 처리 */
 
 /* ── 반응형 ───────────────────────────── */
 @media (max-width: 760px) {

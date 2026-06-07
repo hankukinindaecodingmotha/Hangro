@@ -6,7 +6,7 @@
 
 ## 1. 프로젝트 개요
 
-**행로(Hangro)** — 빈집·유후시설을 지역 관광 숙소·콘텐츠로 재생하는 서비스의 임시 소개 사이트.
+**행로(Hangro)** — 빈집·유휴시설을 지역 관광 숙소·콘텐츠로 재생하는 서비스의 임시 소개 사이트.
 
 - **유저**: 행로야 (`projecthangrow@gmail.com`, GitHub `hankukinindaecodingmotha`)
 - **저장소**: <https://github.com/hankukinindaecodingmotha/Hangro>

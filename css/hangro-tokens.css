@@ -88,6 +88,7 @@
   --co-green: var(--hangro-green);
   --co-green-soft: var(--hangro-green-soft);
   --co-amber: var(--hangro-amber);
+  --co-red: var(--hangro-danger);
   --co-radius: var(--hangro-radius);
   --co-radius-lg: var(--hangro-radius-lg);
   --co-radius-pill: var(--hangro-radius-pill);

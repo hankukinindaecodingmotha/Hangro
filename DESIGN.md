@@ -433,7 +433,7 @@ footer (footer-rich 또는 minimal)
 
 ### 8.2 Hero (공개 홈)
 
-- masthead: `Studio · 행로 / Vol. 01 · 첫 번째 유후공간 / Spring 2026` 3분할
+- masthead: `Studio · 행로 / Vol. 01 · 첫 번째 유휴공간 / Spring 2026` 3분할
 - inner: 좌측(H1 + lead + actions) / 우측(meta-stack 3행)
 - index-line: 정적 키워드 라인 (마키 X — 정적)
 
