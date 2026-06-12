@@ -1855,3 +1855,241 @@ footer .btn-link:hover {
       .map-legend strong {
         color: var(--text);
       }
+
+/* Spots map (map-spots.html) */
+#spots-map {
+  height: min(620px, 72vh);
+  min-height: 480px;
+  width: 100%;
+}
+
+.spots-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) 1fr;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  align-items: stretch;
+}
+
+.spots-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border: 1px solid var(--line, #e5e0d6);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  padding: 1rem;
+}
+
+.spots-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+}
+
+.spots-filter {
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line, #e5e0d6);
+  background: transparent;
+  color: var(--ink-mute, #4a4f44);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.spots-filter:hover {
+  border-color: var(--ink, #1a2419);
+  color: var(--ink, #1a2419);
+}
+
+.spots-filter.is-active {
+  background: var(--ink, #1a2419);
+  border-color: var(--ink, #1a2419);
+  color: var(--paper, #efe9dc);
+}
+
+.spots-panel-hint {
+  margin: 0 0 0.65rem;
+  font-size: 0.8rem;
+  color: var(--text-muted, #6b7570);
+  line-height: 1.45;
+}
+
+.spots-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  max-height: min(520px, 60vh);
+  flex: 1;
+}
+
+.spots-list-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  border: none;
+  background: transparent;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid var(--line, #e5e0d6);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.spots-list-item:hover,
+.spots-list-item.is-active {
+  background: var(--bg-elevated, #f7f4ee);
+}
+
+.spots-list-item strong {
+  display: block;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink, #1a2419);
+  margin: 0.2rem 0 0.25rem;
+}
+
+.spots-list-meta {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--text-muted, #6b7570);
+  line-height: 1.4;
+}
+
+.spots-list-cat {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.spots-list-cat--cafe {
+  background: #ebe3dc;
+  color: #6b4f3a;
+}
+
+.spots-list-cat--restaurant {
+  background: #f5e5e0;
+  color: #b54a32;
+}
+
+.spots-list-cat--attraction {
+  background: #dcebe4;
+  color: #2d6a4f;
+}
+
+.spots-list-empty {
+  padding: 1.5rem 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.spots-map-shell {
+  margin-top: 0;
+}
+
+.spots-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.spots-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.spots-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.spots-dot--cafe {
+  background: #6b4f3a;
+}
+
+.spots-dot--restaurant {
+  background: #b54a32;
+}
+
+.spots-dot--attraction {
+  background: #2d6a4f;
+}
+
+.spots-popup {
+  min-width: 200px;
+  max-width: 280px;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.spots-popup-kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7570;
+}
+
+.spots-popup h3 {
+  margin: 0 0 0.5rem;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a2419;
+}
+
+.spots-popup-desc {
+  margin: 0 0 0.5rem;
+  font-size: 0.84rem;
+  color: #4a4f44;
+  line-height: 1.55;
+}
+
+.spots-popup-addr {
+  margin: 0 0 0.65rem;
+  font-size: 0.78rem;
+  color: #6b7570;
+}
+
+.spots-popup-link {
+  display: inline-flex;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a2419;
+  text-decoration: none;
+  border-bottom: 1px solid #1a2419;
+  padding-bottom: 2px;
+}
+
+@media (max-width: 900px) {
+  .spots-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .spots-list {
+    max-height: 280px;
+  }
+
+  #spots-map {
+    min-height: 360px;
+  }
+}
