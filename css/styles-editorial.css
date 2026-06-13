@@ -538,22 +538,11 @@ section {
   gap: 1rem;
   position: relative;
   text-decoration: none;
-  border-radius: var(--hangro-radius-lg);
+  border-radius: var(--hangro-radius-pill);
   color: inherit;
   transition: background 0.2s ease;
 }
 .case:hover { background: var(--paper); border-bottom-color: var(--rule); }
-.case-image {
-  display: block;
-  overflow: hidden;
-  border-radius: var(--hangro-radius);
-  background: var(--paper);
-}
-.case-image img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 @media (min-width: 760px) {
   .case {
     padding: 2.25rem 1.75rem 2.5rem;
