@@ -355,6 +355,51 @@
   color: #8a6a3a;
 }
 
+/* 카드 사진 위 떠 있는 버튼형 배지 (paused 상태) */
+.ga-card-photo {
+  position: relative;
+}
+.ga-card-photo .ga-status-pill {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  margin: 0;
+  z-index: 2;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ga-ink, #1a2419);
+  border: 1px solid var(--ga-line, rgba(26, 36, 25, 0.1));
+  border-radius: var(--ga-radius-pill, 999px);
+  box-shadow: 0 4px 12px rgba(26, 36, 25, 0.16);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: box-shadow 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.ga-card-photo .ga-status-pill--paused {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ga-ink, #1a2419);
+}
+.ga-card-photo .ga-status-pill--paused::before {
+  content: "";
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--hangro-amber, #c8742b);
+  margin-right: 0.4rem;
+  vertical-align: middle;
+  transform: translateY(-1px);
+}
+.ga-card:hover .ga-card-photo .ga-status-pill {
+  box-shadow: 0 6px 18px rgba(26, 36, 25, 0.22);
+  transform: translateY(-1px);
+}
+
 .ga-card-top {
   display: flex;
   justify-content: space-between;

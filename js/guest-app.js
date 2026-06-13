@@ -172,9 +172,9 @@
     return { cls: cls.trim(), st: st };
   }
 
-  function renderPhotoBox(p, extra) {
+  function renderPhotoBox(p, extra, overlay) {
     var box = photoBoxClass(p, extra);
-    return '<div class="' + box.cls + '"' + (box.st ? ' style="' + box.st + '"' : '') + '></div>';
+    return '<div class="' + box.cls + '"' + (box.st ? ' style="' + box.st + '"' : '') + '>' + (overlay || '') + '</div>';
   }
 
   function listingUrl(p, search) {
@@ -271,8 +271,8 @@
       var D = P();
       var pr = calcPrice(p, daysBetween(search.checkIn, search.checkOut));
       return '<a class="ga-card" href="' + listingUrl(p, search) + '">' +
-        renderPhotoBox(p, 'ga-card-photo') +
-        '<div class="ga-card-body"><div class="ga-card-top"><h2>' + esc(p.name) + propertyStatusBadge(p) + '</h2><span class="ga-rating">★ ' + esc(p.rating) + " (" + esc(p.reviewCount) + ")</span></div>" +
+        renderPhotoBox(p, 'ga-card-photo', propertyStatusBadge(p)) +
+        '<div class="ga-card-body"><div class="ga-card-top"><h2>' + esc(p.name) + '</h2><span class="ga-rating">★ ' + esc(p.rating) + " (" + esc(p.reviewCount) + ")</span></div>" +
         '<p class="ga-card-loc">' + esc(p.locationLabel) + "</p>" +
         '<p class="ga-card-meta">' + esc(p.propertyType) + " · 최대 " + esc(p.guests) + "명</p>" +
         "<p class=\"ga-card-price\"><strong>" + D.formatPrice(pr.total) + "</strong> <span>(" + pr.nights + "박)</span></p></div></a>";
