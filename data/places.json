@@ -239,7 +239,7 @@
       "beforeCaption": "변경 전 · 유휴 상태",
       "afterCaption": "변경 후 · 검토 중",
       "beforeText": "죽천길 거리 인근에서 사용되지 않던 공간입니다.",
-      "afterText": "죽천길 85·87과 함께 거리 단위 재생을 검토 중입니다.",
+      "afterText": "죽천길 85·77과 함께 거리 단위 재생을 검토 중입니다.",
       "bullets": ["경상북도 포항시 북구 흥해읍 죽천길 75", "실측 좌표"],
       "beforePhotos": {
         "title": "현장 사진 — 변경 전",
@@ -250,36 +250,36 @@
       "afterPhotos": {
         "title": "프로젝트 진행 후",
         "alt": "죽천길 75 변경 후",
-        "basePath": "Asset/Home_1/after/",
-        "items": ["Home_1_after_08.jpeg"]
+        "basePath": "Asset/Guest/jookcheon-75/",
+        "items": ["01-pool.png"]
       }
     },
     {
-      "id": "jookcheon-87",
-      "address": "경상북도 포항시 북구 흥해읍 죽천길 87",
+      "id": "jookcheon-77",
+      "address": "경상북도 포항시 북구 흥해읍 죽천길 77",
       "lat": 36.0897339289562,
       "lng": 129.419119468369,
       "status": "진행 중",
-      "tooltip": "죽천길 87 — 클릭하여 위치 확인",
-      "title": "죽천길 87",
-      "lead": "포항 흥해읍 죽천길 87번지 — 죽천길 일대 재생",
+      "tooltip": "죽천길 77 — 클릭하여 위치 확인",
+      "title": "죽천길 77",
+      "lead": "포항 흥해읍 죽천길 77번지 — 죽천길 일대 재생",
       "tags": ["경북", "포항", "흥해", "죽천길"],
       "beforeCaption": "변경 전 · 유휴 상태",
       "afterCaption": "변경 후 · 검토 중",
-      "beforeText": "75·85·87번지와 연계된 죽천길 거리 재생 대상입니다.",
+      "beforeText": "75·85·77번지와 연계된 죽천길 거리 재생 대상입니다.",
       "afterText": "실측 좌표를 지도에 반영했습니다.",
-      "bullets": ["경상북도 포항시 북구 흥해읍 죽천길 87", "실측 좌표"],
+      "bullets": ["경상북도 포항시 북구 흥해읍 죽천길 77", "실측 좌표"],
       "beforePhotos": {
         "title": "현장 사진 — 변경 전",
-        "alt": "죽천길 87 변경 전",
+        "alt": "죽천길 77 변경 전",
         "basePath": "Asset/Home_1/before/",
         "items": ["Home_1_before_03.jpeg", "Home_1_before_04.jpeg"]
       },
       "afterPhotos": {
         "title": "프로젝트 진행 후",
-        "alt": "죽천길 87 변경 후",
-        "basePath": "Asset/Home_1/after/",
-        "items": ["Home_1_after_09.jpeg"]
+        "alt": "죽천길 77 변경 후",
+        "basePath": "Asset/Guest/jookcheon-77/",
+        "items": ["01-hanok-exterior.png"]
       }
     },
     {
@@ -306,8 +306,13 @@
       "afterPhotos": {
         "title": "프로젝트 진행 후",
         "alt": "죽천길185번길 14 변경 후",
-        "basePath": "Asset/Home_1/after/",
-        "items": ["Home_1_after_12.jpeg"]
+        "basePath": "Asset/Guest/jookcheon185-14/",
+        "items": [
+          "01-kitchen.png",
+          "02-mint-room.png",
+          "03-hallway-kitchen.png",
+          "04-tea-room.png"
+        ]
       }
     },
     {
@@ -334,8 +339,8 @@
       "afterPhotos": {
         "title": "프로젝트 진행 후",
         "alt": "죽천길185번길 11 변경 후",
-        "basePath": "Asset/Home_1/after/",
-        "items": ["Home_1_after_08.jpeg"]
+        "basePath": "Asset/Guest/jookcheon185-11/",
+        "items": ["01-yard-stairs.png", "02-red-tile-yard.png"]
       }
     }
   ]

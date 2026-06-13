@@ -66,7 +66,7 @@
       baths: 1,
       propertyType: "독채",
       amenities: ["와이파이", "주차"],
-      photos: ["../Asset/Home_1/after/Home_1_after_08.jpeg"],
+      photos: ["../Asset/Guest/jookcheon-75/01-pool.png"],
       hostName: "행로",
       hostBio: "포항 흥해 죽천길 유휴공간 재생을 진행합니다.",
       description:
@@ -95,7 +95,12 @@
       baths: 1,
       propertyType: "게스트룸",
       amenities: ["와이파이"],
-      photos: ["../Asset/Home_1/after/Home_1_after_12.jpeg"],
+      photos: [
+        "../Asset/Guest/jookcheon185-14/01-kitchen.png",
+        "../Asset/Guest/jookcheon185-14/02-mint-room.png",
+        "../Asset/Guest/jookcheon185-14/03-hallway-kitchen.png",
+        "../Asset/Guest/jookcheon185-14/04-tea-room.png",
+      ],
       hostName: "행로",
       hostBio: "포항 흥해 죽천길 유휴공간 재생을 진행합니다.",
       description:
@@ -124,7 +129,10 @@
       baths: 1,
       propertyType: "단독주택",
       amenities: ["와이파이", "주차"],
-      photos: ["../Asset/Home_1/after/Home_1_after_08.jpeg"],
+      photos: [
+        "../Asset/Guest/jookcheon185-11/01-yard-stairs.png",
+        "../Asset/Guest/jookcheon185-11/02-red-tile-yard.png",
+      ],
       hostName: "행로",
       hostBio: "포항 흥해 죽천길 유휴공간 재생을 진행합니다.",
       description:
@@ -135,13 +143,13 @@
     {
       id: "home-5",
       name: "죽천 끝집",
-      address: "경상북도 포항시 북구 흥해읍 죽천길 87",
+      address: "경상북도 포항시 북구 흥해읍 죽천길 77",
       lat: 36.0897339289562,
       lng: 129.419119468369,
-      placeId: "jookcheon-87",
+      placeId: "jookcheon-77",
       hostId: "host-a",
       status: "paused",
-      summary: "죽천 길 끝자락 독채",
+      summary: "죽천길 77번지 한옥",
       region: "경북",
       locationLabel: "포항 죽천리",
       pricePerNight: 0,
@@ -153,7 +161,7 @@
       baths: 1,
       propertyType: "독채",
       amenities: ["와이파이", "주차"],
-      photos: ["../Asset/Home_1/after/Home_1_after_09.jpeg"],
+      photos: ["../Asset/Guest/jookcheon-77/01-hanok-exterior.png"],
       hostName: "행로",
       hostBio: "포항 흥해 죽천길 유휴공간 재생을 진행합니다.",
       description:
