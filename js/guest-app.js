@@ -197,6 +197,14 @@
     return '<span class="ga-trip-status">' + esc(statusLabel(s)) + "</span>";
   }
 
+  function propertyStatusBadge(p) {
+    if (!p || p.status === "active") return "";
+    if (p.status === "paused") {
+      return '<span class="ga-status-pill ga-status-pill--paused">준비 중</span>';
+    }
+    return "";
+  }
+
   function filterProperties(list, search) {
     return list.filter(function (p) {
       if (p.guests < search.guests) return false;
@@ -204,6 +212,7 @@
       var w = search.where.trim().toLowerCase();
       return (p.region && p.region.toLowerCase().indexOf(w) !== -1) ||
         (p.locationLabel && p.locationLabel.toLowerCase().indexOf(w) !== -1) ||
+        (p.address && p.address.toLowerCase().indexOf(w) !== -1) ||
         (p.name && p.name.toLowerCase().indexOf(w) !== -1);
     });
   }
@@ -262,7 +271,7 @@
       var pr = calcPrice(p, daysBetween(search.checkIn, search.checkOut));
       return '<a class="ga-card" href="' + listingUrl(p, search) + '">' +
         renderPhotoBox(p, 'ga-card-photo') +
-        '<div class="ga-card-body"><div class="ga-card-top"><h2>' + esc(p.name) + '</h2><span class="ga-rating">★ ' + esc(p.rating) + " (" + esc(p.reviewCount) + ")</span></div>" +
+        '<div class="ga-card-body"><div class="ga-card-top"><h2>' + esc(p.name) + propertyStatusBadge(p) + '</h2><span class="ga-rating">★ ' + esc(p.rating) + " (" + esc(p.reviewCount) + ")</span></div>" +
         '<p class="ga-card-loc">' + esc(p.locationLabel) + "</p>" +
         '<p class="ga-card-meta">' + esc(p.propertyType) + " · 최대 " + esc(p.guests) + "명</p>" +
         "<p class=\"ga-card-price\"><strong>" + D.formatPrice(pr.total) + "</strong> <span>(" + pr.nights + "박)</span></p></div></a>";
@@ -325,7 +334,7 @@
         "&guests=" + encodeURIComponent(search.guests);
       var btn = p.status === "active"
         ? '<a class="ga-btn ga-btn--primary ga-btn--block" href="' + checkoutHref + '" id="ga-reserve-btn">예약하기</a>'
-        : '<button type="button" class="ga-btn ga-btn--disabled ga-btn--block" disabled>예약 불가</button>';
+        : '<button type="button" class="ga-btn ga-btn--disabled ga-btn--block" disabled>준비 중 · 예약 불가</button>';
       return '<aside class="ga-widget"><p class="ga-widget-price">' + D.formatPrice(p.pricePerNight) + ' <span>/ 박</span></p>' +
         '<form class="ga-widget-form" id="ga-widget-form" data-property-id="' + esc(p.id) + '">' +
         '<div class="ga-widget-dates"><label>체크인<input type="date" name="checkIn" value="' + esc(search.checkIn) + '" required /></label>' +
@@ -398,7 +407,7 @@
 
     relatedCards: function (currentId, search, limit) {
       var D = P();
-      var list = D.listBookable().filter(function (p) { return p.id !== currentId; }).slice(0, limit || 4);
+      var list = (D.listBrowsable ? D.listBrowsable() : D.listBookable()).filter(function (p) { return p.id !== currentId; }).slice(0, limit || 4);
       if (!list.length) return "";
       return '<h2 class="ga-h2">비슷한 숙소</h2><div class="ga-listings ga-listings--compact">' +
         list.map(function (p) { return V.propertyCard(p, search); }).join("") + "</div>";
@@ -487,7 +496,7 @@
     }
     var grid = document.getElementById("ga-listings");
     if (!grid) return;
-    var list = filterProperties(D.listBookable(), search);
+    var list = filterProperties(D.listBrowsable ? D.listBrowsable() : D.listBookable(), search);
     grid.innerHTML = list.length
       ? list.map(function (p) { return fixHtml(V.propertyCard(p, search)); }).join("")
       : '<p class="ga-empty">조건에 맞는 숙소가 없습니다.</p>';
@@ -510,8 +519,9 @@
       V.breadcrumb([{ href: "./", label: "숙소 찾기" }, { label: p.name }]) +
       V.photoMosaic(p) +
       '<div class="ga-listing-layout"><div class="ga-listing-main">' +
-      "<h1>" + esc(p.name) + "</h1>" +
-      '<p class="ga-listing-sub"><span class="ga-rating">★ ' + esc(p.rating) + "</span> · " + esc(p.reviewCount) + "개 후기 · " + esc(p.locationLabel) + "</p>" +
+      "<h1>" + esc(p.name) + propertyStatusBadge(p) + "</h1>" +
+      '<p class="ga-listing-sub"><span class="ga-rating">★ ' + esc(p.rating) + "</span> · " + esc(p.reviewCount) + "개 후기 · " + esc(p.locationLabel) +
+      (p.address ? " · " + esc(p.address) : "") + "</p>" +
       V.propertyFacts(p) + '<hr class="ga-rule" />' + V.hostBlock(p) + '<hr class="ga-rule" />' +
       "<p>" + esc(p.description || p.summary) + "</p>" + V.highlights(p) + V.amenities(p) + V.nearbyTips(p) + V.reviewsBlock(p.id, p) +
       "</div>" + V.bookingWidget(p, search) + "</div>" +

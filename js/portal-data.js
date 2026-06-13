@@ -308,11 +308,16 @@
       }
       return bundle;
     },
-    listBookable: function () {
+    listBrowsable: function () {
       return PROPERTIES.map(function (p) {
         return mergeProperty(p);
       }).filter(function (p) {
-        return p && p.status === "active";
+        return p && (p.status === "active" || p.status === "paused");
+      });
+    },
+    listBookable: function () {
+      return this.listBrowsable().filter(function (p) {
+        return p.status === "active";
       });
     },
     formatPrice: function (n) {

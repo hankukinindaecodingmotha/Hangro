@@ -335,6 +335,26 @@
   color: var(--ga-ink);
 }
 
+.ga-status-pill {
+  display: inline-block;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--ga-bg-muted, #ebe6dc);
+  color: var(--ga-ink-muted, #6b7570);
+}
+
+.ga-status-pill--paused {
+  background: #f0e8dc;
+  color: #8a6a3a;
+}
+
 .ga-card-top {
   display: flex;
   justify-content: space-between;
