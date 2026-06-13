@@ -178,7 +178,8 @@
   }
 
   function shouldShowMapPreview(p) {
-    return !!(p && p.status === "paused" && isFinite(p.lat) && isFinite(p.lng));
+    if (!p || p.status !== "paused" || !isFinite(p.lat) || !isFinite(p.lng)) return false;
+    return !(p.photos && p.photos.length);
   }
 
   function renderMapPreview(p, extraClass, overlay) {
