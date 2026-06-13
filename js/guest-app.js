@@ -207,7 +207,8 @@
 
   function filterProperties(list, search) {
     return list.filter(function (p) {
-      if (p.guests < search.guests) return false;
+      // 준비 중(paused)은 탐색용 — 인원 조건과 무관하게 노출
+      if (p.status !== "paused" && p.guests < search.guests) return false;
       if (!search.where.trim()) return true;
       var w = search.where.trim().toLowerCase();
       return (p.region && p.region.toLowerCase().indexOf(w) !== -1) ||
