@@ -177,6 +177,108 @@
     return '<div class="' + box.cls + '"' + (box.st ? ' style="' + box.st + '"' : '') + '>' + (overlay || '') + '</div>';
   }
 
+  function shouldShowMapPreview(p) {
+    return !!(p && p.status === "paused" && isFinite(p.lat) && isFinite(p.lng));
+  }
+
+  function renderMapPreview(p, extraClass, overlay) {
+    var label = esc(p.name || p.address || "위치");
+    return (
+      '<div class="' + esc(extraClass) + ' ga-card-map-wrap">' +
+      '<div class="ga-card-map-inner" data-map-id="' + esc(p.id) + '" data-lat="' + p.lat + '" data-lng="' + p.lng + '" aria-hidden="true"></div>' +
+      (overlay || "") +
+      "</div>"
+    );
+  }
+
+  function renderCardMedia(p, overlay) {
+    if (shouldShowMapPreview(p)) return renderMapPreview(p, "ga-card-photo", overlay);
+    return renderPhotoBox(p, "ga-card-photo", overlay);
+  }
+
+  var leafletLoadPromise = null;
+
+  function ensureLeaflet() {
+    if (global.L) return Promise.resolve();
+    if (leafletLoadPromise) return leafletLoadPromise;
+    leafletLoadPromise = new Promise(function (resolve, reject) {
+      if (!document.querySelector('link[data-ga-leaflet-css]')) {
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css";
+        link.setAttribute("data-ga-leaflet-css", "1");
+        document.head.appendChild(link);
+      }
+      if (global.L) {
+        resolve();
+        return;
+      }
+      var script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";
+      script.onload = function () { resolve(); };
+      script.onerror = function () { reject(new Error("Leaflet load failed")); };
+      document.head.appendChild(script);
+    });
+    return leafletLoadPromise;
+  }
+
+  function miniPinIcon(L) {
+    var svg =
+      '<svg class="ga-mini-pin-svg" viewBox="0 0 36 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path fill="#C8742B" stroke="#C8742B" stroke-width="1" d="M18 2C11.5 2 7 6.95 7 13.1c0 8.95 11 26.65 11 26.65S29 21.76 29 13.1C29 6.95 24.5 2 18 2z"/>' +
+      '<circle cx="18" cy="13" r="3.5" fill="#EFE9DC"/>' +
+      "</svg>";
+    return L.divIcon({
+      className: "ga-mini-pin-icon",
+      html: '<div class="ga-mini-pin">' + svg + "</div>",
+      iconSize: [30, 36],
+      iconAnchor: [15, 34],
+    });
+  }
+
+  function mountGuestMiniMaps(root) {
+    root = root || document;
+    var nodes = root.querySelectorAll(".ga-card-map-inner[data-lat][data-lng]:not([data-map-ready])");
+    if (!nodes.length) return;
+    ensureLeaflet()
+      .then(function () {
+        var L = global.L;
+        nodes.forEach(function (el) {
+          if (el.getAttribute("data-map-ready")) return;
+          var lat = parseFloat(el.getAttribute("data-lat"));
+          var lng = parseFloat(el.getAttribute("data-lng"));
+          if (!isFinite(lat) || !isFinite(lng)) return;
+          el.setAttribute("data-map-ready", "1");
+          var map = L.map(el, {
+            zoomControl: false,
+            attributionControl: false,
+            dragging: false,
+            touchZoom: false,
+            doubleClickZoom: false,
+            scrollWheelZoom: false,
+            boxZoom: false,
+            keyboard: false,
+          }).setView([lat, lng], 16);
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+          }).addTo(map);
+          L.marker([lat, lng], { icon: miniPinIcon(L), interactive: false }).addTo(map);
+          setTimeout(function () {
+            map.invalidateSize();
+          }, 120);
+        });
+      })
+      .catch(function () {
+        nodes.forEach(function (el) {
+          if (el.querySelector(".ga-map-fallback")) return;
+          el.insertAdjacentHTML(
+            "beforeend",
+            '<p class="ga-map-fallback">지도를 불러올 수 없습니다</p>'
+          );
+        });
+      });
+  }
+
   function listingUrl(p, search) {
     return "listing.html?id=" + encodeURIComponent(p.id) +
       "&checkIn=" + encodeURIComponent(search.checkIn) +
@@ -271,7 +373,7 @@
       var D = P();
       var pr = calcPrice(p, daysBetween(search.checkIn, search.checkOut));
       return '<a class="ga-card" href="' + listingUrl(p, search) + '">' +
-        renderPhotoBox(p, 'ga-card-photo', propertyStatusBadge(p)) +
+        renderCardMedia(p, propertyStatusBadge(p)) +
         '<div class="ga-card-body"><div class="ga-card-top"><h2>' + esc(p.name) + '</h2><span class="ga-rating">★ ' + esc(p.rating) + " (" + esc(p.reviewCount) + ")</span></div>" +
         '<p class="ga-card-loc">' + esc(p.locationLabel) + "</p>" +
         '<p class="ga-card-meta">' + esc(p.propertyType) + " · 최대 " + esc(p.guests) + "명</p>" +
@@ -279,6 +381,13 @@
     },
 
     photoMosaic: function (p) {
+      if (shouldShowMapPreview(p)) {
+        return (
+          '<div class="ga-mosaic ga-mosaic--solo-map">' +
+          renderMapPreview(p, "ga-mosaic-map-wrap", propertyStatusBadge(p)) +
+          "</div>"
+        );
+      }
       var photos = (p.photos && p.photos.length) ? p.photos.slice(0, 5) : [null];
       while (photos.length < 5) photos.push(photos[0]);
       return '<div class="ga-mosaic">' + photos.map(function (src, i) {
@@ -501,6 +610,7 @@
     grid.innerHTML = list.length
       ? list.map(function (p) { return fixHtml(V.propertyCard(p, search)); }).join("")
       : '<p class="ga-empty">조건에 맞는 숙소가 없습니다.</p>';
+    mountGuestMiniMaps(grid);
   }
 
   function renderListing() {  // 숙소 상세 + 예약 위젯
@@ -529,6 +639,7 @@
       V.relatedCards(p.id, search, 4)
     );
     bindWidgetForm(p);
+    mountGuestMiniMaps(root);
   }
 
   function renderCheckout() {  // 예약 확인 — 결제(알림만) 후 API/local 예약 생성

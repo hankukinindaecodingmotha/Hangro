@@ -317,12 +317,71 @@
 }
 
 .ga-card-photo {
+  position: relative;
   aspect-ratio: 1 / 0.95;
   border-radius: var(--ga-radius);
   margin-bottom: 0.85rem;
   overflow: hidden;
   background: var(--ga-paper);
   transition: box-shadow 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* 준비 중 숙소 — 카드·상세 미니 지도 (외곽은 사진과 동일 크기) */
+.ga-card-map-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--ga-bg-elevated, #f0ebe3);
+}
+
+.ga-card-map-inner {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.ga-card-map-inner.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  font-family: inherit;
+  background: var(--ga-bg-elevated, #f0ebe3);
+}
+
+.ga-card-map-inner .leaflet-pane,
+.ga-card-map-inner .leaflet-control-container {
+  z-index: 1;
+}
+
+.ga-card-map-wrap .ga-status-pill {
+  z-index: 500;
+}
+
+.ga-mini-pin-icon {
+  background: transparent;
+  border: none;
+}
+
+.ga-mini-pin {
+  filter: drop-shadow(0 2px 4px rgba(26, 36, 25, 0.28));
+}
+
+.ga-mini-pin-svg {
+  display: block;
+  width: 30px;
+  height: 36px;
+}
+
+.ga-map-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 1rem;
+  font-size: 0.82rem;
+  color: var(--ga-ink-muted);
+  text-align: center;
+  background: var(--ga-bg-elevated, #f0ebe3);
 }
 
 .ga-card-body h2 {
@@ -355,11 +414,9 @@
   color: #8a6a3a;
 }
 
-/* 카드 사진 위 떠 있는 버튼형 배지 (paused 상태) */
-.ga-card-photo {
-  position: relative;
-}
-.ga-card-photo .ga-status-pill {
+/* 카드 사진·지도 위 떠 있는 버튼형 배지 (paused 상태) */
+.ga-card-photo .ga-status-pill,
+.ga-card-map-wrap .ga-status-pill {
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
@@ -380,11 +437,13 @@
   transition: box-shadow 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
     transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.ga-card-photo .ga-status-pill--paused {
+.ga-card-photo .ga-status-pill--paused,
+.ga-card-map-wrap .ga-status-pill--paused {
   background: rgba(255, 255, 255, 0.96);
   color: var(--ga-ink, #1a2419);
 }
-.ga-card-photo .ga-status-pill--paused::before {
+.ga-card-photo .ga-status-pill--paused::before,
+.ga-card-map-wrap .ga-status-pill--paused::before {
   content: "";
   display: inline-block;
   width: 0.45rem;
@@ -395,7 +454,8 @@
   vertical-align: middle;
   transform: translateY(-1px);
 }
-.ga-card:hover .ga-card-photo .ga-status-pill {
+.ga-card:hover .ga-card-photo .ga-status-pill,
+.ga-card:hover .ga-card-map-wrap .ga-status-pill {
   box-shadow: 0 6px 18px rgba(26, 36, 25, 0.22);
   transform: translateY(-1px);
 }
@@ -457,6 +517,26 @@
 .ga-mosaic-item {
   min-height: 120px;
   background: var(--ga-paper);
+}
+
+.ga-mosaic.ga-mosaic--solo-map {
+  display: block;
+  grid-template-columns: none;
+  grid-template-rows: none;
+  gap: 0;
+  min-height: 340px;
+  height: 340px;
+}
+
+.ga-mosaic.ga-mosaic--solo-map .ga-mosaic-map-wrap {
+  min-height: 340px;
+  height: 100%;
+  width: 100%;
+}
+
+.ga-mosaic-map-wrap .ga-status-pill {
+  top: 1rem;
+  left: 1rem;
 }
 
 .ga-listing-layout {
